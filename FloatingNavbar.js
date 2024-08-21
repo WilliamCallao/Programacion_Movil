@@ -7,16 +7,16 @@ import { useNavigation } from '@react-navigation/native';
 const FloatingNavbar = () => {
   const [selectedItem, setSelectedItem] = useState(0);
   const translateX = useSharedValue(0);
-  const navigation = useNavigation(); // Usar el hook useNavigation
+  const navigation = useNavigation();
 
   const menuItems = [
     { icon: 'home', screen: 'MainScreen' },
     { icon: 'person', screen: 'OtherScreen' },
-    { icon: 'search', screen: 'MainScreen' },
+    { icon: 'search', screen: 'OtherOtherScreen' },
   ];
 
-  const itemWidth = 70;
-  const spacing = 10;
+  const itemWidth = 53;
+  const spacing = 8;
 
   useEffect(() => {
     translateX.value = withSpring(selectedItem * (itemWidth + spacing), {
@@ -50,7 +50,7 @@ const FloatingNavbar = () => {
             style={[styles.iconBox, { width: itemWidth, marginRight: index === menuItems.length - 1 ? 0 : spacing }]}
             onPress={() => handlePress(index, item.screen)}
           >
-            <Icon name={item.icon} size={30} color={selectedItem === index ? '#000' : '#757575'} />
+            <Icon name={item.icon} size={30} color={selectedItem === index ? '#C8D5F3' : 'black'} />
           </TouchableOpacity>
         ))}
       </View>
@@ -61,7 +61,7 @@ const FloatingNavbar = () => {
 const styles = StyleSheet.create({
   outerContainer: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 10,
     left: 0,
     right: 0,
     justifyContent: 'center',
@@ -69,11 +69,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   container: {
-    height: 80,
+    height: 60,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#3C3C3C',
+    backgroundColor: '#C8D5F3',
     borderRadius: 100,
     paddingHorizontal: 5,
   },
@@ -85,10 +85,10 @@ const styles = StyleSheet.create({
   },
   indicator: {
     position: 'absolute',
-    height: 70,
-    backgroundColor: '#fff',
+    height: 53,
+    backgroundColor: '#000',
     borderRadius: 100,
-    top: 5,
+    top: 4,
     left: 5,
   },
 });

@@ -1,11 +1,11 @@
-// MainScreen.js
+// OtherOtherScreen.js
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function OtherScreen() {
+export default function OtherOtherScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Pantalla 1</Text>
+      <Text style={styles.text}>Pantalla 3</Text>
     </View>
   );
 }
