@@ -11,10 +11,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#000"
     },
+    "scheme": "yourapp",
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "package": "com.health.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000"
