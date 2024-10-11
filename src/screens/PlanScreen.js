@@ -54,7 +54,7 @@ export default function MainScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Lista de Recetas</Text>
+      <Text style={styles.title}>Mi Plan</Text>
       {recipes.map(item => (
         <View key={item.id} style={styles.card}>
           <View style={styles.cardContent}>
