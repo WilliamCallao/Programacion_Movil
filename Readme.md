@@ -23,6 +23,16 @@ Sigue estos pasos para configurar y ejecutar el proyecto en tu máquina local:
    ```bash
    npm install
    ```
+## Iniciar Sesión en Expo
+
+Para poder ejecutar el proyecto correctamente y gestionar las herramientas de Expo, es necesario que inicies sesión con tu cuenta de Expo. Si no tienes una cuenta, puedes crear una en [Expo](https://expo.dev/signup).
+
+1. Inicia sesión en tu cuenta de Expo desde la terminal:
+   ```bash
+   expo login
+   ```
+
+2. Ingresa tu **correo electrónico** y **contraseña** asociados con tu cuenta de Expo cuando se te solicite.
 
 ## Ejecución en Dispositivo Móvil (Expo Go)
 
