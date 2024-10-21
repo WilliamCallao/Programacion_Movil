@@ -13,7 +13,7 @@ export default function MainScreen() {
     const fetchRecipes = async () => {
       try {
         const recipesCollection = collection(db, 'recetas');
-        const recipesQuery = query(recipesCollection, limit(1));
+        const recipesQuery = query(recipesCollection, limit(10));
 
         const recipesSnapshot = await getDocs(recipesQuery);
         const recipesList = recipesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   title: {
+    fontFamily: 'Poppins_700Bold',
     fontSize: 24,
     fontWeight: 'bold',
     marginVertical: 20,
@@ -136,22 +137,24 @@ const styles = StyleSheet.create({
     right: 10,
   },
   recipeTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins_500Medium',
+    fontSize: 18,
     color: '#fff',
     marginBottom: 5,
+    paddingHorizontal: 10,
   },
   labels: {
     flexDirection: 'row',
-    // justifyContent: 'space-between',
   },
   label: {
-    backgroundColor: 'rgba(177, 177, 177, 0.6)',
+    fontFamily: 'Poppins_400Regular',
+    backgroundColor: 'rgba(177, 177, 177, 0.5)',
     borderRadius: 50,
-    marginHorizontal: 5,
-    marginBottom: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 2,
+    marginHorizontal: 8,
+    marginBottom: 8,
+    paddingHorizontal: 15,
+    paddingTop: 3,
+    paddingBottom: 0,
     fontSize: 14,
     color: '#fff',
   },
