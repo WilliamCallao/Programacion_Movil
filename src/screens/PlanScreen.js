@@ -1,6 +1,6 @@
-// MainScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, ActivityIndicator, Dimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { db } from '../services/firebase';
 import { collection, getDocs, query, limit } from 'firebase/firestore';
 
@@ -8,7 +8,6 @@ export default function MainScreen() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imageErrorIds, setImageErrorIds] = useState([]);
-  const [debugData, setDebugData] = useState(null);
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -18,13 +17,6 @@ export default function MainScreen() {
 
         const recipesSnapshot = await getDocs(recipesQuery);
         const recipesList = recipesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-        const recipesJson = JSON.stringify(recipesList, null, 2);
-
-        setDebugData(recipesJson);
-
-        console.log("Datos obtenidos de Firestore (limit 1):", recipesJson);
-
         setRecipes(recipesList);
       } catch (error) {
         console.error("Error fetching recipes: ", error);
@@ -57,36 +49,33 @@ export default function MainScreen() {
       <Text style={styles.title}>Mi Plan</Text>
       {recipes.map(item => (
         <View key={item.id} style={styles.card}>
-          <View style={styles.cardContent}>
-            <Text style={styles.recipeTitle}>{item.titulo}</Text>
-            <Text style={styles.recipeDetails}>Porciones: {item.porciones}</Text>
-            <Text style={styles.recipeDetails}>Tiempo de preparación: {formatTime(item.tiempo_preparacion)}</Text>
-            <Text style={styles.recipeDetails}>Tiempo de cocción: {formatTime(item.tiempo_coccion)}</Text>
-          </View>
-
-          {item.imagen_url && !imageErrorIds.includes(item.id) ? (
-            <View style={[styles.imageContainer, { height: imageHeight }]}>
+          <View style={[styles.imageContainer, { height: imageHeight + 70 }]}>
+            {item.imagen_url && !imageErrorIds.includes(item.id) ? (
               <Image
                 source={{ uri: item.imagen_url }}
                 style={styles.image}
                 onError={() => handleImageError(item.id)}
                 resizeMode="cover"
               />
+            ) : (
+              <View style={styles.imagePlaceholder}>
+                <Text style={styles.placeholderText}>Sin Imagen</Text>
+              </View>
+            )}
+            <LinearGradient
+              colors={['transparent', 'rgba(0, 0, 0, 1)']}
+              style={styles.gradient}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.recipeTitle}>{item.titulo}</Text>
+              <View style={styles.labels}>
+                <Text style={styles.label}>Prep: {formatTime(item.tiempo_preparacion)}</Text>
+                <Text style={styles.label}>Cocción: {formatTime(item.tiempo_coccion)}</Text>
+              </View>
             </View>
-          ) : (
-            <View style={[styles.imagePlaceholder, { height: imageHeight }]}>
-              <Text style={styles.placeholderText}>Sin Imagen</Text>
-            </View>
-          )}
+          </View>
         </View>
       ))}
-
-      {debugData && (
-        <View style={styles.debugContainer}>
-          <Text style={styles.debugTitle}>Datos Obtenidos Firebase:</Text>
-          <Text style={styles.debugText}>{debugData}</Text>
-        </View>
-      )}
     </ScrollView>
   );
 }
@@ -117,49 +106,60 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   card: {
-    backgroundColor: '#fff',
-    borderRadius: 15,
-    marginVertical: 15,
-    padding: 15,
+    marginVertical: 20,
+    borderRadius: 25,
+    overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 6,
   },
-  cardContent: {
-    flexDirection: 'column',
-    marginBottom: 15,
-  },
-  recipeTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#333',
-  },
-  recipeDetails: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 5,
-  },
   imageContainer: {
     width: '100%',
-    borderRadius: 15,
-    overflow: 'hidden',
-    marginBottom: 15,
   },
   image: {
     width: '100%',
     height: '100%',
-    borderRadius: 15,
+  },
+  gradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '55%',
+  },
+  textContainer: {
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+    right: 10,
+  },
+  recipeTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 5,
+  },
+  labels: {
+    flexDirection: 'row',
+    // justifyContent: 'space-between',
+  },
+  label: {
+    backgroundColor: 'rgba(177, 177, 177, 0.6)',
+    borderRadius: 50,
+    marginHorizontal: 5,
+    marginBottom: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 2,
+    fontSize: 14,
+    color: '#fff',
   },
   imagePlaceholder: {
-    width: '100%',
-    borderRadius: 15,
-    backgroundColor: '#ccc',
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
+    backgroundColor: '#ccc',
   },
   placeholderText: {
     color: '#fff',
@@ -173,21 +173,6 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#333',
-  },
-  debugContainer: {
-    marginTop: 30,
-    padding: 15,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 10,
-  },
-  debugTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  debugText: {
-    fontSize: 14,
     color: '#333',
   },
 });
