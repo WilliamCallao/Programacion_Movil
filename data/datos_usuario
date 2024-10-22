@@ -1,0 +1,73 @@
+// Ejemplo de documento en la colección "usuarios"
+{
+    id_usuario: "abc123", // Autogenerado
+    informacion_personal: {
+      nombre: "Juan Pérez",
+      correo: "juan.perez@example.com",
+      contraseña: "password",
+      foto_perfil_url: "https://example.com/juan.jpg",
+      fecha_nacimiento: new Date("1990-05-15"),
+      genero: "masculino" // Opciones: "masculino", "femenino", "otro"
+    },
+    medidas_fisicas: {
+      peso_kg: 75, // Ejemplo en kilogramos
+      altura_cm: 175, // Ejemplo en centímetros
+      nivel_actividad: "moderadamente_activo" 
+      // Opciones:
+      // "sedentario", "ligeramente_activo", "moderadamente_activo", 
+      // "muy_activo", "extra_activo"
+    },
+    preferencias: {
+      preferencias_dietarias: ["vegetariano", "gluten-free"], 
+      // Opciones posibles: 
+      // "vegetariano", "vegano", "gluten-free", "low sodium", 
+      // "lower carb", "high in fiber"
+      
+      condiciones_salud: ["CKD No Diálisis", "Kid Friendly"] 
+      // Opciones posibles: 
+      // "CKD No Diálisis", "CKD Diálisis", "Kid Friendly", "Kidney-Friendly"
+    },
+    objetivos: {
+      tipo_objetivo: "perder_peso", 
+      // Opciones: "perder_peso", "mantener_peso", "ganar_peso"
+  
+      peso_objetivo_kg: 70, // Meta de peso en kg
+      meta_calorias: 1800, // Meta calórica diaria
+      distribucion_macronutrientes: {
+        carbohidratos: 50, // Porcentaje de carbohidratos
+        proteinas: 30, // Porcentaje de proteínas
+        grasas: 20 // Porcentaje de grasas
+      }
+    },
+    actividad: {
+      recetas_favoritas: ["receta123", "receta456"], // IDs de recetas favoritas
+      seguimiento_progreso: {
+        historial_peso: [
+          {
+            fecha: new Date("2024-10-01"),
+            peso_kg: 75,
+            estado_progreso: "en_ruta" 
+            // Opciones: "en_ruta", "objetivo_alcanzado", "fuera_de_ruta"
+          },
+          {
+            fecha: new Date("2024-10-15"),
+            peso_kg: 72,
+            estado_progreso: "en_ruta"
+          }
+        ]
+      }
+    },
+    planes_alimentacion: [
+      {
+        id_plan: "plan123",
+        fecha_creacion: new Date("2024-10-01"),
+        estado: "completado" // Opciones: "activo", "completado", "cancelado"
+      },
+      {
+        id_plan: "plan456",
+        fecha_creacion: new Date("2024-10-21"),
+        estado: "activo"
+      }
+    ]
+  }
+  
