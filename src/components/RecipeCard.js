@@ -2,6 +2,7 @@
 import React, { memo } from 'react';
 import { Text, StyleSheet, Image, Dimensions, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Animated, { useAnimatedStyle, interpolate, Extrapolate } from 'react-native-reanimated';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -41,8 +42,14 @@ const RecipeCard = ({ item, index, scrollX, onImageError }) => {
           <View style={styles.textContainer}>
             <Text style={styles.recipeTitle}>{item.titulo}</Text>
             <View style={styles.labels}>
-              <Text style={styles.label}>Prep: {formatTime(item.tiempo_preparacion)}</Text>
-              <Text style={styles.label}>Cocción: {formatTime(item.tiempo_coccion)}</Text>
+              <View style={styles.labelContainer}>
+                <MaterialCommunityIcons name="clock-outline" size={20} color="#fff" />
+                <Text style={styles.label}>{formatTime(item.tiempo_preparacion)}</Text>
+              </View>
+              <View style={styles.labelContainer}>
+                <MaterialCommunityIcons name="chef-hat" size={20} color="#fff" />
+                <Text style={styles.label}>{formatTime(item.tiempo_coccion)}</Text>
+              </View>
             </View>
           </View>
         </View>
@@ -77,7 +84,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 6,
     backgroundColor: 'white',
-    height: ITEM_WIDTH * 1.20,
+    height: ITEM_WIDTH * 1.3,
   },
   imageContainer: {
     width: '100%',
@@ -104,22 +111,28 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_500Medium',
     fontSize: 18,
     color: '#fff',
-    marginBottom: 5,
+    marginLeft: 10,
   },
   labels: {
     flexDirection: 'row',
+    alignItems: 'center',
+  },
+  labelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 8,
+    // backgroundColor: 'rgba(177, 177, 177, 0.5)',
+    // borderRadius: 50,
+    // paddingHorizontal: 15,
+    // paddingVertical: 2,
   },
   label: {
     fontFamily: 'Poppins_400Regular',
-    backgroundColor: 'rgba(177, 177, 177, 0.5)',
-    borderRadius: 50,
-    marginHorizontal: 8,
-    marginBottom: 8,
-    paddingHorizontal: 15,
-    paddingTop: 3,
-    paddingBottom: 0,
     fontSize: 14,
     color: '#fff',
+    marginLeft: 5,
+    paddingTop: 5
   },
   imagePlaceholder: {
     flex: 1,
@@ -130,7 +143,7 @@ const styles = StyleSheet.create({
   placeholderText: {
     color: '#fff',
     fontSize: 14,
-  },
+  }
 });
 
 export default memo(RecipeCard);
