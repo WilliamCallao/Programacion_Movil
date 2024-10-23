@@ -1,8 +1,7 @@
 import { collection, addDoc, updateDoc, doc, arrayUnion } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { db } from './firebase'; // Asegúrate de tener la configuración correcta de Firebase
+import { db } from './firebase';
 import { generarPlanSemanal } from './planAlimenticioService';
-
 
 // Calcular la edad del usuario
 export const calcularEdad = (fechaNacimiento) => {
@@ -84,45 +83,25 @@ const guardarIdEnAsyncStorage = async (usuarioId) => {
   }
 };
 
-// // Crear un nuevo usuario en Firebase
-// export const crearUsuario = async (datosUsuario) => {
-//   try {
-//     const usuarioRef = await addDoc(collection(db, 'usuarios'), datosUsuario);
-//     console.log('Usuario creado:', JSON.stringify(datosUsuario, null, 2));
-//     await guardarIdEnAsyncStorage(usuarioRef.id);
-//   } catch (error) {
-//     console.error('Error al crear el usuario:', error);
-//   }
-// };
-
-// Crear un nuevo usuario en Firebase y generar su plan alimenticio
 // Crear un nuevo usuario en Firebase y generar su plan alimenticio
 export const crearUsuario = async (datosUsuario) => {
   try {
-    // Crear el documento de usuario
     const usuarioRef = await addDoc(collection(db, 'usuarios'), datosUsuario);
     console.log('Usuario creado en Firebase con ID:', usuarioRef.id);
 
-    // Guardar el ID del usuario en AsyncStorage
     await guardarIdEnAsyncStorage(usuarioRef.id);
 
-    // Generar el plan alimenticio semanal
     const planSemanal = await generarPlanSemanal(datosUsuario.objetivos.meta_calorias);
-    // console.log('Plan semanal generado:', planSemanal);
 
-    // Preparar el plan para guardar en Firebase
     const fechaCreacion = new Date();
     const planesAlimentacion = planSemanal.map((plan, index) => ({
-      id_plan: `plan${index + 1}_${fechaCreacion.getTime()}`, // Generar un ID único para el plan
+      id_plan: `plan${index + 1}_${fechaCreacion.getTime()}`,
       fecha_creacion: fechaCreacion,
-      estado: 'activo', // Puedes ajustar el estado según corresponda
+      estado: 'activo',
       dia: index + 1,
       comidas: plan,
     }));
 
-    // console.log('Planes alimenticios preparados para Firebase:', planesAlimentacion);
-
-    // Actualizar el documento del usuario con los planes alimenticios
     await updateDoc(doc(db, 'usuarios', usuarioRef.id), {
       planes_alimentacion: arrayUnion(...planesAlimentacion),
     });
