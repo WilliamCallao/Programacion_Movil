@@ -1,4 +1,6 @@
-import { collection, addDoc, updateDoc, doc, arrayUnion } from 'firebase/firestore';
+// src/services/usuarioService.js
+
+import { collection, addDoc, updateDoc, doc, arrayUnion, getDoc } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { db } from './firebase';
 import { generarPlanSemanal } from './planAlimenticioService';
@@ -107,6 +109,13 @@ export const crearUsuario = async (datosUsuario) => {
     });
 
     console.log('Plan alimenticio generado y guardado en Firebase.');
+
+    const usuarioDoc = await getDoc(doc(db, 'usuarios', usuarioRef.id));
+    if (usuarioDoc.exists()) {
+      console.log('Datos completos del usuario:', JSON.stringify(usuarioDoc.data(), null, 2));
+    } else {
+      console.error('No se encontró el documento del usuario después de actualizar.');
+    }
   } catch (error) {
     console.error('Error al crear el usuario y generar el plan:', error);
   }
