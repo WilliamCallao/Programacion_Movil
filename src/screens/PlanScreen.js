@@ -1,15 +1,25 @@
+// src/screens/MainScreen.js
+
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Button, Alert } from 'react-native';
-import { doc, setDoc, collection, addDoc } from 'firebase/firestore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { db } from '../services/firebase';
+import { 
+  calcularEdad, 
+  calcularPesoObjetivo, 
+  obtenerDistribucionMacronutrientes, 
+  calcularCalorias, 
+  calcularMacronutrientes, 
+  crearUsuario 
+} from '../services/usuarioService';
+
+import { useNavigation } from '@react-navigation/native';
+
 // Datos iniciales del usuario
 const usuario = {
   informacionPersonal: {
-    nombre: 'Juan Pérez',
-    correo: 'juan.perez@example.com',
-    genero: 'masculino',
-    fechaNacimiento: '1990-05-15',
+    nombre: 'Luz',
+    correo: 'luz@example.com',
+    genero: 'femenino',
+    fechaNacimiento: '2002-05-15',
   },
   medidasFisicas: {
     pesoKg: 75,
@@ -21,132 +31,72 @@ const usuario = {
   },
 };
 
-// Calcular la edad del usuario
-const calcularEdad = (fechaNacimiento) => {
-  const hoy = new Date();
-  const nacimiento = new Date(fechaNacimiento);
-  let edad = hoy.getFullYear() - nacimiento.getFullYear();
-  const mes = hoy.getMonth() - nacimiento.getMonth();
-  if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-    edad--;
-  }
-  return edad;
-};
-
-// Calcular peso objetivo basado en el tipo de objetivo
-const calcularPesoObjetivo = (pesoActual, tipoObjetivo) => {
-  switch (tipoObjetivo) {
-    case 'perder_peso':
-      return pesoActual * 0.9;
-    case 'ganar_peso':
-      return pesoActual * 1.1;
-    default:
-      return pesoActual;
-  }
-};
-
-// Definir distribución de macronutrientes según el objetivo
-const obtenerDistribucionMacronutrientes = (tipoObjetivo) => {
-  switch (tipoObjetivo) {
-    case 'perder_peso':
-      return { carbohidratos: 40, proteinas: 35, grasas: 25 };
-    case 'ganar_peso':
-      return { carbohidratos: 50, proteinas: 30, grasas: 20 };
-    default:
-      return { carbohidratos: 50, proteinas: 20, grasas: 30 };
-  }
-};
-
-// Calcular calorías con la fórmula Harris-Benedict
-const calcularCalorias = (peso, altura, edad, genero, nivelActividad) => {
-  let tmb;
-  if (genero === 'masculino') {
-    tmb = 88.362 + (13.397 * peso) + (4.799 * altura) - (5.677 * edad);
-  } else {
-    tmb = 447.593 + (9.247 * peso) + (3.098 * altura) - (4.330 * edad);
-  }
-
-  const factorActividad = {
-    sedentario: 1.2,
-    ligeramente_activo: 1.375,
-    moderadamente_activo: 1.55,
-    muy_activo: 1.725,
-    extra_activo: 1.9,
-  };
-
-  return Math.round(tmb * factorActividad[nivelActividad]);
-};
-
-// Calcular distribución de macronutrientes
-const calcularMacronutrientes = (caloriasTotales, distribucion) => {
-  const { carbohidratos, proteinas, grasas } = distribucion;
-  const gramosCarbohidratos = (caloriasTotales * (carbohidratos / 100)) / 4;
-  const gramosProteinas = (caloriasTotales * (proteinas / 100)) / 4;
-  const gramosGrasas = (caloriasTotales * (grasas / 100)) / 9;
-
-  return {
-    carbohidratos: gramosCarbohidratos.toFixed(2),
-    proteinas: gramosProteinas.toFixed(2),
-    grasas: gramosGrasas.toFixed(2),
-  };
-};
-
-// Guardar ID en AsyncStorage
-const guardarIdEnAsyncStorage = async (usuarioId) => {
-  try {
-    await AsyncStorage.setItem('usuarioId', usuarioId);
-    console.log(`ID de usuario guardado: ${usuarioId}`);
-  } catch (error) {
-    console.error('Error al guardar el ID en AsyncStorage:', error);
-  }
-};
-
-// Crear un nuevo usuario en Firebase
-const crearUsuario = async (datosUsuario) => {
-  try {
-    const usuarioRef = await addDoc(collection(db, 'usuarios'), datosUsuario);
-    console.log('Usuario creado:', JSON.stringify(datosUsuario, null, 2));
-    await guardarIdEnAsyncStorage(usuarioRef.id); // Guardar el ID en AsyncStorage
-  } catch (error) {
-    console.error('Error al crear el usuario:', error);
-  }
-};
-
 export default function MainScreen() {
   const [calorias, setCalorias] = useState(null);
   const [macronutrientes, setMacronutrientes] = useState(null);
+  const [mensaje, setMensaje] = useState('');
+  const navigation = useNavigation();
 
-  const handleCalcular = () => {
-    const edad = calcularEdad(usuario.informacionPersonal.fechaNacimiento);
-    const pesoObjetivo = calcularPesoObjetivo(usuario.medidasFisicas.pesoKg, usuario.objetivoPersonal.tipoObjetivo);
+  const handleCalcular = async () => {
+    try {
+      const edad = calcularEdad(usuario.informacionPersonal.fechaNacimiento);
+      const pesoObjetivo = calcularPesoObjetivo(usuario.medidasFisicas.pesoKg, usuario.objetivoPersonal.tipoObjetivo);
+      const distribucion = obtenerDistribucionMacronutrientes(usuario.objetivoPersonal.tipoObjetivo);
 
-    const distribucion = obtenerDistribucionMacronutrientes(usuario.objetivoPersonal.tipoObjetivo);
+      const caloriasCalculadas = calcularCalorias(
+        usuario.medidasFisicas.pesoKg,
+        usuario.medidasFisicas.alturaCm,
+        edad,
+        usuario.informacionPersonal.genero,
+        usuario.medidasFisicas.nivelActividad
+      );
 
-    const caloriasCalculadas = calcularCalorias(
-      usuario.medidasFisicas.pesoKg,
-      usuario.medidasFisicas.alturaCm,
-      edad,
-      usuario.informacionPersonal.genero,
-      usuario.medidasFisicas.nivelActividad
-    );
+      setCalorias(caloriasCalculadas);
 
-    setCalorias(caloriasCalculadas);
+      const macros = calcularMacronutrientes(caloriasCalculadas, distribucion);
+      setMacronutrientes(macros);
 
-    const macros = calcularMacronutrientes(caloriasCalculadas, distribucion);
-    setMacronutrientes(macros);
+      const datosUsuarioFinal = {
+        informacion_personal: {
+          nombre: usuario.informacionPersonal.nombre,
+          correo: usuario.informacionPersonal.correo,
+          contraseña: 'password',
+          foto_perfil_url: '',
+          fecha_nacimiento: new Date(usuario.informacionPersonal.fechaNacimiento),
+          genero: usuario.informacionPersonal.genero,
+        },
+        medidas_fisicas: {
+          peso_kg: usuario.medidasFisicas.pesoKg,
+          altura_cm: usuario.medidasFisicas.alturaCm,
+          nivel_actividad: usuario.medidasFisicas.nivelActividad,
+        },
+        preferencias: {
+          preferencias_dietarias: [], 
+          condiciones_salud: [],
+        },
+        objetivos: {
+          tipo_objetivo: usuario.objetivoPersonal.tipoObjetivo,
+          peso_objetivo_kg: pesoObjetivo,
+          meta_calorias: caloriasCalculadas,
+          distribucion_macronutrientes: distribucion,
+          macronutrientes: macros,
+        },
+        actividad: {
+          recetas_favoritas: [],
+          seguimiento_progreso: {
+            historial_peso: [],
+          },
+        },
+        planes_alimentacion: [],
+      };
 
-    const datosUsuarioFinal = {
-      ...usuario,
-      objetivoPersonal: {
-        ...usuario.objetivoPersonal,
-        pesoObjetivoKg: pesoObjetivo,
-        metaCalorias: caloriasCalculadas,
-        distribucionMacronutrientes: distribucion,
-        macronutrientes: macros,
-      },
-    };
-
-    crearUsuario(datosUsuarioFinal);
+      await crearUsuario(datosUsuarioFinal);
+      setMensaje('Usuario y plan alimenticio creados exitosamente.');
+    } catch (error) {
+      console.error(error);
+      setMensaje('Error al crear el usuario y el plan alimenticio.');
+      Alert.alert('Error', 'Hubo un problema al crear tu usuario y plan alimenticio.');
+    }
   };
 
   return (
@@ -160,6 +110,11 @@ export default function MainScreen() {
           <Text>Grasas: {macronutrientes.grasas} g</Text>
         </View>
       )}
+      {mensaje ? (
+        <View style={styles.messageContainer}>
+          <Text style={styles.messageText}>{mensaje}</Text>
+        </View>
+      ) : null}
     </ScrollView>
   );
 }
@@ -181,5 +136,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
     color: '#000',
+  },
+  messageContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  messageText: {
+    fontSize: 16,
+    color: 'green',
   },
 });
