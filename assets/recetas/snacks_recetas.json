@@ -5,7 +5,17 @@
     "calorias": 5,
     "carbohidratos": 2,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "NMVC5c0e3RgaXo8p6qLg",
@@ -13,7 +23,17 @@
     "calorias": 5,
     "carbohidratos": 1,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "aEvNkjyplVSIPYKQGIeh",
@@ -21,7 +41,17 @@
     "calorias": 5,
     "carbohidratos": 1,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "eZwvyunb89iOTIcY4RH1",
@@ -29,7 +59,17 @@
     "calorias": 5,
     "carbohidratos": 2,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "D5ezwv1RpCMui31jhLLV",
@@ -37,7 +77,17 @@
     "calorias": 10,
     "carbohidratos": 2,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "dwstYDM5xFx8qy7tejOO",
@@ -45,7 +95,17 @@
     "calorias": 10,
     "carbohidratos": 2,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "03duuZrboNXwfRC0MBD6",
@@ -53,7 +113,17 @@
     "calorias": 15,
     "carbohidratos": 1,
     "proteinas": 2,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "4owcXBQ1af4u50Wyz3o6",
@@ -61,7 +131,17 @@
     "calorias": 15,
     "carbohidratos": 1,
     "proteinas": 0,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "RNlYga9fV9KxgEjFKoux",
@@ -69,7 +149,17 @@
     "calorias": 15,
     "carbohidratos": 1,
     "proteinas": 2,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "VUchTzv4yzzbNtNkHR7D",
@@ -77,7 +167,17 @@
     "calorias": 15,
     "carbohidratos": 3,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "pJMfeqSsQSBng2xiJ7Co",
@@ -85,7 +185,17 @@
     "calorias": 15,
     "carbohidratos": 4,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "6u1PV1gwGG283i71JhVo",
@@ -93,7 +203,17 @@
     "calorias": 20,
     "carbohidratos": 4,
     "proteinas": 1,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "6v5njhixkf8Ecfi4R99w",
@@ -101,7 +221,17 @@
     "calorias": 20,
     "carbohidratos": 3,
     "proteinas": 1,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "yBEQK32vDpNCQ3XqjFtT",
@@ -109,7 +239,17 @@
     "calorias": 20,
     "carbohidratos": 5,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "6sXjVjYRPelAVVFWGMze",
@@ -117,7 +257,17 @@
     "calorias": 25,
     "carbohidratos": 2,
     "proteinas": 1,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "LqDD6KTrLwB5DGec1ss8",
@@ -125,7 +275,17 @@
     "calorias": 25,
     "carbohidratos": 1,
     "proteinas": 1,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "fj0MvhIgNmkxm5mybAzo",
@@ -133,7 +293,17 @@
     "calorias": 25,
     "carbohidratos": 6,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "uI6nWIxaOXqwRGN99QUb",
@@ -141,7 +311,17 @@
     "calorias": 25,
     "carbohidratos": 7,
     "proteinas": 1,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "vMv2vPWsyRL5T2rXOsQh",
@@ -149,7 +329,17 @@
     "calorias": 25,
     "carbohidratos": 4,
     "proteinas": 1,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "6DdFsZXKJdXX27h2WGY2",
@@ -157,7 +347,17 @@
     "calorias": 30,
     "carbohidratos": 5,
     "proteinas": 1,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "TMG7iIh3KxFPYUp7WcvM",
@@ -165,7 +365,17 @@
     "calorias": 30,
     "carbohidratos": 5,
     "proteinas": 0,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "YSwvJDW556SZNZhnZPb1",
@@ -173,7 +383,17 @@
     "calorias": 35,
     "carbohidratos": 7,
     "proteinas": 0,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "nhECSHHJ8LNOAzmL5Eiw",
@@ -181,7 +401,17 @@
     "calorias": 35,
     "carbohidratos": 3,
     "proteinas": 1,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "xXVOxr0nG6aLNLY7cCbR",
@@ -189,7 +419,17 @@
     "calorias": 35,
     "carbohidratos": 7,
     "proteinas": 2,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "B4p9zAZJXLkrSia9StM4",
@@ -197,7 +437,17 @@
     "calorias": 40,
     "carbohidratos": 2,
     "proteinas": 1,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "K7oyBc9xBZdvo08R0uBj",
@@ -205,7 +455,17 @@
     "calorias": 40,
     "carbohidratos": 10,
     "proteinas": 1,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "SivyHSj0Vtmd3xuDKAwS",
@@ -213,7 +473,17 @@
     "calorias": 40,
     "carbohidratos": 3,
     "proteinas": 2,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "TcN5AQqRSVS44lsmXnrw",
@@ -221,7 +491,17 @@
     "calorias": 40,
     "carbohidratos": 5,
     "proteinas": 2,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "g34kIBlWU71hviFTTULn",
@@ -229,7 +509,17 @@
     "calorias": 40,
     "carbohidratos": 8,
     "proteinas": 1,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "gGchoEYFslKVm7NcBAhj",
@@ -237,7 +527,17 @@
     "calorias": 40,
     "carbohidratos": 4,
     "proteinas": 2,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "hzeH92PTHI5yTWhELqp1",
@@ -245,7 +545,17 @@
     "calorias": 40,
     "carbohidratos": 4,
     "proteinas": 1,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "iCofkPTA8CmBz9uE1zeM",
@@ -253,7 +563,17 @@
     "calorias": 40,
     "carbohidratos": 4,
     "proteinas": 1,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "mA9iybtYIFx9HxLTCOMZ",
@@ -261,7 +581,17 @@
     "calorias": 40,
     "carbohidratos": 6,
     "proteinas": 4,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "vuOtyxF9kgNYIAXIDT6F",
@@ -269,7 +599,17 @@
     "calorias": 40,
     "carbohidratos": 6,
     "proteinas": 4,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "0Lj9LaaIfguaJ2u62OUD",
@@ -277,7 +617,17 @@
     "calorias": 45,
     "carbohidratos": 2,
     "proteinas": 3,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "3lMqbO8e8euKO7kEJw6D",
@@ -285,7 +635,17 @@
     "calorias": 45,
     "carbohidratos": 4,
     "proteinas": 3,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "B44utUPbfzBUDS5NpDQn",
@@ -293,7 +653,17 @@
     "calorias": 45,
     "carbohidratos": 4,
     "proteinas": 3,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "EJy80yKx0Ktbkh4lbk8f",
@@ -301,7 +671,17 @@
     "calorias": 45,
     "carbohidratos": 4,
     "proteinas": 1,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "bgFxfAiMnrp8WU7W7xJY",
@@ -309,7 +689,17 @@
     "calorias": 45,
     "carbohidratos": 1,
     "proteinas": 3,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "0RikxtxtdQowJ3KmzwH2",
@@ -317,7 +707,17 @@
     "calorias": 50,
     "carbohidratos": 12,
     "proteinas": 2,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "0VOG7YtI228EibdHhP7X",
@@ -325,7 +725,17 @@
     "calorias": 50,
     "carbohidratos": 3,
     "proteinas": 6,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "8tGToYaCOUuxSKqfkoHZ",
@@ -333,7 +743,17 @@
     "calorias": 50,
     "carbohidratos": 4,
     "proteinas": 4,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "BFJbK4JUMTgq2gaq6gM1",
@@ -341,7 +761,17 @@
     "calorias": 50,
     "carbohidratos": 6,
     "proteinas": 2,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "CWntB2AnvFugPX68PHqX",
@@ -349,7 +779,17 @@
     "calorias": 50,
     "carbohidratos": 13,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "Jr5KXzLJtRN5okEJ9GYR",
@@ -357,7 +797,17 @@
     "calorias": 50,
     "carbohidratos": 3,
     "proteinas": 3,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "LEyNCOT9OVhteK1ochGb",
@@ -365,7 +815,17 @@
     "calorias": 50,
     "carbohidratos": 3,
     "proteinas": 6,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "OQZmaEEvjGBcRTgkIySI",
@@ -373,7 +833,17 @@
     "calorias": 50,
     "carbohidratos": 6,
     "proteinas": 2,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "aJG68NZNYAFRNc6BVCOg",
@@ -381,7 +851,17 @@
     "calorias": 50,
     "carbohidratos": 0,
     "proteinas": 11,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "b3yKCwiNqJbTw9vf5ahY",
@@ -389,7 +869,17 @@
     "calorias": 50,
     "carbohidratos": 4,
     "proteinas": 3,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "iW1Lr4rSXZI2WYDPu01e",
@@ -397,7 +887,17 @@
     "calorias": 50,
     "carbohidratos": 3,
     "proteinas": 4,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "D6I58pCOqji0WIIOAiYL",
@@ -405,7 +905,17 @@
     "calorias": 55,
     "carbohidratos": 1,
     "proteinas": 6,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "LHQK0KqVpfdvobNIkF4z",
@@ -413,7 +923,17 @@
     "calorias": 55,
     "carbohidratos": 8,
     "proteinas": 1,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "qB3kILVj6lGya6v3ot8m",
@@ -421,7 +941,17 @@
     "calorias": 55,
     "carbohidratos": 5,
     "proteinas": 2,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "x19JMcBFpsadzkTwHmSc",
@@ -429,7 +959,17 @@
     "calorias": 55,
     "carbohidratos": 3,
     "proteinas": 2,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "nQKJ1TPFJserQG9QnHp7",
@@ -437,7 +977,17 @@
     "calorias": 56,
     "carbohidratos": 12,
     "proteinas": 2,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "3708WncuMh5TOEDjn3Jm",
@@ -445,7 +995,17 @@
     "calorias": 60,
     "carbohidratos": 3,
     "proteinas": 0,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "4Fnj6Qopy6ZWikMcOa22",
@@ -453,7 +1013,17 @@
     "calorias": 60,
     "carbohidratos": 7,
     "proteinas": 2,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "BHKkebGhNWTy9UBKcv6I",
@@ -461,7 +1031,17 @@
     "calorias": 60,
     "carbohidratos": 13,
     "proteinas": 1,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "Dymw7Ctce8bASYDAuseG",
@@ -469,7 +1049,17 @@
     "calorias": 60,
     "carbohidratos": 9,
     "proteinas": 3,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "FHPsbD2bxur2u8iM0iqz",
@@ -477,7 +1067,17 @@
     "calorias": 60,
     "carbohidratos": 12,
     "proteinas": 1,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "nx4k15mSjIUZxky1qGhz",
@@ -485,7 +1085,17 @@
     "calorias": 60,
     "carbohidratos": 15,
     "proteinas": 0,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "pjMiennANubb1fJRvmvW",
@@ -493,7 +1103,17 @@
     "calorias": 60,
     "carbohidratos": 10,
     "proteinas": 3,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "xpcL6P8PYz0B2F1FoFs1",
@@ -501,7 +1121,17 @@
     "calorias": 60,
     "carbohidratos": 10,
     "proteinas": 1,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "tEaCmBj0BQDpwr9AAypb",
@@ -509,7 +1139,17 @@
     "calorias": 64,
     "carbohidratos": 15,
     "proteinas": 1,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "3LJasE8kAoexdV7tD0v4",
@@ -517,7 +1157,17 @@
     "calorias": 65,
     "carbohidratos": 2,
     "proteinas": 7,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "5Kj7sbnOjsNeoBx5qmtP",
@@ -525,7 +1175,17 @@
     "calorias": 65,
     "carbohidratos": 5,
     "proteinas": 4,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "C6Dvc1jpNwQXkZAhMAQC",
@@ -533,7 +1193,17 @@
     "calorias": 65,
     "carbohidratos": 9,
     "proteinas": 4,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "EB4DiSsqFavuJdWPjefD",
@@ -541,7 +1211,17 @@
     "calorias": 65,
     "carbohidratos": 5,
     "proteinas": 5,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "Yl3qvRvPNwmvcLhkNfVF",
@@ -549,7 +1229,17 @@
     "calorias": 65,
     "carbohidratos": 5,
     "proteinas": 10,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "aWzgGmqHLoiXiKN4TYQB",
@@ -557,7 +1247,17 @@
     "calorias": 65,
     "carbohidratos": 7,
     "proteinas": 2,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "29Lyrzde34LfX03IQj3n",
@@ -565,7 +1265,17 @@
     "calorias": 70,
     "carbohidratos": 7,
     "proteinas": 3,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "2bJJUaVIzXVeNTOk0NO9",
@@ -573,7 +1283,17 @@
     "calorias": 70,
     "carbohidratos": 9,
     "proteinas": 4,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "7K1u2ERzvw78H4XnDxDa",
@@ -581,7 +1301,17 @@
     "calorias": 70,
     "carbohidratos": 6,
     "proteinas": 8,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "8Mo8CXC5A73qW39G2HJJ",
@@ -589,7 +1319,17 @@
     "calorias": 70,
     "carbohidratos": 13,
     "proteinas": 3,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "9C1BW6dH4BGHp0wnRaCq",
@@ -597,7 +1337,17 @@
     "calorias": 70,
     "carbohidratos": 15,
     "proteinas": 3,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "9Q7qdTJAdd3zn3w6aPEM",
@@ -605,7 +1355,17 @@
     "calorias": 70,
     "carbohidratos": 10,
     "proteinas": 1,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "9mUC4qbz3BcKGUQGWu0a",
@@ -613,7 +1373,17 @@
     "calorias": 70,
     "carbohidratos": 6,
     "proteinas": 2,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "BRGBnUm0vAQ5oKnJ3ZUX",
@@ -621,7 +1391,17 @@
     "calorias": 70,
     "carbohidratos": 18,
     "proteinas": 8,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "QBHaFmH5hKgMK4ukZdEi",
@@ -629,7 +1409,17 @@
     "calorias": 70,
     "carbohidratos": 8,
     "proteinas": 3,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "T9R7TQmOszrsThy4d7sh",
@@ -637,7 +1427,17 @@
     "calorias": 70,
     "carbohidratos": 4,
     "proteinas": 3,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "V5WtQR0asj7wqGiYSakL",
@@ -645,7 +1445,17 @@
     "calorias": 70,
     "carbohidratos": 13,
     "proteinas": 3,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "a0Q4h29MlMklDgajHVvL",
@@ -653,7 +1463,17 @@
     "calorias": 70,
     "carbohidratos": 12,
     "proteinas": 2,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "bI67Vmsiw0sUZyEM5TgE",
@@ -661,7 +1481,17 @@
     "calorias": 70,
     "carbohidratos": 14,
     "proteinas": 1,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "dQLnQJdDgNA7FZJ2R38Q",
@@ -669,7 +1499,17 @@
     "calorias": 70,
     "carbohidratos": 6,
     "proteinas": 11,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "n4bJz1g9BcjHR6Z8rFqz",
@@ -677,7 +1517,17 @@
     "calorias": 70,
     "carbohidratos": 9,
     "proteinas": 3,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "pZtc9X0zf0Wdqx1DsDoz",
@@ -685,7 +1535,17 @@
     "calorias": 70,
     "carbohidratos": 4,
     "proteinas": 5,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "5XomtNn2qMARi2L7gjtw",
@@ -693,7 +1553,17 @@
     "calorias": 73,
     "carbohidratos": 10,
     "proteinas": 3,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "DDjMBe6JshZGMHbeUCPS",
@@ -701,7 +1571,17 @@
     "calorias": 75,
     "carbohidratos": 3,
     "proteinas": 7,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "H5oOPXivzRpIsIwENRAq",
@@ -709,7 +1589,17 @@
     "calorias": 75,
     "carbohidratos": 9,
     "proteinas": 3,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "LwBHACWyfbAedaYlUhYr",
@@ -717,7 +1607,17 @@
     "calorias": 75,
     "carbohidratos": 14,
     "proteinas": 4,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "bg0ANtwVv6swwVspq5QP",
@@ -725,7 +1625,17 @@
     "calorias": 75,
     "carbohidratos": 18,
     "proteinas": 1,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "fKpI2xEgoXyV9t50arRS",
@@ -733,7 +1643,17 @@
     "calorias": 75,
     "carbohidratos": 15,
     "proteinas": 2,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "hiLjsh0OTTsnFUTVEOXJ",
@@ -741,7 +1661,17 @@
     "calorias": 75,
     "carbohidratos": 8,
     "proteinas": 8,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "qfgWHAdCjGm8qPYo1UOj",
@@ -749,7 +1679,17 @@
     "calorias": 75,
     "carbohidratos": 13,
     "proteinas": 1,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "7gRdvrPWzKv4lJyXafBN",
@@ -757,7 +1697,17 @@
     "calorias": 78,
     "carbohidratos": 0,
     "proteinas": 6,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "6zuu2MteAyYZ3HSa2DNg",
@@ -765,7 +1715,17 @@
     "calorias": 80,
     "carbohidratos": 4,
     "proteinas": 4,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ABjawqh9EP902TPRbj8s",
@@ -773,7 +1733,17 @@
     "calorias": 80,
     "carbohidratos": 16,
     "proteinas": 4,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "MhhCvoZxRWgi2PlGV202",
@@ -781,7 +1751,17 @@
     "calorias": 80,
     "carbohidratos": 18,
     "proteinas": 2,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "PRhljk2z87zfleEnVTjP",
@@ -789,7 +1769,17 @@
     "calorias": 80,
     "carbohidratos": 3,
     "proteinas": 5,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "QQgHl7YQ8DQHHxKFgwgR",
@@ -797,7 +1787,17 @@
     "calorias": 80,
     "carbohidratos": 20,
     "proteinas": 2,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "bbbEla9fFOGuUpk1vDyn",
@@ -805,7 +1805,17 @@
     "calorias": 80,
     "carbohidratos": 9,
     "proteinas": 2,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "cE5m3gYUmJf244YaX069",
@@ -813,7 +1823,17 @@
     "calorias": 80,
     "carbohidratos": 19,
     "proteinas": 1,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "fdcBUObX7LMgIpIjdU1v",
@@ -821,7 +1841,17 @@
     "calorias": 80,
     "carbohidratos": 3,
     "proteinas": 4,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "h0l8Odzi3LnitPehJ6zp",
@@ -829,7 +1859,17 @@
     "calorias": 80,
     "carbohidratos": 6,
     "proteinas": 2,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "ip6rHirRxLejyDkqRWDh",
@@ -837,7 +1877,17 @@
     "calorias": 80,
     "carbohidratos": 10,
     "proteinas": 2,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ljPaUJ1jb8toDZu7RYKX",
@@ -845,7 +1895,17 @@
     "calorias": 80,
     "carbohidratos": 12,
     "proteinas": 5,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "mM9giDAajWzNRF9uha6x",
@@ -853,7 +1913,17 @@
     "calorias": 80,
     "carbohidratos": 9,
     "proteinas": 3,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "sjpW5RGOH6OsWqPY2fNS",
@@ -861,7 +1931,17 @@
     "calorias": 80,
     "carbohidratos": 3,
     "proteinas": 4,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "vvsqDJGjVoM9mneRqB4v",
@@ -869,7 +1949,17 @@
     "calorias": 80,
     "carbohidratos": 3,
     "proteinas": 3,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "AwcJjMXgW28oN4zWNHKg",
@@ -877,7 +1967,17 @@
     "calorias": 85,
     "carbohidratos": 19,
     "proteinas": 4,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "HBPMufcZvj5LPuJNpLjx",
@@ -885,7 +1985,17 @@
     "calorias": 85,
     "carbohidratos": 2,
     "proteinas": 6,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "gmHMAwtXkl0AZd91MIiC",
@@ -893,7 +2003,17 @@
     "calorias": 85,
     "carbohidratos": 13,
     "proteinas": 5,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "kXPK5My35GpJt2lVtEuq",
@@ -901,7 +2021,17 @@
     "calorias": 85,
     "carbohidratos": 9,
     "proteinas": 3,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "0v2MNBW0Nm7p3WTBBfnV",
@@ -909,7 +2039,17 @@
     "calorias": 90,
     "carbohidratos": 10,
     "proteinas": 5,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "0yUuBJcQ6eRdiUoY4jHo",
@@ -917,7 +2057,17 @@
     "calorias": 90,
     "carbohidratos": 13,
     "proteinas": 7,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "CmtkjxbRlfleiglRDzsk",
@@ -925,7 +2075,17 @@
     "calorias": 90,
     "carbohidratos": 6,
     "proteinas": 3,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "HKNGxXTYtcMvipx6dNhb",
@@ -933,7 +2093,17 @@
     "calorias": 90,
     "carbohidratos": 15,
     "proteinas": 1,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "QbVt0kGYzSFZRuAE65Vu",
@@ -941,7 +2111,17 @@
     "calorias": 90,
     "carbohidratos": 3,
     "proteinas": 7,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "VemLJfO7uuTp1pN1PDEX",
@@ -949,7 +2129,17 @@
     "calorias": 90,
     "carbohidratos": 18,
     "proteinas": 0,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "ZbBkOsyoMeFaAv9imNck",
@@ -957,7 +2147,17 @@
     "calorias": 90,
     "carbohidratos": 7,
     "proteinas": 1,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "dcSCLKyJpQST0R6XpWkY",
@@ -965,7 +2165,17 @@
     "calorias": 90,
     "carbohidratos": 20,
     "proteinas": 0,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "fmZECPKFRlbDyqS8y4vV",
@@ -973,7 +2183,17 @@
     "calorias": 90,
     "carbohidratos": 10,
     "proteinas": 4,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "hBuhHxD6XEyVEzwvAtoX",
@@ -981,7 +2201,17 @@
     "calorias": 90,
     "carbohidratos": 11,
     "proteinas": 5,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "j2f2MFQesbP1kZRI7gIx",
@@ -989,7 +2219,17 @@
     "calorias": 90,
     "carbohidratos": 19,
     "proteinas": 2,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "jSUyQw23rQjAMl1eO7oY",
@@ -997,7 +2237,17 @@
     "calorias": 90,
     "carbohidratos": 11,
     "proteinas": 3,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "lAg2iFIlKX2McXyyua4C",
@@ -1005,7 +2255,17 @@
     "calorias": 90,
     "carbohidratos": 10,
     "proteinas": 9,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "mBXP38WxdQy2ZOuFmp3M",
@@ -1013,7 +2273,17 @@
     "calorias": 90,
     "carbohidratos": 10,
     "proteinas": 7,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "nKrGcVFzIldQ2j67dRLe",
@@ -1021,7 +2291,17 @@
     "calorias": 90,
     "carbohidratos": 3,
     "proteinas": 7,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "nU6TlizS5EFtjGtgkFmU",
@@ -1029,7 +2309,17 @@
     "calorias": 90,
     "carbohidratos": 19,
     "proteinas": 1,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "E8OzB8UYP4r4m8klPirl",
@@ -1037,7 +2327,17 @@
     "calorias": 95,
     "carbohidratos": 12,
     "proteinas": 3,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "A1OL1wCSGl3rtSXqDz7k",
@@ -1045,7 +2345,17 @@
     "calorias": 97,
     "carbohidratos": 15,
     "proteinas": 5,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "3ldZ51mfnsxBm9DkupVy",
@@ -1053,7 +2363,17 @@
     "calorias": 100,
     "carbohidratos": 14,
     "proteinas": 8,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "7GY7wPcWjx9lIucKUcck",
@@ -1061,7 +2381,17 @@
     "calorias": 100,
     "carbohidratos": 24,
     "proteinas": 2,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "7o6RalNTDUinI0p7NcUS",
@@ -1069,7 +2399,17 @@
     "calorias": 100,
     "carbohidratos": 11,
     "proteinas": 1,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "7vIwnNyIqsNgpdiY6Q47",
@@ -1077,7 +2417,17 @@
     "calorias": 100,
     "carbohidratos": 19,
     "proteinas": 4,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "9s0xkK6vszEiL17Yod1Y",
@@ -1085,7 +2435,17 @@
     "calorias": 100,
     "carbohidratos": 15,
     "proteinas": 1,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "DSpLVmrDKhq3GkxTDoP5",
@@ -1093,7 +2453,17 @@
     "calorias": 100,
     "carbohidratos": 15,
     "proteinas": 5,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "E8HSKyH78C3g9pnAmFop",
@@ -1101,7 +2471,17 @@
     "calorias": 100,
     "carbohidratos": 14,
     "proteinas": 6,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "NoLLyzsAmN7u9wFwLmMn",
@@ -1109,7 +2489,17 @@
     "calorias": 100,
     "carbohidratos": 14,
     "proteinas": 4,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "SDDX3wjEhHED6KReSjze",
@@ -1117,7 +2507,17 @@
     "calorias": 100,
     "carbohidratos": 1,
     "proteinas": 14,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "SI0f7YYxh9cePEHX46iT",
@@ -1125,7 +2525,17 @@
     "calorias": 100,
     "carbohidratos": 17,
     "proteinas": 4,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "aPzqbtwcp9CCClWmzWeu",
@@ -1133,7 +2543,17 @@
     "calorias": 100,
     "carbohidratos": 4,
     "proteinas": 4,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ivyODIYuU4VqJnvgz80y",
@@ -1141,7 +2561,17 @@
     "calorias": 100,
     "carbohidratos": 20,
     "proteinas": 5,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "oXgp4xTo6ZB0Kg3AYer8",
@@ -1149,7 +2579,17 @@
     "calorias": 100,
     "carbohidratos": 13,
     "proteinas": 7,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "p7NuLHRhjrGLuQGT1TE8",
@@ -1157,7 +2597,17 @@
     "calorias": 100,
     "carbohidratos": 19,
     "proteinas": 1,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "pwS3fEar7n2RmDDcFGID",
@@ -1165,7 +2615,17 @@
     "calorias": 100,
     "carbohidratos": 14,
     "proteinas": 5,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "so1aWBr1mIJjw4mGU5c2",
@@ -1173,7 +2633,17 @@
     "calorias": 100,
     "carbohidratos": 16,
     "proteinas": 3,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ucTgFiV6o9OYwANIoiJq",
@@ -1181,7 +2651,17 @@
     "calorias": 100,
     "carbohidratos": 3,
     "proteinas": 13,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "v9yej8MxF1vi8ViuYOsB",
@@ -1189,7 +2669,17 @@
     "calorias": 100,
     "carbohidratos": 16,
     "proteinas": 6,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ydzXdYyzRBv0CcBUkZE8",
@@ -1197,7 +2687,17 @@
     "calorias": 100,
     "carbohidratos": 10,
     "proteinas": 5,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ykglNJWIniWdelV0vHmc",
@@ -1205,7 +2705,17 @@
     "calorias": 100,
     "carbohidratos": 16,
     "proteinas": 0,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "1Sv5hStQRy83dD0VD7NN",
@@ -1213,7 +2723,17 @@
     "calorias": 105,
     "carbohidratos": 10,
     "proteinas": 13,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "BunZNb0FwhOJLB7U414L",
@@ -1221,7 +2741,17 @@
     "calorias": 105,
     "carbohidratos": 21,
     "proteinas": 4,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "CEoiBtWsziQFF2Tc5zN3",
@@ -1229,7 +2759,17 @@
     "calorias": 105,
     "carbohidratos": 11,
     "proteinas": 3,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "U34w74aTgQOAVD66nSrh",
@@ -1237,7 +2777,17 @@
     "calorias": 105,
     "carbohidratos": 11,
     "proteinas": 4,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "3KfznsmSLu7FTaiUv9gu",
@@ -1245,7 +2795,17 @@
     "calorias": 110,
     "carbohidratos": 15,
     "proteinas": 3,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "Bovhpk5SrAAhp74DPpOK",
@@ -1253,7 +2813,17 @@
     "calorias": 110,
     "carbohidratos": 12,
     "proteinas": 3,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "Ch6AuLdetfcBXF58KJPE",
@@ -1261,7 +2831,17 @@
     "calorias": 110,
     "carbohidratos": 13,
     "proteinas": 4,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "CtSR1OXFo1VykgBNyycn",
@@ -1269,7 +2849,17 @@
     "calorias": 110,
     "carbohidratos": 26,
     "proteinas": 2,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "DpgqKeJJsTrxSq27GOIz",
@@ -1277,7 +2867,17 @@
     "calorias": 110,
     "carbohidratos": 19,
     "proteinas": 2,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "JcXRHORxbj8WW09LJezr",
@@ -1285,7 +2885,17 @@
     "calorias": 110,
     "carbohidratos": 4,
     "proteinas": 9,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "O3R1UyQtXVdOZs9U0Ypw",
@@ -1293,7 +2903,17 @@
     "calorias": 110,
     "carbohidratos": 16,
     "proteinas": 3,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "Oliul6xh7ZDjBAs0Kmyc",
@@ -1301,7 +2921,17 @@
     "calorias": 110,
     "carbohidratos": 14,
     "proteinas": 4,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "R2ttX8sqkKIxRzXTKrvJ",
@@ -1309,7 +2939,17 @@
     "calorias": 110,
     "carbohidratos": 5,
     "proteinas": 4,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "bZIgWJGzyE3mcqPeAZHX",
@@ -1317,7 +2957,17 @@
     "calorias": 110,
     "carbohidratos": 12,
     "proteinas": 3,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ik1596fG0KqQhAQBAu2o",
@@ -1325,7 +2975,17 @@
     "calorias": 110,
     "carbohidratos": 12,
     "proteinas": 3,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "j7TMTmRGDTKQ0knj49NR",
@@ -1333,7 +2993,17 @@
     "calorias": 110,
     "carbohidratos": 23,
     "proteinas": 4,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "lcFNuVwslFcIUhNtDe7e",
@@ -1341,7 +3011,17 @@
     "calorias": 110,
     "carbohidratos": 5,
     "proteinas": 1,
-    "grasas": 10
+    "grasas": 10,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "m4baSMl6OJy1Aa7socui",
@@ -1349,7 +3029,17 @@
     "calorias": 110,
     "carbohidratos": 19,
     "proteinas": 3,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "s2mWW1RVnsl0nAdPyq7O",
@@ -1357,7 +3047,17 @@
     "calorias": 110,
     "carbohidratos": 17,
     "proteinas": 9,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "5yroRF0rKEIJvX2E2b6J",
@@ -1365,7 +3065,17 @@
     "calorias": 115,
     "carbohidratos": 17,
     "proteinas": 6,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "SJJRT3Hof8YQv88WpphV",
@@ -1373,7 +3083,17 @@
     "calorias": 115,
     "carbohidratos": 20,
     "proteinas": 6,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "Ynvcdh0LLQtZq4eWdW0T",
@@ -1381,7 +3101,17 @@
     "calorias": 115,
     "carbohidratos": 17,
     "proteinas": 11,
-    "grasas": 0
+    "grasas": 0,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "zw62JRWmioczpNvbVS5x",
@@ -1389,7 +3119,17 @@
     "calorias": 115,
     "carbohidratos": 22,
     "proteinas": 2,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "08txtNEQcBRb7tWYdHnW",
@@ -1397,7 +3137,17 @@
     "calorias": 120,
     "carbohidratos": 20,
     "proteinas": 1,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "28e8xikJaYNQwG1TwmCI",
@@ -1405,7 +3155,17 @@
     "calorias": 120,
     "carbohidratos": 9,
     "proteinas": 4,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "6lyYcrvcDNtYM9JEObkI",
@@ -1413,7 +3173,17 @@
     "calorias": 120,
     "carbohidratos": 15,
     "proteinas": 5,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "BV9TKGs2Ye6kQpXz5D59",
@@ -1421,7 +3191,17 @@
     "calorias": 120,
     "carbohidratos": 18,
     "proteinas": 3,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "Hi2iOsPFFQe38eds0AtT",
@@ -1429,7 +3209,17 @@
     "calorias": 120,
     "carbohidratos": 15,
     "proteinas": 4,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "Z1dykkrNKwBtZfPx4362",
@@ -1437,7 +3227,17 @@
     "calorias": 120,
     "carbohidratos": 16,
     "proteinas": 2,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "jquiYIfsIRkQgg7qzljh",
@@ -1445,7 +3245,17 @@
     "calorias": 120,
     "carbohidratos": 22,
     "proteinas": 2,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "lLkqN36Cth1xJI7cYZnA",
@@ -1453,7 +3263,17 @@
     "calorias": 120,
     "carbohidratos": 18,
     "proteinas": 5,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "nyBTDbWy9ghX5vFb9fBS",
@@ -1461,7 +3281,17 @@
     "calorias": 120,
     "carbohidratos": 22,
     "proteinas": 3,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "wGSbJqp7yiIycqOgepcS",
@@ -1469,7 +3299,17 @@
     "calorias": 120,
     "carbohidratos": 26,
     "proteinas": 2,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "wIxKyTljQmPiYMxrjyOk",
@@ -1477,7 +3317,17 @@
     "calorias": 120,
     "carbohidratos": 10,
     "proteinas": 4,
-    "grasas": 11
+    "grasas": 11,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "xkF2RQyI7AYAEnmhYYUP",
@@ -1485,7 +3335,17 @@
     "calorias": 120,
     "carbohidratos": 15,
     "proteinas": 5,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "66IPSWCqlXbTWLiktSZN",
@@ -1493,7 +3353,17 @@
     "calorias": 125,
     "carbohidratos": 17,
     "proteinas": 3,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "IXdmOgxwUZAvLQYx15yz",
@@ -1501,7 +3371,17 @@
     "calorias": 125,
     "carbohidratos": 16,
     "proteinas": 4,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "OXNKtdop0deLKlU0uZD2",
@@ -1509,7 +3389,17 @@
     "calorias": 125,
     "carbohidratos": 19,
     "proteinas": 2,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "qOU0qGyJr8OD9iRxiXva",
@@ -1517,7 +3407,17 @@
     "calorias": 125,
     "carbohidratos": 9,
     "proteinas": 4,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "6N01ymXHGWEywzqKUKqe",
@@ -1525,7 +3425,17 @@
     "calorias": 130,
     "carbohidratos": 4,
     "proteinas": 18,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "6aUW2iuTTorXYSOOZ2vR",
@@ -1533,7 +3443,17 @@
     "calorias": 130,
     "carbohidratos": 1,
     "proteinas": 18,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "7wQo6W84CpfgJOPdUsIG",
@@ -1541,7 +3461,17 @@
     "calorias": 130,
     "carbohidratos": 14,
     "proteinas": 4,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "8J6ZfK3tcZrYmiG6xDFS",
@@ -1549,7 +3479,17 @@
     "calorias": 130,
     "carbohidratos": 22,
     "proteinas": 2,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "ByFOeBhfDjbbHWcUc3jG",
@@ -1557,7 +3497,17 @@
     "calorias": 130,
     "carbohidratos": 18,
     "proteinas": 4,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "DuTSm0vQT7mmBXHLZZZ7",
@@ -1565,7 +3515,17 @@
     "calorias": 130,
     "carbohidratos": 13,
     "proteinas": 5,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "FWG7lI4McL20z7vZSicq",
@@ -1573,7 +3533,17 @@
     "calorias": 130,
     "carbohidratos": 17,
     "proteinas": 9,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "TZvyEjVQPU2suhlD5WAD",
@@ -1581,7 +3551,17 @@
     "calorias": 130,
     "carbohidratos": 7,
     "proteinas": 7,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "dsVqHYRaeFF3UWli4MQM",
@@ -1589,7 +3569,17 @@
     "calorias": 130,
     "carbohidratos": 18,
     "proteinas": 3,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "hsEOWNdxhZm4BFwOdqey",
@@ -1597,7 +3587,17 @@
     "calorias": 130,
     "carbohidratos": 23,
     "proteinas": 4,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "iKaPlVWYLvDKN1KqFGBP",
@@ -1605,7 +3605,17 @@
     "calorias": 130,
     "carbohidratos": 25,
     "proteinas": 1,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "lFrz7I9Vh3M1xIkUnsTB",
@@ -1613,7 +3623,17 @@
     "calorias": 130,
     "carbohidratos": 18,
     "proteinas": 10,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "lc1yqjKU3p7b2vzmxaaI",
@@ -1621,7 +3641,17 @@
     "calorias": 130,
     "carbohidratos": 17,
     "proteinas": 10,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "tR0bBzoxcdrwqJgaG7NP",
@@ -1629,7 +3659,17 @@
     "calorias": 130,
     "carbohidratos": 15,
     "proteinas": 4,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "7OMoLCooqHExi8AdLdJU",
@@ -1637,7 +3677,17 @@
     "calorias": 135,
     "carbohidratos": 8,
     "proteinas": 5,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "Hh8FqNu2Pa8xzEyaAZa3",
@@ -1645,7 +3695,17 @@
     "calorias": 135,
     "carbohidratos": 23,
     "proteinas": 6,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "0loS9vW6KioAsACpjNZp",
@@ -1653,7 +3713,17 @@
     "calorias": 140,
     "carbohidratos": 25,
     "proteinas": 4,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "A0PbDElKyywKjDJB6ryf",
@@ -1661,7 +3731,17 @@
     "calorias": 140,
     "carbohidratos": 11,
     "proteinas": 5,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "FXT9weKEfY4bkcqWxaRa",
@@ -1669,7 +3749,17 @@
     "calorias": 140,
     "carbohidratos": 19,
     "proteinas": 9,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "JIZBTsQB30oGSFhJlTHd",
@@ -1677,7 +3767,17 @@
     "calorias": 140,
     "carbohidratos": 28,
     "proteinas": 5,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "JYx2mfIaRaDlKPRWp66D",
@@ -1685,7 +3785,17 @@
     "calorias": 140,
     "carbohidratos": 24,
     "proteinas": 6,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "LmPLXkdvzPe6EgCVZcl6",
@@ -1693,7 +3803,17 @@
     "calorias": 140,
     "carbohidratos": 22,
     "proteinas": 5,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "OWEh20igTtIvH4Mk9Wx5",
@@ -1701,7 +3821,17 @@
     "calorias": 140,
     "carbohidratos": 13,
     "proteinas": 3,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "SJhEfG6E2xVmzJBZM4Db",
@@ -1709,7 +3839,17 @@
     "calorias": 140,
     "carbohidratos": 20,
     "proteinas": 7,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "TAi52uwbit8zxAdVQYcW",
@@ -1717,7 +3857,17 @@
     "calorias": 140,
     "carbohidratos": 19,
     "proteinas": 6,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "U0t6zvqGLXPr3GNQ8nPt",
@@ -1725,7 +3875,17 @@
     "calorias": 140,
     "carbohidratos": 13,
     "proteinas": 8,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "W4MoyN7TGXMNFqDC6HZK",
@@ -1733,7 +3893,17 @@
     "calorias": 140,
     "carbohidratos": 21,
     "proteinas": 3,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "qKLCRQg4ojCR5RUIwQkV",
@@ -1741,7 +3911,17 @@
     "calorias": 140,
     "carbohidratos": 15,
     "proteinas": 5,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "z4QPLihhHs5zmUwd2UOJ",
@@ -1749,7 +3929,17 @@
     "calorias": 140,
     "carbohidratos": 17,
     "proteinas": 5,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "zopbGqO6iETuq36Bhjxp",
@@ -1757,7 +3947,17 @@
     "calorias": 140,
     "carbohidratos": 20,
     "proteinas": 3,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "xiNm2rs0raV8RuAJG5bi",
@@ -1765,7 +3965,17 @@
     "calorias": 142,
     "carbohidratos": 30,
     "proteinas": 6,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "56CXIM9p9udSdyWfJIwy",
@@ -1773,7 +3983,17 @@
     "calorias": 150,
     "carbohidratos": 29,
     "proteinas": 7,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "5wdNYa93AgO9LALWMeo8",
@@ -1781,7 +4001,17 @@
     "calorias": 150,
     "carbohidratos": 27,
     "proteinas": 6,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "PweGsfKeoJi4Q1XfCUDF",
@@ -1789,7 +4019,17 @@
     "calorias": 150,
     "carbohidratos": 11,
     "proteinas": 5,
-    "grasas": 10
+    "grasas": 10,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "ZJlxYOz8JOb0ZTLHdBPL",
@@ -1797,7 +4037,17 @@
     "calorias": 150,
     "carbohidratos": 14,
     "proteinas": 4,
-    "grasas": 10
+    "grasas": 10,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "iT9UUlIYFKJW2GwPzNTS",
@@ -1805,7 +4055,17 @@
     "calorias": 150,
     "carbohidratos": 21,
     "proteinas": 7,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ipnyP8CFWOpDBjk56xwi",
@@ -1813,7 +4073,17 @@
     "calorias": 150,
     "carbohidratos": 20,
     "proteinas": 2,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "iqUctdKCuwJ2foY9Um1S",
@@ -1821,7 +4091,17 @@
     "calorias": 150,
     "carbohidratos": 17,
     "proteinas": 4,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ivHiR0jciGyY7h3EdSVK",
@@ -1829,7 +4109,17 @@
     "calorias": 150,
     "carbohidratos": 18,
     "proteinas": 10,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "k2Ew6lOhmlb8Ns1RKibI",
@@ -1837,7 +4127,17 @@
     "calorias": 150,
     "carbohidratos": 6,
     "proteinas": 10,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "krzQKC8Xs1OLPcwXFiBJ",
@@ -1845,7 +4145,17 @@
     "calorias": 150,
     "carbohidratos": 22,
     "proteinas": 4,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "l3RGoDlOPbGgABHxA4CN",
@@ -1853,7 +4163,17 @@
     "calorias": 150,
     "carbohidratos": 16,
     "proteinas": 13,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "x082NTnCASKKQrs5Z2Y4",
@@ -1861,7 +4181,17 @@
     "calorias": 150,
     "carbohidratos": 11,
     "proteinas": 3,
-    "grasas": 11
+    "grasas": 11,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "xDhaVuVzrg7EMCqoquWk",
@@ -1869,7 +4199,17 @@
     "calorias": 150,
     "carbohidratos": 15,
     "proteinas": 3,
-    "grasas": 10
+    "grasas": 10,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "zjP2rsu8v2SKYDKdetBC",
@@ -1877,7 +4217,17 @@
     "calorias": 150,
     "carbohidratos": 25,
     "proteinas": 8,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "lGiDte3tpIWAcZRYJ3sX",
@@ -1885,7 +4235,17 @@
     "calorias": 155,
     "carbohidratos": 25,
     "proteinas": 3,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "p0ZG9RV0PnOkZLIE1oM1",
@@ -1893,7 +4253,17 @@
     "calorias": 155,
     "carbohidratos": 19,
     "proteinas": 5,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "plNJktwaM4EZBsjFzsJ8",
@@ -1901,7 +4271,17 @@
     "calorias": 155,
     "carbohidratos": 24,
     "proteinas": 7,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "4G2S9fbfmr93D70P9t9f",
@@ -1909,7 +4289,17 @@
     "calorias": 160,
     "carbohidratos": 21,
     "proteinas": 5,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "I6r9kwFVKpltsRK1Q6jL",
@@ -1917,7 +4307,17 @@
     "calorias": 160,
     "carbohidratos": 11,
     "proteinas": 2,
-    "grasas": 13
+    "grasas": 13,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "IlanZvqc1vLQnCENc3Af",
@@ -1925,7 +4325,17 @@
     "calorias": 160,
     "carbohidratos": 12,
     "proteinas": 5,
-    "grasas": 12
+    "grasas": 12,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "RDLnFmvbrfLgB563h9zD",
@@ -1933,7 +4343,17 @@
     "calorias": 160,
     "carbohidratos": 8,
     "proteinas": 5,
-    "grasas": 13
+    "grasas": 13,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "WJeSTYLWFgevoj4KxeNi",
@@ -1941,7 +4361,17 @@
     "calorias": 160,
     "carbohidratos": 23,
     "proteinas": 6,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "XmwNVRDKmeGdXmvqZ0Ye",
@@ -1949,7 +4379,17 @@
     "calorias": 160,
     "carbohidratos": 22,
     "proteinas": 10,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "XyFUVamR8F8d1NPHkJYi",
@@ -1957,7 +4397,17 @@
     "calorias": 160,
     "carbohidratos": 23,
     "proteinas": 4,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "d2lyCS6Uc1F6XSENBlt5",
@@ -1965,7 +4415,17 @@
     "calorias": 160,
     "carbohidratos": 23,
     "proteinas": 5,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "pVCC48CrBWNjzS86EzFf",
@@ -1973,7 +4433,17 @@
     "calorias": 160,
     "carbohidratos": 23,
     "proteinas": 4,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "tkj5wopKOdRzoM3QxmKI",
@@ -1981,7 +4451,17 @@
     "calorias": 160,
     "carbohidratos": 22,
     "proteinas": 4,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "0ZLZCljMdw7qM9znxlNL",
@@ -1989,7 +4469,17 @@
     "calorias": 170,
     "carbohidratos": 27,
     "proteinas": 4,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "CDyyJAh1UxC3Ol6gJeje",
@@ -1997,7 +4487,17 @@
     "calorias": 170,
     "carbohidratos": 23,
     "proteinas": 8,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "FXwAluLFWyQWc10iIxxI",
@@ -2005,7 +4505,17 @@
     "calorias": 170,
     "carbohidratos": 28,
     "proteinas": 10,
-    "grasas": 2
+    "grasas": 2,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ZQvyUDJXHGAXfaPMTpOC",
@@ -2013,7 +4523,17 @@
     "calorias": 170,
     "carbohidratos": 28,
     "proteinas": 8,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "iQ2mI9s01NXnAGepouXp",
@@ -2021,7 +4541,17 @@
     "calorias": 170,
     "carbohidratos": 21,
     "proteinas": 5,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "maY9gNr5OVOJieq5GByz",
@@ -2029,7 +4559,17 @@
     "calorias": 170,
     "carbohidratos": 23,
     "proteinas": 5,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ohgGulF2iYeMrjgAAAUW",
@@ -2037,7 +4577,17 @@
     "calorias": 170,
     "carbohidratos": 15,
     "proteinas": 20,
-    "grasas": 3
+    "grasas": 3,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "qdYqzAfDBTn3dYzGB9hW",
@@ -2045,7 +4595,17 @@
     "calorias": 170,
     "carbohidratos": 16,
     "proteinas": 6,
-    "grasas": 10
+    "grasas": 10,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "TXjFPxphYZCh6DvwdfjT",
@@ -2053,7 +4613,17 @@
     "calorias": 175,
     "carbohidratos": 9,
     "proteinas": 6,
-    "grasas": 14
+    "grasas": 14,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "3OfK1dNbVALSzIE80qSV",
@@ -2061,7 +4631,17 @@
     "calorias": 180,
     "carbohidratos": 30,
     "proteinas": 3,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "JkloGvxPZ3G5mZEEJ5Jd",
@@ -2069,7 +4649,17 @@
     "calorias": 180,
     "carbohidratos": 5,
     "proteinas": 5,
-    "grasas": 18
+    "grasas": 18,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "KHad38jVxYJUrQVn5Fol",
@@ -2077,7 +4667,17 @@
     "calorias": 180,
     "carbohidratos": 19,
     "proteinas": 11,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "MZoeRo9pFYiuTN9A07ti",
@@ -2085,7 +4685,17 @@
     "calorias": 180,
     "carbohidratos": 9,
     "proteinas": 28,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "UR0FLgwQQPX12GcmMJ1H",
@@ -2093,7 +4703,17 @@
     "calorias": 180,
     "carbohidratos": 33,
     "proteinas": 5,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "ckAsxliBb8tnCL4X7wke",
@@ -2101,7 +4721,17 @@
     "calorias": 180,
     "carbohidratos": 19,
     "proteinas": 24,
-    "grasas": 1
+    "grasas": 1,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "HiXKWZsSWBNbLMLPUMBJ",
@@ -2109,7 +4739,17 @@
     "calorias": 185,
     "carbohidratos": 28,
     "proteinas": 5,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "hPSR2kQS1SghFS9cSQDI",
@@ -2117,7 +4757,17 @@
     "calorias": 185,
     "carbohidratos": 16,
     "proteinas": 18,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "lgOm2YyBbEx0ryzxwHPR",
@@ -2125,7 +4775,17 @@
     "calorias": 185,
     "carbohidratos": 26,
     "proteinas": 8,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "1cpDnzbgFUIrvSUgSpvv",
@@ -2133,7 +4793,17 @@
     "calorias": 190,
     "carbohidratos": 19,
     "proteinas": 11,
-    "grasas": 11
+    "grasas": 11,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "3PdXwbpLZbWu9neB64oj",
@@ -2141,7 +4811,17 @@
     "calorias": 190,
     "carbohidratos": 14,
     "proteinas": 4,
-    "grasas": 14
+    "grasas": 14,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "8mXm35XzTkK6xl0gP0kv",
@@ -2149,7 +4829,17 @@
     "calorias": 190,
     "carbohidratos": 9,
     "proteinas": 7,
-    "grasas": 16
+    "grasas": 16,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "C0ipjXUIzxryGvjO2kkc",
@@ -2157,7 +4847,17 @@
     "calorias": 190,
     "carbohidratos": 19,
     "proteinas": 4,
-    "grasas": 12
+    "grasas": 12,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "K0wUNbExIgRuSOWQ50Rc",
@@ -2165,7 +4865,17 @@
     "calorias": 190,
     "carbohidratos": 26,
     "proteinas": 5,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "LopVt2NzwdmYpwDaYUAB",
@@ -2173,7 +4883,17 @@
     "calorias": 190,
     "carbohidratos": 24,
     "proteinas": 3,
-    "grasas": 11
+    "grasas": 11,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "lfR3AC9fQ73L9p2t0T4K",
@@ -2181,7 +4901,17 @@
     "calorias": 190,
     "carbohidratos": 21,
     "proteinas": 19,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "11ZHT1rkXXetn52X8yIu",
@@ -2189,7 +4919,17 @@
     "calorias": 195,
     "carbohidratos": 16,
     "proteinas": 6,
-    "grasas": 14
+    "grasas": 14,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "8mnSvlwCt9J2S29SzIro",
@@ -2197,7 +4937,17 @@
     "calorias": 200,
     "carbohidratos": 33,
     "proteinas": 4,
-    "grasas": 6
+    "grasas": 6,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "GqvaIkcTh0miXVwzdYzG",
@@ -2205,7 +4955,17 @@
     "calorias": 200,
     "carbohidratos": 15,
     "proteinas": 17,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "In1iUEfdmWe9yAEAixlF",
@@ -2213,7 +4973,17 @@
     "calorias": 200,
     "carbohidratos": 22,
     "proteinas": 6,
-    "grasas": 12
+    "grasas": 12,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "MJGMP4cVRlHOv9dfU7AJ",
@@ -2221,7 +4991,17 @@
     "calorias": 200,
     "carbohidratos": 27,
     "proteinas": 6,
-    "grasas": 10
+    "grasas": 10,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "jXWcrBadqmEpn3iD7TLk",
@@ -2229,7 +5009,17 @@
     "calorias": 200,
     "carbohidratos": 7,
     "proteinas": 24,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "vzqMiALN3dida2XY2Qbt",
@@ -2237,7 +5027,17 @@
     "calorias": 200,
     "carbohidratos": 8,
     "proteinas": 5,
-    "grasas": 17
+    "grasas": 17,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 1,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "yljgm4upokAAq9kWGTZM",
@@ -2245,7 +5045,17 @@
     "calorias": 200,
     "carbohidratos": 15,
     "proteinas": 13,
-    "grasas": 11
+    "grasas": 11,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "xBDxwuNGIIDg4wiHUJAa",
@@ -2253,7 +5063,17 @@
     "calorias": 205,
     "carbohidratos": 20,
     "proteinas": 17,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "f12gOd5qV5WG1xVQGLjZ",
@@ -2261,7 +5081,17 @@
     "calorias": 210,
     "carbohidratos": 14,
     "proteinas": 8,
-    "grasas": 14
+    "grasas": 14,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 1,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "Iyo1JvxjHXSq4KPkXvrP",
@@ -2269,7 +5099,17 @@
     "calorias": 220,
     "carbohidratos": 25,
     "proteinas": 8,
-    "grasas": 11
+    "grasas": 11,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "QHKMGhlocZVbIIJNumpU",
@@ -2277,7 +5117,17 @@
     "calorias": 220,
     "carbohidratos": 21,
     "proteinas": 25,
-    "grasas": 4
+    "grasas": 4,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "a0ewnxjBF7UDVflOjKKn",
@@ -2285,7 +5135,17 @@
     "calorias": 220,
     "carbohidratos": 14,
     "proteinas": 2,
-    "grasas": 18
+    "grasas": 18,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "bDlVHtr1oPCuEgALECax",
@@ -2293,7 +5153,17 @@
     "calorias": 220,
     "carbohidratos": 17,
     "proteinas": 25,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "pnLitY1KgIWD8jWCWSm9",
@@ -2301,7 +5171,17 @@
     "calorias": 220,
     "carbohidratos": 10,
     "proteinas": 27,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 1,
+    "kid-friendly": 0,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "Dx7JZTtTLdMp0Kmg8DGw",
@@ -2309,7 +5189,17 @@
     "calorias": 230,
     "carbohidratos": 22,
     "proteinas": 18,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "S6kYr5G8KWevINdzpY8b",
@@ -2317,7 +5207,17 @@
     "calorias": 230,
     "carbohidratos": 26,
     "proteinas": 16,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "mg0tz2gwoQWMXW0S8r6q",
@@ -2325,7 +5225,17 @@
     "calorias": 230,
     "carbohidratos": 25,
     "proteinas": 21,
-    "grasas": 5
+    "grasas": 5,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "92qomV1Gfg60hNgIiXNU",
@@ -2333,7 +5243,17 @@
     "calorias": 240,
     "carbohidratos": 16,
     "proteinas": 18,
-    "grasas": 12
+    "grasas": 12,
+    "vegetariano": 1,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 1,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "O4JRcEmt7ABIFMrhX2YW",
@@ -2341,7 +5261,17 @@
     "calorias": 245,
     "carbohidratos": 25,
     "proteinas": 22,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "pR901f8nw11JpXZCpgLL",
@@ -2349,7 +5279,17 @@
     "calorias": 245,
     "carbohidratos": 35,
     "proteinas": 9,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "CgLBX9wn1L1fe7BWUDMW",
@@ -2357,7 +5297,17 @@
     "calorias": 250,
     "carbohidratos": 40,
     "proteinas": 4,
-    "grasas": 10
+    "grasas": 10,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "CFCMAPo4zpAqfkXGlmKt",
@@ -2365,7 +5315,17 @@
     "calorias": 260,
     "carbohidratos": 28,
     "proteinas": 18,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 1,
+    "ckd-diálisis": 1,
+    "kid-friendly": 1,
+    "kidney-friendly": 1
   },
   {
     "id_receta": "AlMJWNdHG0qthMmFc8Kw",
@@ -2373,7 +5333,17 @@
     "calorias": 270,
     "carbohidratos": 15,
     "proteinas": 25,
-    "grasas": 10
+    "grasas": 10,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 1,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "H2uGfrT6VJuuldhkzV6P",
@@ -2381,7 +5351,17 @@
     "calorias": 270,
     "carbohidratos": 33,
     "proteinas": 11,
-    "grasas": 12
+    "grasas": 12,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "8yvKuVQSncvdbddetpOY",
@@ -2389,7 +5369,17 @@
     "calorias": 285,
     "carbohidratos": 29,
     "proteinas": 29,
-    "grasas": 7
+    "grasas": 7,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "HGbVY0oqAabVPdbq5FBN",
@@ -2397,7 +5387,17 @@
     "calorias": 300,
     "carbohidratos": 28,
     "proteinas": 26,
-    "grasas": 9
+    "grasas": 9,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "tj7fE01wHgQOd6pc71Lh",
@@ -2405,7 +5405,17 @@
     "calorias": 300,
     "carbohidratos": 32,
     "proteinas": 25,
-    "grasas": 8
+    "grasas": 8,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "YcLaXY87UnJdigJUxncB",
@@ -2413,7 +5423,17 @@
     "calorias": 350,
     "carbohidratos": 42,
     "proteinas": 14,
-    "grasas": 15
+    "grasas": 15,
+    "vegetariano": 1,
+    "vegano": 1,
+    "gluten-free": 1,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 1,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   },
   {
     "id_receta": "l1UuHObBcj8tdZhoRZI9",
@@ -2421,6 +5441,16 @@
     "calorias": 390,
     "carbohidratos": 25,
     "proteinas": 31,
-    "grasas": 17
+    "grasas": 17,
+    "vegetariano": 0,
+    "vegano": 0,
+    "gluten-free": 0,
+    "low-sodium": 0,
+    "lower-carb": 0,
+    "high-in-fiber": 0,
+    "ckd-no-diálisis": 0,
+    "ckd-diálisis": 0,
+    "kid-friendly": 0,
+    "kidney-friendly": 0
   }
 ]
