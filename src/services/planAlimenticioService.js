@@ -67,7 +67,6 @@ export const generarPlanSemanal = async (metaCalorias, preferencias) => {
       const planDiario = {};
       let totalCaloriasDia = 0;
 
-
       const categorias = ['Desayuno', 'Almuerzo', 'Cena', 'Snacks'];
       for (let categoria of categorias) {
         const { min, max } = caloriasPorCategoria[categoria];
@@ -142,7 +141,9 @@ export const generarPlanSemanal = async (metaCalorias, preferencias) => {
         const caloriasCategoria = recetasSeleccionadas.reduce((sum, r) => sum + r.calorias, 0);
         totalCaloriasDia += caloriasCategoria;
 
+        // Incluyendo id_receta en cada objeto del plan.
         planDiario[categoria] = recetasSeleccionadas.map(receta => ({
+          id: receta.id_receta,
           titulo: receta.titulo,
           calorias: receta.calorias,
         }));
