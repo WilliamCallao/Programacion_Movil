@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 5,
-    borderWidth: 1,
-    borderColor: 'black',
+    borderWidth: 2,
+    borderColor: '#222222',
     borderRadius: 30,
     paddingHorizontal: 10,
     textAlign: 'center',
@@ -77,15 +77,17 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'black',
     fontSize: 14,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: 'DMSans_400Regular',
     textAlign: 'center',
-    paddingTop: 3,
+    paddingVertical: 4,
+    paddingBottom: 6,
   },
   buttonTextSelected: {
     color: 'white',
     fontSize: 14,
-    fontFamily: 'Poppins_500Medium',
+    fontFamily: 'DMSans_500Medium',
     textAlign: 'center',
-    paddingTop: 3,
+    paddingVertical: 4,
+    paddingBottom: 6,
   },
 });
