@@ -1,148 +1,91 @@
-// src/screens/MainScreen.js
+// MainScreen.js
+import React from 'react';
+import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Button, Alert } from 'react-native';
-import { 
-  calcularEdad, 
-  calcularPesoObjetivo, 
-  obtenerDistribucionMacronutrientes, 
-  calcularCalorias, 
-  calcularMacronutrientes, 
-  crearUsuario 
-} from '../services/usuarioService';
-
-import { useNavigation } from '@react-navigation/native';
-
-// Datos iniciales del usuario
-const usuario = {
-  informacionPersonal: {
-    nombre: 'Luz',
-    correo: 'luz@example.com',
-    genero: 'femenino',
-    fechaNacimiento: '2002-05-15',
-  },
-  medidasFisicas: {
-    pesoKg: 75,
-    alturaCm: 175,
-    nivelActividad: 'moderadamente_activo',
-  },
-  objetivoPersonal: {
-    tipoObjetivo: 'mantener_peso',
-  },
-};
+const SECTION_HEIGHT_PERCENTAGES = [5, 10, 10, 10, 17];
+const COLORS = ['#FFF', '#33FF57', '#3357FF', '#FF33A6', '#F3FF33', '#33FFF5'];
 
 export default function MainScreen() {
-  const [calorias, setCalorias] = useState(null);
-  const [macronutrientes, setMacronutrientes] = useState(null);
-  const [mensaje, setMensaje] = useState('');
-  const navigation = useNavigation();
-
-  const handleCalcular = async () => {
-    try {
-      const edad = calcularEdad(usuario.informacionPersonal.fechaNacimiento);
-      const pesoObjetivo = calcularPesoObjetivo(usuario.medidasFisicas.pesoKg, usuario.objetivoPersonal.tipoObjetivo);
-      const distribucion = obtenerDistribucionMacronutrientes(usuario.objetivoPersonal.tipoObjetivo);
-
-      const caloriasCalculadas = calcularCalorias(
-        usuario.medidasFisicas.pesoKg,
-        usuario.medidasFisicas.alturaCm,
-        edad,
-        usuario.informacionPersonal.genero,
-        usuario.medidasFisicas.nivelActividad
-      );
-
-      setCalorias(caloriasCalculadas);
-
-      const macros = calcularMacronutrientes(caloriasCalculadas, distribucion);
-      setMacronutrientes(macros);
-
-      const datosUsuarioFinal = {
-        informacion_personal: {
-          nombre: usuario.informacionPersonal.nombre,
-          correo: usuario.informacionPersonal.correo,
-          contraseña: 'password',
-          foto_perfil_url: '',
-          fecha_nacimiento: new Date(usuario.informacionPersonal.fechaNacimiento),
-          genero: usuario.informacionPersonal.genero,
-        },
-        medidas_fisicas: {
-          peso_kg: usuario.medidasFisicas.pesoKg,
-          altura_cm: usuario.medidasFisicas.alturaCm,
-          nivel_actividad: usuario.medidasFisicas.nivelActividad,
-        },
-        preferencias: {
-          preferencias_dietarias: [], 
-          condiciones_salud: [],
-        },
-        objetivos: {
-          tipo_objetivo: usuario.objetivoPersonal.tipoObjetivo,
-          peso_objetivo_kg: pesoObjetivo,
-          meta_calorias: caloriasCalculadas,
-          distribucion_macronutrientes: distribucion,
-          macronutrientes: macros,
-        },
-        actividad: {
-          recetas_favoritas: [],
-          seguimiento_progreso: {
-            historial_peso: [],
-          },
-        },
-        planes_alimentacion: [],
-      };
-
-      await crearUsuario(datosUsuarioFinal);
-      setMensaje('Usuario y plan alimenticio creados exitosamente.');
-    } catch (error) {
-      console.error(error);
-      setMensaje('Error al crear el usuario y el plan alimenticio.');
-      Alert.alert('Error', 'Hubo un problema al crear tu usuario y plan alimenticio.');
-    }
-  };
+  const { height } = Dimensions.get('window');
+  const totalUsedHeightPercentage = SECTION_HEIGHT_PERCENTAGES.reduce((sum, percentage) => sum + percentage, 0);
+  const remainingHeightPercentage = 100 - totalUsedHeightPercentage;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Button title="Calcular y Crear Usuario" onPress={handleCalcular} />
-      {calorias && (
-        <View style={styles.resultContainer}>
-          <Text style={styles.resultText}>Calorías Diarias: {calorias} kcal</Text>
-          <Text>Carbohidratos: {macronutrientes.carbohidratos} g</Text>
-          <Text>Proteínas: {macronutrientes.proteinas} g</Text>
-          <Text>Grasas: {macronutrientes.grasas} g</Text>
-        </View>
-      )}
-      {mensaje ? (
-        <View style={styles.messageContainer}>
-          <Text style={styles.messageText}>{mensaje}</Text>
-        </View>
-      ) : null}
-    </ScrollView>
+    <View style={styles.container}>
+      <View style={[styles.section1, { height: (height * SECTION_HEIGHT_PERCENTAGES[0]) / 100 }]}> 
+      </View>
+      <View style={[styles.section2, { height: (height * SECTION_HEIGHT_PERCENTAGES[1]) / 100, paddingHorizontal: 20, paddingVertical: 5 }]}> 
+        <View style={styles.avatarCircle} />
+      </View>
+      <View style={[styles.section3, { height: (height * SECTION_HEIGHT_PERCENTAGES[2]) / 100 }]}> 
+        <Text style={styles.section3Text}>Cada comida cuenta!</Text>
+        <View style={styles.underline} />
+      </View>
+      <View style={[styles.section4, { backgroundColor: COLORS[3], height: (height * SECTION_HEIGHT_PERCENTAGES[3]) / 100 }]}> 
+        <Text style={styles.text}>Sección 4</Text>
+      </View>
+      <View style={[styles.section5, { backgroundColor: COLORS[4], height: (height * SECTION_HEIGHT_PERCENTAGES[4]) / 100 }]}> 
+        <Text style={styles.text}>Sección 5</Text>
+      </View>
+      <View style={[styles.section6, { backgroundColor: COLORS[5], height: (height * remainingHeightPercentage) / 100 }]}> 
+        <Text style={styles.text}>Sección 6</Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
+  },
+  section1: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5F5F5',
-    padding: 20,
   },
-  resultContainer: {
-    marginTop: 20,
+  section2: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  resultText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
-    color: '#000',
-  },
-  messageContainer: {
-    marginTop: 20,
+  section3: {
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  messageText: {
-    fontSize: 16,
-    color: 'green',
+  section4: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  section5: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  section6: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    color: 'white',
+    fontSize: 20,
+    marginLeft: 10,
+    fontFamily: 'Poppins_500Medium',
+  },
+  section3Text: {
+    fontSize: 20,
+    color: 'black',
+    fontFamily: 'Poppins_600SemiBold',
+    alignSelf: 'flex-start',
+    marginLeft: 20,
+  },
+  underline: {
+    width: '90%',
+    height: 2,
+    backgroundColor: '#818181',
+    marginTop: 5,
+  },
+  avatarCircle: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    backgroundColor: 'gray',
+    marginRight: 20,
   },
 });
