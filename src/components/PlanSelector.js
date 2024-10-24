@@ -6,7 +6,7 @@ export default function PlanSelector({ selectedButton, onButtonPress }) {
   const { height } = Dimensions.get('window');
 
   return (
-    <View style={[styles.section4, { height: (height * 10) / 100 }]}>
+    <View style={[styles.section4, { height: (height * 9) / 100 }]}>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[
