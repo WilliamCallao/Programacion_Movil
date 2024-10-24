@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
-const SECTION_HEIGHT_PERCENTAGES = [5, 10, 8];
+const SECTION_HEIGHT_PERCENTAGES = [5, 7, 9];
 
 export default function HeaderSections() {
   const { height } = Dimensions.get('window');
