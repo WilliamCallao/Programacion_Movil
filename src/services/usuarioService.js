@@ -93,7 +93,7 @@ export const crearUsuario = async (datosUsuario) => {
 
     await guardarIdEnAsyncStorage(usuarioRef.id);
 
-    const planSemanal = await generarPlanSemanal(datosUsuario.objetivos.meta_calorias);
+    const planSemanal = await generarPlanSemanal(datosUsuario.objetivos.meta_calorias, datosUsuario.preferencias);
 
     const fechaCreacion = new Date();
     const planesAlimentacion = planSemanal.map((plan, index) => ({
