@@ -45,6 +45,7 @@ export default function PlanSelector({ selectedButton, onButtonPress }) {
 
 const styles = StyleSheet.create({
   section4: {
+    marginTop: 2,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -58,7 +59,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 30,
-    paddingVertical: 1,
     paddingHorizontal: 10,
     textAlign: 'center',
   },
@@ -76,14 +76,14 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Poppins_400Regular',
     textAlign: 'center',
     paddingTop: 3,
   },
   buttonTextSelected: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Poppins_500Medium',
     textAlign: 'center',
     paddingTop: 3,
