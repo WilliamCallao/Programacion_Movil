@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
-const SECTION_HEIGHT_PERCENTAGES = [5, 7, 9];
+const SECTION_HEIGHT_PERCENTAGES = [5, 10, 8];
 
 export default function HeaderSections() {
   const { height } = Dimensions.get('window');
@@ -37,11 +37,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   section3: {
-    justifyContent: 'flex-end',
+    marginTop: 12,
+    justifyContent: 'space-between',
     alignItems: 'center',
+    // backgroundColor: 'red',
   },
   section3Text: {
-    fontSize: 20,
+    fontSize: 18,
     color: 'black',
     fontFamily: 'Poppins_600SemiBold',
     alignSelf: 'flex-start',
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 2,
     backgroundColor: '#818181',
-    marginTop: 5,
+    // marginTop: 15,
   },
   avatarCircle: {
     width: 60,
