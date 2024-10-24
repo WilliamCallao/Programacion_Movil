@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import HeaderSections from '../components/HeaderSections';
 import PlanSelector from '../components/PlanSelector';
 import { obtenerUsuario } from '../services/usuarioService';
 import { obtenerRecetasPorIds } from '../services/recetaService';
 import Secciones56 from '../components/RecipesPlan';
+import WeeklyView from '../components/WeeklyView';
 
 const USER_ID = 'Ieq3dMwGsdDqInbvlUvy';
 
@@ -18,13 +19,17 @@ export default function MainScreen() {
   const [selectedButton, setSelectedButton] = useState('Hoy');
   const [usuario, setUsuario] = useState(null);
   const [recetasDelDia, setRecetasDelDia] = useState([]);
+  const [planes, setPlanes] = useState([]);
   const [totalCalorias, setTotalCalorias] = useState(0);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const datosUsuario = await obtenerUsuario(USER_ID);
-        if (datosUsuario) setUsuario(datosUsuario);
+        if (datosUsuario) {
+          setUsuario(datosUsuario);
+          setPlanes(datosUsuario.planes_alimentacion);
+        }
       } catch (error) {
         console.error('Error al obtener los datos del usuario:', error);
       }
@@ -84,7 +89,7 @@ export default function MainScreen() {
       <PlanSelector selectedButton={selectedButton} onButtonPress={handleButtonPress} />
       {selectedButton === 'Semanal' ? (
         <View style={styles.section7}>
-          <Text style={styles.text}>Sección 7</Text>
+          <WeeklyView planes={planes} />
         </View>
       ) : (
         <Secciones56 recetas={recetasDelDia} />
@@ -100,12 +105,6 @@ const styles = StyleSheet.create({
   section7: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red',
-  },
-  text: {
-    color: 'white',
-    fontSize: 20,
-    fontFamily: 'Poppins_500Medium',
+    backgroundColor: '#F5F5F5',
   },
 });
