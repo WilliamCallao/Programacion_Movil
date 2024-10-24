@@ -120,3 +120,21 @@ export const crearUsuario = async (datosUsuario) => {
     console.error('Error al crear el usuario y generar el plan:', error);
   }
 };
+
+export const obtenerUsuario = async (usuarioId) => {
+  try {
+    const usuarioDocRef = doc(db, 'usuarios', usuarioId);
+    const usuarioDoc = await getDoc(usuarioDocRef);
+
+    if (usuarioDoc.exists()) {
+      console.log('Datos del usuario:', JSON.stringify(usuarioDoc.data(), null, 2));
+      return usuarioDoc.data();
+    } else {
+      console.error('No se encontró un usuario con la ID proporcionada.');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error al obtener los datos del usuario:', error);
+    throw error;
+  }
+};
