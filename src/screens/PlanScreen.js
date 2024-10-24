@@ -1,14 +1,20 @@
 // MainScreen.js
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
-const SECTION_HEIGHT_PERCENTAGES = [5, 10, 10, 10, 17];
+const SECTION_HEIGHT_PERCENTAGES = [5, 10, 8, 10, 17];
 const COLORS = ['#FFF', '#33FF57', '#3357FF', '#FF33A6', '#F3FF33', '#33FFF5'];
 
 export default function MainScreen() {
-  const { height } = Dimensions.get('window');
+  const { height, width } = Dimensions.get('window');
   const totalUsedHeightPercentage = SECTION_HEIGHT_PERCENTAGES.reduce((sum, percentage) => sum + percentage, 0);
   const remainingHeightPercentage = 100 - totalUsedHeightPercentage;
+
+  const [selectedButton, setSelectedButton] = useState('Hoy');
+
+  const handleButtonPress = (button) => {
+    setSelectedButton(button);
+  };
 
   return (
     <View style={styles.container}>
@@ -21,8 +27,39 @@ export default function MainScreen() {
         <Text style={styles.section3Text}>Cada comida cuenta!</Text>
         <View style={styles.underline} />
       </View>
-      <View style={[styles.section4, { backgroundColor: COLORS[3], height: (height * SECTION_HEIGHT_PERCENTAGES[3]) / 100 }]}> 
-        <Text style={styles.text}>Sección 4</Text>
+      <View style={[styles.section4, { height: (height * SECTION_HEIGHT_PERCENTAGES[3]) / 100 }]}> 
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              styles.largeButton,
+              selectedButton === 'Semanal' && styles.buttonSelected,
+            ]}
+            onPress={() => handleButtonPress('Semanal')}
+          >
+            <Text style={selectedButton === 'Semanal' ? styles.buttonTextSelected : styles.buttonText} numberOfLines={1}>Semanal</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              styles.smallButton,
+              selectedButton === 'Hoy' && styles.buttonSelected,
+            ]}
+            onPress={() => handleButtonPress('Hoy')}
+          >
+            <Text style={selectedButton === 'Hoy' ? styles.buttonTextSelected : styles.buttonText} numberOfLines={1}>Hoy</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              styles.mediumButton,
+              selectedButton === 'Mañana' && styles.buttonSelected,
+            ]}
+            onPress={() => handleButtonPress('Mañana')}
+          >
+            <Text style={selectedButton === 'Mañana' ? styles.buttonTextSelected : styles.buttonText} numberOfLines={1}>Mañana</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={[styles.section5, { backgroundColor: COLORS[4], height: (height * SECTION_HEIGHT_PERCENTAGES[4]) / 100 }]}> 
         <Text style={styles.text}>Sección 5</Text>
@@ -47,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   section3: {
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   section4: {
@@ -87,5 +124,46 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: 'gray',
     marginRight: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // width: '90%',
+    paddingHorizontal: 10,
+  },
+  button: {
+    marginHorizontal: 5,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 30,
+    paddingVertical: 1,
+    paddingHorizontal: 10,
+    textAlign: 'center',
+  },
+  smallButton: {
+    flex: 1,
+  },
+  mediumButton: {
+    flex: 1.5,
+  },
+  largeButton: {
+    flex: 2,
+  },
+  buttonSelected: {
+    backgroundColor: 'black',
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 16,
+    fontFamily: 'Poppins_400Regular',
+    textAlign: 'center',
+    paddingTop: 3,
+  },
+  buttonTextSelected: {
+    color: 'white',
+    fontSize: 16,
+    fontFamily: 'Poppins_500Medium',
+    textAlign: 'center',
+    paddingTop: 3,
   },
 });
