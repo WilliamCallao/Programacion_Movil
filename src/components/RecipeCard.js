@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     right: 10,
   },
   recipeTitle: {
-    fontFamily: 'Poppins_500Medium',
+    fontFamily: 'DMSans_500Medium',
     fontSize: 18,
     color: '#fff',
     marginLeft: 10,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   label: {
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: 'DMSans_400Regular',
     fontSize: 14,
     color: '#fff',
     marginLeft: 5,
