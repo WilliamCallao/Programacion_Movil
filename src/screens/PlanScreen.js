@@ -4,18 +4,15 @@ import HeaderSections from '../components/HeaderSections';
 import PlanSelector from '../components/PlanSelector';
 import { obtenerUsuario } from '../services/usuarioService';
 import { obtenerRecetasPorIds } from '../services/recetaService';
-import RecipeCard from '../components/RecipeCard';
-import Animated, { useSharedValue, useAnimatedScrollHandler } from 'react-native-reanimated';
+import Secciones56 from '../components/RecipesPlan';
 
 const SECTION_HEIGHT_PERCENTAGES = [5, 7, 9, 16, 12];
 const COLORS = ['#FFF', '#33FF57', '#3357FF', '#FF33A6', '#F3FF33', '#33FFF5'];
 const USER_ID = 'Ieq3dMwGsdDqInbvlUvy';
-
-const ITEM_WIDTH = Dimensions.get('window').width * 0.75;
+const CURRENT_DAY = 2;
 
 export default function MainScreen() {
   const { height } = Dimensions.get('window');
-  
   const totalUsedHeightPercentage = SECTION_HEIGHT_PERCENTAGES.reduce(
     (sum, percentage) => sum + percentage,
     0
@@ -25,17 +22,12 @@ export default function MainScreen() {
   const [selectedButton, setSelectedButton] = useState('Hoy');
   const [usuario, setUsuario] = useState(null);
   const [recetasDelDia, setRecetasDelDia] = useState([]);
-  const CURRENT_DAY = 2;
-
-  const scrollX = useSharedValue(0);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const datosUsuario = await obtenerUsuario(USER_ID);
-        if (datosUsuario) {
-          setUsuario(datosUsuario);
-        }
+        if (datosUsuario) setUsuario(datosUsuario);
       } catch (error) {
         console.error('Error al obtener los datos del usuario:', error);
       }
@@ -51,6 +43,7 @@ export default function MainScreen() {
           const planDelDia = usuario.planes_alimentacion.find(
             (plan) => plan.dia === CURRENT_DAY
           );
+
           if (planDelDia) {
             const { comidas } = planDelDia;
             const tiposDeComida = ['Desayuno', 'Almuerzo', 'Cena', 'Snacks'];
@@ -78,26 +71,14 @@ export default function MainScreen() {
     fetchRecetasDelDia();
   }, [usuario]);
 
-  const handleButtonPress = (button) => {
-    setSelectedButton(button);
-  };
-
-  const renderRecipeCard = ({ item, index }) => (
-    <RecipeCard item={item} index={index} scrollX={scrollX} onImageError={() => {}} />
-  );
-
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      scrollX.value = event.contentOffset.x;
-    },
-  });
+  const handleButtonPress = (button) => setSelectedButton(button);
 
   return (
     <View style={styles.container}>
       <HeaderSections />
       <PlanSelector selectedButton={selectedButton} onButtonPress={handleButtonPress} />
       {selectedButton === 'Semanal' ? (
-        <View 
+        <View
           style={[
             styles.section7,
             {
@@ -109,41 +90,7 @@ export default function MainScreen() {
           <Text style={styles.text}>Sección 7</Text>
         </View>
       ) : (
-        <>
-          <View
-            style={[
-              styles.section5,
-              { height: (height * SECTION_HEIGHT_PERCENTAGES[4]) / 100 },
-            ]}
-          >
-            <Text style={styles.text}>Sección 5</Text>
-          </View>
-          <View
-            style={[
-              styles.section6,
-              {
-                height: (height * remainingHeightPercentage) / 100,
-              },
-            ]}
-          >
-            {recetasDelDia.length > 0 ? (
-              <Animated.FlatList
-                data={recetasDelDia}
-                keyExtractor={(item) => item.id}
-                renderItem={renderRecipeCard}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                onScroll={scrollHandler}
-                scrollEventThrottle={16}
-                snapToInterval={ITEM_WIDTH+16}
-                decelerationRate="fast"
-                contentContainerStyle={{ alignItems: 'center' }}
-              />
-            ) : (
-              <Text style={styles.text}>Cargando recetas...</Text>
-            )}
-          </View>
-        </>
+        <Secciones56 recetas={recetasDelDia} />
       )}
     </View>
   );
@@ -152,12 +99,6 @@ export default function MainScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  section5: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  section6: {
   },
   section7: {
     justifyContent: 'center',
