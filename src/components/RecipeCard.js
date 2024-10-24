@@ -63,9 +63,11 @@ const styles = StyleSheet.create({
     width: ITEM_WIDTH,
     alignItems: 'center',
     marginLeft: 15,
+    marginVertical: 10,
   },
   card: {
     width: '100%',
+    height: '100%',
     borderRadius: 25,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -74,7 +76,6 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 6,
     backgroundColor: 'white',
-    height: ITEM_WIDTH * 1.35,
   },
   imageContainer: {
     width: '100%',
