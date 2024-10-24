@@ -1,17 +1,21 @@
-// MainScreen.js
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import HeaderSections from '../components/HeaderSections';
 import PlanSelector from '../components/PlanSelector';
 import { obtenerUsuario } from '../services/usuarioService';
-import { obtenerRecetasPorIds } from '../services/recetaService';  // Importamos el servicio
+import { obtenerRecetasPorIds } from '../services/recetaService';
+import RecipeCard from '../components/RecipeCard';
+import Animated, { useSharedValue, useAnimatedScrollHandler } from 'react-native-reanimated';
 
-const SECTION_HEIGHT_PERCENTAGES = [5, 10, 8, 10, 17];
+const SECTION_HEIGHT_PERCENTAGES = [5, 7, 9, 12, 14];
 const COLORS = ['#FFF', '#33FF57', '#3357FF', '#FF33A6', '#F3FF33', '#33FFF5'];
 const USER_ID = 'Ieq3dMwGsdDqInbvlUvy';
 
+const ITEM_WIDTH = Dimensions.get('window').width * 0.75;
+
 export default function MainScreen() {
   const { height } = Dimensions.get('window');
+  
   const totalUsedHeightPercentage = SECTION_HEIGHT_PERCENTAGES.reduce(
     (sum, percentage) => sum + percentage,
     0
@@ -20,7 +24,10 @@ export default function MainScreen() {
 
   const [selectedButton, setSelectedButton] = useState('Hoy');
   const [usuario, setUsuario] = useState(null);
-  const CURRENT_DAY = 1;
+  const [recetasDelDia, setRecetasDelDia] = useState([]);
+  const CURRENT_DAY = 2;
+
+  const scrollX = useSharedValue(0);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -38,46 +45,59 @@ export default function MainScreen() {
   }, []);
 
   useEffect(() => {
-    const fetchRecetas = async (idsRecetas) => {
+    const fetchRecetasDelDia = async () => {
       try {
-        const recetas = await obtenerRecetasPorIds(idsRecetas);  // Usamos el servicio para obtener las recetas
-        console.log('Recetas obtenidas:', recetas);
+        if (usuario) {
+          const planDelDia = usuario.planes_alimentacion.find(
+            (plan) => plan.dia === CURRENT_DAY
+          );
+          if (planDelDia) {
+            const { comidas } = planDelDia;
+            const tiposDeComida = ['Desayuno', 'Almuerzo', 'Cena', 'Snacks'];
+
+            let idsRecetas = [];
+            tiposDeComida.forEach((tipo) => {
+              if (comidas[tipo]) {
+                const ids = comidas[tipo].map((receta) => receta.id);
+                idsRecetas = idsRecetas.concat(ids);
+              }
+            });
+
+            idsRecetas = [...new Set(idsRecetas)];
+            const recetas = await obtenerRecetasPorIds(idsRecetas);
+            setRecetasDelDia(recetas);
+          } else {
+            console.log(`No se encontró un plan para el día ${CURRENT_DAY}.`);
+          }
+        }
       } catch (error) {
-        console.error('Error al obtener las recetas:', error);
+        console.error('Error al obtener las recetas del día:', error);
       }
     };
 
-    if (usuario) {
-      const planDelDia = usuario.planes_alimentacion.find(
-        (plan) => plan.dia === CURRENT_DAY
-      );
-      if (planDelDia) {
-        const { comidas } = planDelDia;
-        const tiposDeComida = ['Desayuno', 'Almuerzo', 'Cena', 'Snacks'];
-        tiposDeComida.forEach((tipo) => {
-          if (comidas[tipo]) {
-            const idsRecetas = comidas[tipo].map((receta) => receta.id);
-            console.log(`IDs de recetas para ${tipo} del día ${CURRENT_DAY}:`, idsRecetas);
-            fetchRecetas(idsRecetas);  // Llamamos al servicio para obtener las recetas
-          }
-        });
-        console.log(`Total de calorías para el día ${CURRENT_DAY}:`, comidas.TotalCalorias);
-      } else {
-        console.log(`No se encontró un plan para el día ${CURRENT_DAY}.`);
-      }
-    }
+    fetchRecetasDelDia();
   }, [usuario]);
 
   const handleButtonPress = (button) => {
     setSelectedButton(button);
   };
 
+  const renderRecipeCard = ({ item, index }) => (
+    <RecipeCard item={item} index={index} scrollX={scrollX} onImageError={() => {}} />
+  );
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollX.value = event.contentOffset.x;
+    },
+  });
+
   return (
     <View style={styles.container}>
       <HeaderSections />
       <PlanSelector selectedButton={selectedButton} onButtonPress={handleButtonPress} />
       {selectedButton === 'Semanal' ? (
-        <View
+        <View 
           style={[
             styles.section7,
             {
@@ -93,7 +113,7 @@ export default function MainScreen() {
           <View
             style={[
               styles.section5,
-              { backgroundColor: COLORS[4], height: (height * SECTION_HEIGHT_PERCENTAGES[4]) / 100 },
+              { height: (height * SECTION_HEIGHT_PERCENTAGES[4]) / 100 },
             ]}
           >
             <Text style={styles.text}>Sección 5</Text>
@@ -101,10 +121,27 @@ export default function MainScreen() {
           <View
             style={[
               styles.section6,
-              { backgroundColor: COLORS[5], height: (height * remainingHeightPercentage) / 100 },
+              {
+                height: (height * remainingHeightPercentage) / 100,
+              },
             ]}
           >
-            <Text style={styles.text}>Sección 6</Text>
+            {recetasDelDia.length > 0 ? (
+              <Animated.FlatList
+                data={recetasDelDia}
+                keyExtractor={(item) => item.id}
+                renderItem={renderRecipeCard}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                onScroll={scrollHandler}
+                scrollEventThrottle={16}
+                snapToInterval={ITEM_WIDTH}
+                decelerationRate="fast"
+                contentContainerStyle={{ alignItems: 'center' }}
+              />
+            ) : (
+              <Text style={styles.text}>Cargando recetas...</Text>
+            )}
           </View>
         </>
       )}
@@ -120,10 +157,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  section6: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  section6: {},
   section7: {
     justifyContent: 'center',
     alignItems: 'center',
