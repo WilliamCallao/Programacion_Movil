@@ -127,7 +127,7 @@ export const obtenerUsuario = async (usuarioId) => {
     const usuarioDoc = await getDoc(usuarioDocRef);
 
     if (usuarioDoc.exists()) {
-      console.log('Datos del usuario:', JSON.stringify(usuarioDoc.data(), null, 2));
+      // console.log('Datos del usuario:', JSON.stringify(usuarioDoc.data(), null, 2));
       return usuarioDoc.data();
     } else {
       console.error('No se encontró un usuario con la ID proporcionada.');
