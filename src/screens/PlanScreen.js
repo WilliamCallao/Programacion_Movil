@@ -18,8 +18,9 @@ const getDayName = (offset = 0) => {
 export default function MainScreen() {
   const [selectedButton, setSelectedButton] = useState('Hoy');
   const [usuario, setUsuario] = useState(null);
-  const [recetasDelDia, setRecetasDelDia] = useState([]);
-  const [planes, setPlanes] = useState([]);
+  const [recetasDeHoy, setRecetasDeHoy] = useState([]);
+  const [recetasDeMañana, setRecetasDeMañana] = useState([]);
+  const [recetasSemanales, setRecetasSemanales] = useState([]);
   const [totalCalorias, setTotalCalorias] = useState(0);
 
   useEffect(() => {
@@ -28,7 +29,6 @@ export default function MainScreen() {
         const datosUsuario = await obtenerUsuario(USER_ID);
         if (datosUsuario) {
           setUsuario(datosUsuario);
-          setPlanes(datosUsuario.planes_alimentacion);
         }
       } catch (error) {
         console.error('Error al obtener los datos del usuario:', error);
@@ -38,48 +38,55 @@ export default function MainScreen() {
     fetchUserData();
   }, []);
 
+  const fetchRecetasPorDia = async (offset) => {
+    const targetDay = (new Date().getDay() + offset) % 7;
+    const planDelDia = usuario?.planes_alimentacion.find((plan) => plan.dia === targetDay);
+
+    if (!planDelDia) return [];
+
+    const tiposDeComida = ['Desayuno', 'Almuerzo', 'Cena', 'Snacks'];
+    let idsRecetas = [];
+
+    tiposDeComida.forEach((tipo) => {
+      if (planDelDia.comidas[tipo]) {
+        const ids = planDelDia.comidas[tipo].map((receta) => receta.id);
+        idsRecetas = idsRecetas.concat(ids);
+      }
+    });
+
+    idsRecetas = [...new Set(idsRecetas)];
+    const recetasCompletas = await obtenerRecetasPorIds(idsRecetas);
+    return recetasCompletas;
+  };
+
   useEffect(() => {
-    const fetchRecetas = async () => {
-      try {
-        if (usuario) {
-          const offset = selectedButton === 'Mañana' ? 1 : 0;
-          const targetDay = (new Date().getDay() + offset) % 7;
-
-          const planDelDia = usuario.planes_alimentacion.find(
-            (plan) => plan.dia === targetDay
-          );
-
-          if (planDelDia) {
-            const { comidas } = planDelDia;
-            const tiposDeComida = ['Desayuno', 'Almuerzo', 'Cena', 'Snacks'];
-
-            let idsRecetas = [];
-            tiposDeComida.forEach((tipo) => {
-              if (comidas[tipo]) {
-                const ids = comidas[tipo].map((receta) => receta.id);
-                idsRecetas = idsRecetas.concat(ids);
-              }
-            });
-
-            idsRecetas = [...new Set(idsRecetas)];
-            const recetas = await obtenerRecetasPorIds(idsRecetas);
-            setRecetasDelDia(recetas);
-
-            const total = recetas.reduce((sum, receta) => {
-              return sum + (parseFloat(receta.nutricion?.calories) || 0);
-            }, 0);
-            setTotalCalorias(total);
-          } else {
-            console.log('No se encontró un plan para el día.');
-          }
-        }
-      } catch (error) {
-        console.error('Error al obtener las recetas:', error);
+    const cargarRecetasIniciales = async () => {
+      if (usuario) {
+        const recetasHoy = await fetchRecetasPorDia(0);
+        setRecetasDeHoy(recetasHoy);
+        const totalCal = recetasHoy.reduce(
+          (sum, receta) => sum + (parseFloat(receta.nutricion?.calories) || 0),
+          0
+        );
+        setTotalCalorias(totalCal);
+        fetchRecetasPorDia(1).then(setRecetasDeMañana);
+        fetchRecetasSemanales();
       }
     };
 
-    fetchRecetas();
-  }, [usuario, selectedButton]);
+    cargarRecetasIniciales();
+  }, [usuario]);
+
+  const fetchRecetasSemanales = async () => {
+    try {
+      const recetasPorDia = await Promise.all(
+        Array.from({ length: 7 }, (_, i) => fetchRecetasPorDia(i))
+      );
+      setRecetasSemanales(recetasPorDia);
+    } catch (error) {
+      console.error('Error al obtener las recetas semanales:', error);
+    }
+  };
 
   const handleButtonPress = (button) => setSelectedButton(button);
 
@@ -89,10 +96,10 @@ export default function MainScreen() {
       <PlanSelector selectedButton={selectedButton} onButtonPress={handleButtonPress} />
       {selectedButton === 'Semanal' ? (
         <View style={styles.section7}>
-          <WeeklyView planes={planes} />
+          <WeeklyView planes={recetasSemanales} />
         </View>
       ) : (
-        <Secciones56 recetas={recetasDelDia} />
+        <Secciones56 recetas={selectedButton === 'Hoy' ? recetasDeHoy : recetasDeMañana} />
       )}
     </View>
   );
