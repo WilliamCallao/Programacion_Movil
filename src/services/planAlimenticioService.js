@@ -2,9 +2,10 @@
 
 import { cargarRecetas } from './recetasService';
 
-export const generarPlanSemanal = async (metaCalorias) => {
+export const generarPlanSemanal = async (metaCalorias, preferencias) => {
   try {
     console.log('Generando plan semanal con meta_calorias:', metaCalorias);
+    console.log('Preferencias del usuario:', preferencias);
 
     const distribucion = {
       Desayuno: { min: 0.25, max: 0.30 },
@@ -66,15 +67,47 @@ export const generarPlanSemanal = async (metaCalorias) => {
       const planDiario = {};
       let totalCaloriasDia = 0;
 
-      // console.log(`Generando plan para el día ${dia}`);
 
       const categorias = ['Desayuno', 'Almuerzo', 'Cena', 'Snacks'];
       for (let categoria of categorias) {
         const { min, max } = caloriasPorCategoria[categoria];
-        let recetasValidas = (categoria === 'Desayuno' ? desayunos :
-                              categoria === 'Almuerzo' ? almuerzos :
-                              categoria === 'Cena' ? cenas : snacks)
-          .filter(receta => receta.calorias >= min && receta.calorias <= max && !usados[categoria].has(receta.id_receta));
+        let recetasDisponibles;
+
+        switch (categoria) {
+          case 'Desayuno':
+            recetasDisponibles = desayunos;
+            break;
+          case 'Almuerzo':
+            recetasDisponibles = almuerzos;
+            break;
+          case 'Cena':
+            recetasDisponibles = cenas;
+            break;
+          case 'Snacks':
+            recetasDisponibles = snacks;
+            break;
+          default:
+            recetasDisponibles = [];
+        }
+
+        const recetasFiltradas = recetasDisponibles.filter(receta => {
+          const dietas = preferencias.preferencias_dietarias;
+          const condiciones = preferencias.condiciones_salud;
+          const cumpleDietas = dietas.every(dieta => {
+            const key = dieta.toLowerCase().replace(' ', '-');
+            return receta[key] === 1;
+          });
+          const cumpleCondiciones = condiciones.every(condicion => {
+            const key = condicion.toLowerCase().replace(' ', '-');
+            return receta[key] === 1;
+          });
+
+          return cumpleDietas && cumpleCondiciones;
+        });
+
+        const recetasValidas = recetasFiltradas.filter(receta => 
+          receta.calorias >= min && receta.calorias <= max && !usados[categoria].has(receta.id_receta)
+        );
 
         let recetasSeleccionadas = [];
 
@@ -87,25 +120,20 @@ export const generarPlanSemanal = async (metaCalorias) => {
 
           if (recetasValidas.length > 0) {
             const recetaElegida = recetasValidas[Math.floor(Math.random() * recetasValidas.length)];
-            // console.log(`Seleccionada receta válida para ${categoria}: ${recetaElegida.titulo} (${recetaElegida.calorias} kcal)`);
             recetasSeleccionadas.push(recetaElegida);
             usados[categoria].add(recetaElegida.id_receta);
 
-            recetasValidas = recetasValidas.filter(r => r.id_receta !== recetaElegida.id_receta);
+            recetasValidas.splice(recetasValidas.indexOf(recetaElegida), 1);
           } else {
-            const recetasOrdenadas = (categoria === 'Desayuno' ? desayunos :
-                                       categoria === 'Almuerzo' ? almuerzos :
-                                       categoria === 'Cena' ? cenas : snacks)
+            const recetasOrdenadas = recetasFiltradas
               .filter(receta => !usados[categoria].has(receta.id_receta))
               .sort((a, b) => Math.abs(a.calorias - min) - Math.abs(b.calorias - min));
 
             if (recetasOrdenadas.length > 0) {
               const recetaCercana = recetasOrdenadas[0];
-              // console.log(`No hay recetas válidas para ${categoria}. Seleccionada la más cercana al mínimo: ${recetaCercana.titulo} (${recetaCercana.calorias} kcal)`);
               recetasSeleccionadas.push(recetaCercana);
               usados[categoria].add(recetaCercana.id_receta);
             } else {
-              // console.log(`No hay recetas disponibles para ${categoria} para alcanzar las calorías mínimas.`);
               break;
             }
           }
@@ -121,11 +149,8 @@ export const generarPlanSemanal = async (metaCalorias) => {
       }
 
       planDiario.TotalCalorias = totalCaloriasDia;
-      // console.log(`Plan diario para el día ${dia}:`, planDiario);
       planSemanal.push(planDiario);
     }
-
-    // console.log('Plan alimenticio completo generado:', JSON.stringify(planSemanal, null, 2));
 
     return planSemanal;
   } catch (error) {
