@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
-const SECTION_HEIGHT_PERCENTAGES = [5, 10, 8];
+const SECTION_HEIGHT_PERCENTAGES = [5, 10, 4];
 
 export default function HeaderSections() {
   const { height } = Dimensions.get('window');
@@ -14,7 +14,7 @@ export default function HeaderSections() {
       </View>
 
       {/* Sección 2 */}
-      <View style={[styles.section2, { height: (height * SECTION_HEIGHT_PERCENTAGES[1]) / 100, paddingHorizontal: 20, paddingVertical: 5 }]}>
+      <View style={[styles.section2, { height: (height * SECTION_HEIGHT_PERCENTAGES[1]) / 100, paddingVertical: 5 }]}>
         <View style={styles.avatarCircle} />
       </View>
 
@@ -34,32 +34,31 @@ const styles = StyleSheet.create({
   },
   section2: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    marginLeft: 15,
   },
   section3: {
     marginTop: 12,
     justifyContent: 'space-between',
     alignItems: 'center',
-    // backgroundColor: 'red',
   },
   section3Text: {
-    fontSize: 18,
+    fontSize: 24,
     color: 'black',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'DMSans_500Medium',
     alignSelf: 'flex-start',
-    marginLeft: 20,
+    marginLeft: 15,
   },
-  underline: {
-    width: '90%',
-    height: 2,
-    backgroundColor: '#818181',
-    // marginTop: 15,
-  },
+  // underline: {
+  //   width: '90%',
+  //   height: 2,
+  //   backgroundColor: '#222222',
+  //   // marginTop: 15,
+  // },
   avatarCircle: {
     width: 60,
     height: 60,
     borderRadius: 30,
     backgroundColor: 'gray',
-    marginRight: 20,
   },
 });
