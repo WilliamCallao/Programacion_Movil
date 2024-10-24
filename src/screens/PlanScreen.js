@@ -7,10 +7,14 @@ import { obtenerRecetasPorIds } from '../services/recetaService';
 import Secciones56 from '../components/RecipesPlan';
 
 const USER_ID = 'Ieq3dMwGsdDqInbvlUvy';
-const CURRENT_DAY = new Date().toLocaleDateString('es-ES', { weekday: 'long' });
+
+const getDayName = (offset = 0) => {
+  const date = new Date();
+  date.setDate(date.getDate() + offset);
+  return date.toLocaleDateString('es-ES', { weekday: 'long' });
+};
 
 export default function MainScreen() {
-  const { height } = Dimensions.get('window');
   const [selectedButton, setSelectedButton] = useState('Hoy');
   const [usuario, setUsuario] = useState(null);
   const [recetasDelDia, setRecetasDelDia] = useState([]);
@@ -30,11 +34,14 @@ export default function MainScreen() {
   }, []);
 
   useEffect(() => {
-    const fetchRecetasDelDia = async () => {
+    const fetchRecetas = async () => {
       try {
         if (usuario) {
+          const offset = selectedButton === 'Mañana' ? 1 : 0;
+          const targetDay = (new Date().getDay() + offset) % 7;
+
           const planDelDia = usuario.planes_alimentacion.find(
-            (plan) => plan.dia === new Date().getDay()
+            (plan) => plan.dia === targetDay
           );
 
           if (planDelDia) {
@@ -62,22 +69,21 @@ export default function MainScreen() {
           }
         }
       } catch (error) {
-        console.error('Error al obtener las recetas del día:', error);
+        console.error('Error al obtener las recetas:', error);
       }
     };
 
-    fetchRecetasDelDia();
-  }, [usuario]);
+    fetchRecetas();
+  }, [usuario, selectedButton]);
 
   const handleButtonPress = (button) => setSelectedButton(button);
 
   return (
     <View style={styles.container}>
-      {/* Enviar día y calorías al HeaderSections */}
-      <HeaderSections dia={CURRENT_DAY} calorias={totalCalorias} />
+      <HeaderSections dia={getDayName(selectedButton === 'Mañana' ? 1 : 0)} calorias={totalCalorias} />
       <PlanSelector selectedButton={selectedButton} onButtonPress={handleButtonPress} />
       {selectedButton === 'Semanal' ? (
-        <View style={[styles.section7, { height: height * 0.12 }]}>
+        <View style={styles.section7}>
           <Text style={styles.text}>Sección 7</Text>
         </View>
       ) : (
@@ -92,8 +98,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   section7: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'red',
   },
   text: {
     color: 'white',
