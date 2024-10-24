@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 6,
     backgroundColor: 'white',
-    height: ITEM_WIDTH * 1.3,
+    height: ITEM_WIDTH * 1.35,
   },
   imageContainer: {
     width: '100%',
