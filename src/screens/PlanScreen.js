@@ -7,7 +7,7 @@ import { obtenerRecetasPorIds } from '../services/recetaService';
 import RecipeCard from '../components/RecipeCard';
 import Animated, { useSharedValue, useAnimatedScrollHandler } from 'react-native-reanimated';
 
-const SECTION_HEIGHT_PERCENTAGES = [5, 7, 9, 16, 10];
+const SECTION_HEIGHT_PERCENTAGES = [5, 7, 9, 16, 12];
 const COLORS = ['#FFF', '#33FF57', '#3357FF', '#FF33A6', '#F3FF33', '#33FFF5'];
 const USER_ID = 'Ieq3dMwGsdDqInbvlUvy';
 
@@ -156,10 +156,8 @@ const styles = StyleSheet.create({
   section5: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'green'
   },
   section6: {
-    backgroundColor: 'blue'
   },
   section7: {
     justifyContent: 'center',
