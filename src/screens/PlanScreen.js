@@ -6,22 +6,15 @@ import { obtenerUsuario } from '../services/usuarioService';
 import { obtenerRecetasPorIds } from '../services/recetaService';
 import Secciones56 from '../components/RecipesPlan';
 
-const SECTION_HEIGHT_PERCENTAGES = [5, 7, 9, 16, 12];
-const COLORS = ['#FFF', '#33FF57', '#3357FF', '#FF33A6', '#F3FF33', '#33FFF5'];
 const USER_ID = 'Ieq3dMwGsdDqInbvlUvy';
-const CURRENT_DAY = 2;
+const CURRENT_DAY = new Date().toLocaleDateString('es-ES', { weekday: 'long' });
 
 export default function MainScreen() {
   const { height } = Dimensions.get('window');
-  const totalUsedHeightPercentage = SECTION_HEIGHT_PERCENTAGES.reduce(
-    (sum, percentage) => sum + percentage,
-    0
-  );
-  const remainingHeightPercentage = 100 - totalUsedHeightPercentage;
-
   const [selectedButton, setSelectedButton] = useState('Hoy');
   const [usuario, setUsuario] = useState(null);
   const [recetasDelDia, setRecetasDelDia] = useState([]);
+  const [totalCalorias, setTotalCalorias] = useState(0);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -41,7 +34,7 @@ export default function MainScreen() {
       try {
         if (usuario) {
           const planDelDia = usuario.planes_alimentacion.find(
-            (plan) => plan.dia === CURRENT_DAY
+            (plan) => plan.dia === new Date().getDay()
           );
 
           if (planDelDia) {
@@ -59,8 +52,13 @@ export default function MainScreen() {
             idsRecetas = [...new Set(idsRecetas)];
             const recetas = await obtenerRecetasPorIds(idsRecetas);
             setRecetasDelDia(recetas);
+
+            const total = recetas.reduce((sum, receta) => {
+              return sum + (parseFloat(receta.nutricion?.calories) || 0);
+            }, 0);
+            setTotalCalorias(total);
           } else {
-            console.log(`No se encontró un plan para el día ${CURRENT_DAY}.`);
+            console.log('No se encontró un plan para el día.');
           }
         }
       } catch (error) {
@@ -75,18 +73,11 @@ export default function MainScreen() {
 
   return (
     <View style={styles.container}>
-      <HeaderSections />
+      {/* Enviar día y calorías al HeaderSections */}
+      <HeaderSections dia={CURRENT_DAY} calorias={totalCalorias} />
       <PlanSelector selectedButton={selectedButton} onButtonPress={handleButtonPress} />
       {selectedButton === 'Semanal' ? (
-        <View
-          style={[
-            styles.section7,
-            {
-              backgroundColor: COLORS[4],
-              height: (height * (SECTION_HEIGHT_PERCENTAGES[4] + remainingHeightPercentage)) / 100,
-            },
-          ]}
-        >
+        <View style={[styles.section7, { height: height * 0.12 }]}>
           <Text style={styles.text}>Sección 7</Text>
         </View>
       ) : (
@@ -107,7 +98,6 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 20,
-    marginLeft: 10,
     fontFamily: 'Poppins_500Medium',
   },
 });
