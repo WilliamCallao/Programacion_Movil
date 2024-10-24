@@ -3,28 +3,14 @@ import React, { memo } from 'react';
 import { Text, StyleSheet, Image, Dimensions, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Animated, { useAnimatedStyle, interpolate, Extrapolate } from 'react-native-reanimated';
 
 const { width: screenWidth } = Dimensions.get('window');
 const ITEM_WIDTH = screenWidth * 0.75;
 
-const RecipeCard = ({ item, index, scrollX, onImageError }) => {
-  const animatedStyle = useAnimatedStyle(() => {
-    const scale = interpolate(
-      scrollX.value,
-      [(index - 1) * ITEM_WIDTH, index * ITEM_WIDTH, (index + 1) * ITEM_WIDTH],
-      [0.85, 1, 0.85],
-      Extrapolate.CLAMP
-    );
-
-    return {
-      transform: [{ scale }],
-    };
-  });
-
+const RecipeCard = ({ item, onImageError }) => {
   return (
-    <Animated.View style={[styles.cardContainer, animatedStyle]}>
-      <Animated.View style={[styles.card]}>
+    <View style={styles.cardContainer}>
+      <View style={styles.card}>
         <View style={styles.imageContainer}>
           {item.imagen_url && !item.imageError ? (
             <Image
@@ -38,7 +24,10 @@ const RecipeCard = ({ item, index, scrollX, onImageError }) => {
               <Text style={styles.placeholderText}>Sin Imagen</Text>
             </View>
           )}
-          <LinearGradient colors={['transparent', 'rgba(0, 0, 0, 0.6)', 'rgba(0, 0, 0, 0.8)']} style={styles.gradient} />
+          <LinearGradient
+            colors={['transparent', 'rgba(0, 0, 0, 0.6)', 'rgba(0, 0, 0, 0.8)']}
+            style={styles.gradient}
+          />
           <View style={styles.textContainer}>
             <Text style={styles.recipeTitle}>{item.titulo}</Text>
             <View style={styles.labels}>
@@ -53,8 +42,8 @@ const RecipeCard = ({ item, index, scrollX, onImageError }) => {
             </View>
           </View>
         </View>
-      </Animated.View>
-    </Animated.View>
+      </View>
+    </View>
   );
 };
 
@@ -73,6 +62,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: ITEM_WIDTH,
     alignItems: 'center',
+    marginLeft: 15,
   },
   card: {
     width: '100%',
@@ -122,17 +112,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 8,
-    // backgroundColor: 'rgba(177, 177, 177, 0.5)',
-    // borderRadius: 50,
-    // paddingHorizontal: 15,
-    // paddingVertical: 2,
   },
   label: {
     fontFamily: 'Poppins_400Regular',
     fontSize: 14,
     color: '#fff',
     marginLeft: 5,
-    paddingTop: 5
+    paddingTop: 5,
   },
   imagePlaceholder: {
     flex: 1,
@@ -143,7 +129,7 @@ const styles = StyleSheet.create({
   placeholderText: {
     color: '#fff',
     fontSize: 14,
-  }
+  },
 });
 
 export default memo(RecipeCard);
