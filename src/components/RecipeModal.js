@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,8 @@ import {
   Dimensions,
   ScrollView,
   Image,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -18,6 +20,7 @@ const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
 const RecipeModal = ({ visible, onClose, recipe }) => {
   const translateY = useRef(new Animated.Value(screenHeight)).current;
   const opacity = useRef(new Animated.Value(0)).current;
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     // console.log("Datos recibidos en RecipeModal:", JSON.stringify(recipe, null, 2));
@@ -54,6 +57,25 @@ const RecipeModal = ({ visible, onClose, recipe }) => {
     }
   }, [visible]);
 
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { contentOffset } = event.nativeEvent;
+    setScrollY(contentOffset.y);
+  };
+
+  const handleScrollEndDrag = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { contentOffset } = event.nativeEvent;
+    if (contentOffset.y <= 0 && scrollY <= 0) {
+      onClose();
+    }
+  };
+
+  const formatTime = (isoTime) => {
+    if (isoTime === 'Desconocido') return null;
+    const regex = /PT(\d+)M/;
+    const match = isoTime.match(regex);
+    return match ? `${match[1]} min.` : isoTime;
+  };
+
   return (
     <Modal transparent visible={visible} animationType="none">
       <Animated.View style={[styles.overlay, { opacity }]}>
@@ -69,10 +91,13 @@ const RecipeModal = ({ visible, onClose, recipe }) => {
           </TouchableOpacity>
         </View>
 
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* Título de la receta */}
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          onScroll={handleScroll}
+          onScrollEndDrag={handleScrollEndDrag}
+          scrollEventThrottle={16}
+        >
           <Text style={styles.recipeTitle}>{recipe.titulo}</Text>
-
           <Image source={{ uri: recipe.imagen_url }} style={styles.recipeImage} />
 
           <View style={styles.infoRow}>
@@ -81,16 +106,20 @@ const RecipeModal = ({ visible, onClose, recipe }) => {
               <Text style={styles.infoTitle}>Porciones</Text>
               <Text style={styles.infoValue}>{extractNumber(recipe.porciones)}</Text>
             </View>
-            <View style={[styles.infoBox, styles.preparacionBox]}>
-              <MaterialCommunityIcons name="clock-outline" size={24} color="#1E90FF" />
-              <Text style={styles.infoTitle}>Prep.</Text>
-              <Text style={styles.infoValue}>{formatTime(recipe.tiempo_preparacion)}</Text>
-            </View>
-            <View style={[styles.infoBox, styles.coccionBox]}>
-              <MaterialCommunityIcons name="clock-check-outline" size={24} color="#32CD32" />
-              <Text style={styles.infoTitle}>Coc.</Text>
-              <Text style={styles.infoValue}>{formatTime(recipe.tiempo_coccion)}</Text>
-            </View>
+            {recipe.tiempo_preparacion !== 'Desconocido' && (
+              <View style={[styles.infoBox, styles.preparacionBox]}>
+                <MaterialCommunityIcons name="clock-outline" size={24} color="#1E90FF" />
+                <Text style={styles.infoTitle}>Prep.</Text>
+                <Text style={styles.infoValue}>{formatTime(recipe.tiempo_preparacion)}</Text>
+              </View>
+            )}
+            {recipe.tiempo_coccion !== 'Desconocido' && (
+              <View style={[styles.infoBox, styles.coccionBox]}>
+                <MaterialCommunityIcons name="clock-check-outline" size={24} color="#32CD32" />
+                <Text style={styles.infoTitle}>Coc.</Text>
+                <Text style={styles.infoValue}>{formatTime(recipe.tiempo_coccion)}</Text>
+              </View>
+            )}
           </View>
 
           <View style={styles.section}>
@@ -133,14 +162,8 @@ const extractNumber = (str) => {
   return match ? match[0] : str;
 };
 
-const formatTime = (isoTime) => {
-  const regex = /PT(\d+)M/;
-  const match = isoTime.match(regex);
-  return match ? `${match[1]} min.` : isoTime;
-};
-
 const capitalizeWords = (str) => {
-  return str.replace(/\b\w/g, char => char.toUpperCase());
+  return str.replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
 const styles = StyleSheet.create({
