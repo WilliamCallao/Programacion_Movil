@@ -48,7 +48,7 @@ export default function Secciones56({ recetas }) {
   const scrollX = useSharedValue(0);
 
   useEffect(() => {
-    console.log('Datos recibidos por Secciones56:', JSON.stringify(recetas, null, 2));
+    // console.log('Datos recibidos por Secciones56:', JSON.stringify(recetas, null, 2));
   }, [recetas]);
 
   const resumen = calcularResumenNutricional(recetas);
