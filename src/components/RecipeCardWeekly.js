@@ -4,15 +4,14 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 export default function RecipeCardWeekly({ receta }) {
   const [imageError, setImageError] = useState(false);
-  const placeholderImage = 'https://via.placeholder.com/80'; // Imagen por defecto
+  const placeholderImage = 'https://via.placeholder.com/80';
 
-  // Log para verificar los datos recibidos
   useEffect(() => {
     // console.log('Receta recibida en RecipeCardWeekly:', receta);
   }, [receta]);
 
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} activeOpacity={0.8}>
       <View style={styles.imageContainer}>
         {receta.imagen_url && !imageError ? (
           <Image
@@ -31,7 +30,9 @@ export default function RecipeCardWeekly({ receta }) {
         <Text numberOfLines={1} style={styles.title}>
           {receta.titulo}
         </Text>
-        <Text style={styles.subtitle}>{receta.calorias} kcal</Text>
+        <Text style={styles.subtitle}>
+          {receta.nutricion?.calories || receta.calorias} kcal
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -40,16 +41,16 @@ export default function RecipeCardWeekly({ receta }) {
 const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     marginVertical: 8,
-    marginHorizontal: 16,
+    marginHorizontal: 10,
     overflow: 'hidden',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    elevation: 2,
   },
   imageContainer: {
     width: 80,
@@ -64,11 +65,12 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ccc',
+    backgroundColor: '#CCCCCC',
   },
   placeholderText: {
-    color: '#fff',
-    fontSize: 14,
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontFamily: 'DMSans_400Regular',
   },
   infoContainer: {
     flex: 1,
@@ -77,13 +79,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
+    fontWeight: '600',
+    color: '#333333',
     fontFamily: 'DMSans_500Medium',
-    color: '#333',
-    marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
+    color: '#777777',
     fontFamily: 'DMSans_400Regular',
-    color: '#777',
+    marginTop: 4,
   },
 });
