@@ -1,49 +1,61 @@
-// src/components/RecipeCard.js
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Text, StyleSheet, Image, Dimensions, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import RecipeModal from './RecipeModal';
 
 const { width: screenWidth } = Dimensions.get('window');
 const ITEM_WIDTH = screenWidth * 0.75;
 
 const RecipeCard = ({ item, onImageError }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => setModalVisible(true);
+  const closeModal = () => setModalVisible(false);
+ 
   return (
-    <View style={styles.cardContainer}>
-      <View style={styles.card}>
-        <View style={styles.imageContainer}>
-          {item.imagen_url && !item.imageError ? (
-            <Image
-              source={{ uri: item.imagen_url }}
-              style={styles.image}
-              onError={() => onImageError(item.id)}
-              resizeMode="cover"
-            />
-          ) : (
-            <View style={styles.imagePlaceholder}>
-              <Text style={styles.placeholderText}>Sin Imagen</Text>
-            </View>
-          )}
-          <LinearGradient
-            colors={['transparent', 'rgba(0, 0, 0, 0.6)', 'rgba(0, 0, 0, 0.8)']}
-            style={styles.gradient}
-          />
-          <View style={styles.textContainer}>
-            <Text style={styles.recipeTitle}>{item.titulo}</Text>
-            <View style={styles.labels}>
-              <View style={styles.labelContainer}>
-                <MaterialCommunityIcons name="clock-outline" size={20} color="#fff" />
-                <Text style={styles.label}>{formatTime(item.tiempo_preparacion)}</Text>
+    <>
+      <View onTouchEnd={openModal} style={styles.cardContainer}>
+        <View style={styles.card}>
+          <View style={styles.imageContainer}>
+            {item.imagen_url && !item.imageError ? (
+              <Image
+                source={{ uri: item.imagen_url }}
+                style={styles.image}
+                onError={() => onImageError(item.id)}
+                resizeMode="cover"
+              />
+            ) : (
+              <View style={styles.imagePlaceholder}>
+                <Text style={styles.placeholderText}>Sin Imagen</Text>
               </View>
-              <View style={styles.labelContainer}>
-                <MaterialCommunityIcons name="chef-hat" size={20} color="#fff" />
-                <Text style={styles.label}>{formatTime(item.tiempo_coccion)}</Text>
+            )}
+            <LinearGradient
+              colors={['transparent', 'rgba(0, 0, 0, 0.6)', 'rgba(0, 0, 0, 0.8)']}
+              style={styles.gradient}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.recipeTitle}>{item.titulo}</Text>
+              <View style={styles.labels}>
+                <View style={styles.labelContainer}>
+                  <MaterialCommunityIcons name="clock-outline" size={20} color="#fff" />
+                  <Text style={styles.label}>{formatTime(item.tiempo_preparacion)}</Text>
+                </View>
+                <View style={styles.labelContainer}>
+                  <MaterialCommunityIcons name="chef-hat" size={20} color="#fff" />
+                  <Text style={styles.label}>{formatTime(item.tiempo_coccion)}</Text>
+                </View>
               </View>
             </View>
           </View>
         </View>
       </View>
-    </View>
+
+      <RecipeModal
+        visible={modalVisible}
+        onClose={closeModal}
+        recipe={item}
+      />
+    </>
   );
 };
 
