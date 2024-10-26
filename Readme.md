@@ -45,17 +45,7 @@ Para poder ejecutar el proyecto correctamente y gestionar las herramientas de Ex
 
 3. Escanea el código QR que aparece en la terminal con la aplicación Expo Go.
 
-## Ejecución en Web
-
-1. Inicia el proyecto en modo web:
-   ```bash
-   npx expo start --web
-   ```
-
-2. Abre el navegador y accede a la URL que se muestra en la terminal para ver tu proyecto ejecutándose en la web.
-
 ## Tecnologías Utilizadas
 
 - **React Native**: Framework para construir aplicaciones móviles usando React.
 - **Expo**: Plataforma y conjunto de herramientas para desarrollar y construir aplicaciones React Native.
-- **React Native Paper**: Biblioteca de componentes de Material Design para React Native. Más información disponible en la [documentación oficial](https://callstack.github.io/react-native-paper/).
