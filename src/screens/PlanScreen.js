@@ -7,7 +7,7 @@ import { obtenerRecetasPorIds } from '../services/recetaService';
 import Secciones56 from '../components/RecipesPlan';
 import WeeklyView from '../components/WeeklyView';
 
-const USER_ID = 'Ieq3dMwGsdDqInbvlUvy';
+const USER_ID = 'mz8TIwTVRAMwiLIAshLS';
 
 const getDayName = (offset = 0) => {
   const date = new Date();
