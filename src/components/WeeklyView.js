@@ -11,6 +11,7 @@ import {
   UIManager 
 } from 'react-native';
 import RecipeCardWeekly from './RecipeCardWeekly';
+import RecipeModal from './RecipeModal'; 
 import { Ionicons } from '@expo/vector-icons';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -34,6 +35,8 @@ const obtenerRecetasConDetalles = (comidas, recetasCompletas) => {
 
 export default function WeeklyView({ planes, recetasCompletas, currentDay }) {
   const [activeDay, setActiveDay] = useState(currentDay !== undefined ? currentDay : null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null); 
 
   useEffect(() => {}, [planes, recetasCompletas, currentDay]);
 
@@ -42,49 +45,66 @@ export default function WeeklyView({ planes, recetasCompletas, currentDay }) {
     setActiveDay(prevActiveDay => (prevActiveDay === index ? null : index));
   };
 
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {diasDeLaSemana.map((dia, index) => {
-        const plan = planes.find((p) => p.dia === index + 1);
-        const recetas = plan ? obtenerRecetasConDetalles(plan.comidas, recetasCompletas) : [];
+  const handleRecipePress = (receta) => {
+    console.log(JSON.stringify(receta)); 
+    setSelectedRecipe(receta);
+    setModalVisible(true); 
+  };
 
-        return (
-          <View key={dia} style={styles.daySection}>
-            <TouchableOpacity 
-              onPress={() => toggleDay(index)} 
-              style={styles.dayHeader}
-              activeOpacity={1}
-              accessibilityRole="button"
-              accessibilityLabel={`Mostrar recetas para ${dia}`}
-              accessibilityState={{ expanded: activeDay === index }}
-            >
-              <Text style={[styles.dayTitle, activeDay === index && styles.activeDayTitle]}>
-                {dia}
-              </Text>
-              <Ionicons
-                name={activeDay === index ? 'chevron-up' : 'chevron-down'}
-                size={20}
-                color="#6C757D"
-              />
-            </TouchableOpacity>
-            {activeDay === index && (
-              <View style={styles.recipesContainer}>
-                {recetas.length > 0 ? (
-                  recetas.map((item, idx) => (
-                    <View key={item.id.toString()}>
-                      <RecipeCardWeekly receta={item} />
-                      {idx < recetas.length - 1 && <View style={styles.separator} />}
-                    </View>
-                  ))
-                ) : (
-                  <Text style={styles.noRecipesText}>No hay recetas para este día.</Text>
-                )}
-              </View>
-            )}
-          </View>
-        );
-      })}
-    </ScrollView>
+  return (
+    <View style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        {diasDeLaSemana.map((dia, index) => {
+          const plan = planes.find((p) => p.dia === index + 1);
+          const recetas = plan ? obtenerRecetasConDetalles(plan.comidas, recetasCompletas) : [];
+
+          return (
+            <View key={dia} style={styles.daySection}>
+              <TouchableOpacity 
+                onPress={() => toggleDay(index)} 
+                style={styles.dayHeader}
+                activeOpacity={1}
+                accessibilityRole="button"
+                accessibilityLabel={`Mostrar recetas para ${dia}`}
+                accessibilityState={{ expanded: activeDay === index }}
+              >
+                <Text style={[styles.dayTitle, activeDay === index && styles.activeDayTitle]}>
+                  {dia}
+                </Text>
+                <Ionicons
+                  name={activeDay === index ? 'chevron-up' : 'chevron-down'}
+                  size={20}
+                  color="#6C757D"
+                />
+              </TouchableOpacity>
+              {activeDay === index && (
+                <View style={styles.recipesContainer}>
+                  {recetas.length > 0 ? (
+                    recetas.map((item, idx) => (
+                      <View key={item.id.toString()}>
+                        <RecipeCardWeekly receta={item} onPress={handleRecipePress} />
+                        {idx < recetas.length - 1 && <View style={styles.separator} />}
+                      </View>
+                    ))
+                  ) : (
+                    <Text style={styles.noRecipesText}>No hay recetas para este día.</Text>
+                  )}
+                </View>
+              )}
+            </View>
+          );
+        })}
+      </ScrollView>
+
+      {/* Incluir el RecipeModal */}
+      {selectedRecipe && (
+        <RecipeModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          recipe={selectedRecipe}
+        />
+      )}
+    </View>
   );
 }
 
