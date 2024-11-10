@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-export default function RecipeCardWeekly({ receta }) {
+export default function RecipeCardWeekly({ receta, onPress }) { 
   const [imageError, setImageError] = useState(false);
   const placeholderImage = 'https://via.placeholder.com/80';
 
@@ -10,8 +10,18 @@ export default function RecipeCardWeekly({ receta }) {
     // console.log('Receta recibida en RecipeCardWeekly:', receta);
   }, [receta]);
 
+  const handlePress = () => {
+    if (onPress && typeof onPress === 'function') {
+      onPress(receta);
+    }
+  };
+
   return (
-    <TouchableOpacity style={styles.card} activeOpacity={0.8}>
+    <TouchableOpacity 
+      style={styles.card} 
+      activeOpacity={0.8}
+      onPress={handlePress}
+    >
       <View style={styles.imageContainer}>
         {receta.imagen_url && !imageError ? (
           <Image
