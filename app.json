@@ -30,6 +30,9 @@
         "projectId": "2468ba58-7dbe-4fee-8d16-0d8aff8c9307"
       }
     },
-    "owner": "programacionmovil"
+    "owner": "programacionmovil",
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
