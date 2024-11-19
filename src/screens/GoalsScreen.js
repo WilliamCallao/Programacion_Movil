@@ -1,97 +1,63 @@
-// screens/GoalsScreen.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { auth } from '../services/firebase';
 import { actualizarUsuario } from '../services/usuarioService';
-import { Picker } from '@react-native-picker/picker';
-import AppNavigator from '../navigation/AppNavigator';
+import MultiSelect from 'react-native-multiple-select';
 
-const GoalsScreen = ({navigation}) => {
-  const [metaCalorias, setMetaCalorias] = useState('');
-  const [carbohidratos, setCarbohidratos] = useState('');
-  const [proteinas, setProteinas] = useState('');
-  const [grasas, setGrasas] = useState('');
-  const [pesoObjetivoEntero, setPesoObjetivoEntero] = useState('35');
-  const [pesoObjetivoDecimal, setPesoObjetivoDecimal] = useState('0');
+const GoalsScreen = ({ navigation }) => {
+  const [preferenciasDietarias, setPreferenciasDietarias] = useState([]);
   const [tipoObjetivo, setTipoObjetivo] = useState('');
+
+  const opcionesDietarias = [
+    { id: 'vegetariano', name: 'Vegetariano' },
+    { id: 'vegano', name: 'Vegano' },
+    { id: 'gluten-free', name: 'Gluten-Free' },
+    { id: 'low sodium', name: 'Low Sodium' },
+    { id: 'lower carb', name: 'Lower Carb' },
+    { id: 'high in fiber', name: 'High in Fiber' },
+  ];
 
   const handleFinish = async () => {
     try {
-    const user = auth.currentUser;
-    if (user) {
-      const pesoObjetivo = parseFloat(`${pesoObjetivoEntero}.${pesoObjetivoDecimal}`);
-      const datosActualizados = {
-        'objetivos.meta_calorias': parseFloat(metaCalorias),
-        'objetivos.distribucion_macronutrientes.carbohidratos': parseFloat(carbohidratos),
-        'objetivos.distribucion_macronutrientes.proteinas': parseFloat(proteinas),
-        'objetivos.distribucion_macronutrientes.grasas': parseFloat(grasas),
-        'objetivo_peso.peso_objetivo_kg': pesoObjetivo,
-        'objetivo_peso.tipo_objetivo': tipoObjetivo,
-      };
-      await actualizarUsuario(user.uid, datosActualizados);
-      console.log('Datos del usuario actualizados en Firebase.');
-      navigation.navigate('AppNavigator'); // Navega a AppNavigator
+      const user = auth.currentUser;
+      if (user) {
+        const datosActualizados = {
+          'preferencias.preferencias_dietarias': preferenciasDietarias,
+          'objetivo_peso.tipo_objetivo': tipoObjetivo,
+        };
+        await actualizarUsuario(user.uid, datosActualizados);
+        console.log('Datos del usuario actualizados en Firebase.');
+        navigation.navigate('AppNavigator', { screen: 'PlanScreen' }); // Navega a PlanScreen dentro de AppNavigator
+      }
+    } catch (error) {
+      console.error('Error al actualizar datos del usuario:', error.message);
     }
-  } catch (error) {
-    console.error('Error al actualizar datos del usuario:', error.message);
-  }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.authContainer}>
-        <Text style={styles.title}>Objetivos</Text>
-        <TextInput
-          style={styles.input}
-          value={metaCalorias}
-          onChangeText={setMetaCalorias}
-          placeholder="Meta de Calorías"
-          keyboardType="numeric"
+        <Text style={styles.title}>Preferencias y Objetivos</Text>
+        <Text style={styles.label}>Preferencias Dietarias</Text>
+        <MultiSelect
+          items={opcionesDietarias}
+          uniqueKey="id"
+          onSelectedItemsChange={setPreferenciasDietarias}
+          selectedItems={preferenciasDietarias}
+          selectText="Selecciona tus preferencias"
+          searchInputPlaceholderText="Buscar preferencias..."
+          tagRemoveIconColor="#CCC"
+          tagBorderColor="#CCC"
+          tagTextColor="#CCC"
+          selectedItemTextColor="#CCC"
+          selectedItemIconColor="#CCC"
+          itemTextColor="#000"
+          displayKey="name"
+          searchInputStyle={{ color: '#CCC' }}
+          submitButtonColor="#CCC"
+          submitButtonText="Seleccionar"
         />
-        <TextInput
-          style={styles.input}
-          value={carbohidratos}
-          onChangeText={setCarbohidratos}
-          placeholder="Carbohidratos (%)"
-          keyboardType="numeric"
-        />
-        <TextInput
-          style={styles.input}
-          value={proteinas}
-          onChangeText={setProteinas}
-          placeholder="Proteínas (%)"
-          keyboardType="numeric"
-        />
-        <TextInput
-          style={styles.input}
-          value={grasas}
-          onChangeText={setGrasas}
-          placeholder="Grasas (%)"
-          keyboardType="numeric"
-        />
-        <Text style={styles.label}>Peso Objetivo (kg)</Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={pesoObjetivoEntero}
-            style={styles.picker}
-            onValueChange={(itemValue) => setPesoObjetivoEntero(itemValue)}
-          >
-            {Array.from({ length: 191 }, (_, i) => i + 35).map((value) => (
-              <Picker.Item key={value} label={`${value}`} value={`${value}`} />
-            ))}
-          </Picker>
-          <Text style={styles.decimalSeparator}>.</Text>
-          <Picker
-            selectedValue={pesoObjetivoDecimal}
-            style={styles.picker}
-            onValueChange={(itemValue) => setPesoObjetivoDecimal(itemValue)}
-          >
-            {Array.from({ length: 10 }, (_, i) => i).map((value) => (
-              <Picker.Item key={value} label={`${value}`} value={`${value}`} />
-            ))}
-          </Picker>
-        </View>
         <Text style={styles.label}>Tipo de Objetivo</Text>
         <Picker
           selectedValue={tipoObjetivo}
@@ -136,26 +102,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 8,
   },
-  input: {
-    height: 40,
-    borderColor: '#ddd',
-    borderWidth: 1,
-    marginBottom: 16,
-    padding: 8,
-    borderRadius: 4,
-  },
-  pickerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
   picker: {
-    flex: 1,
     height: 50,
-  },
-  decimalSeparator: {
-    fontSize: 24,
-    marginHorizontal: 8,
+    marginBottom: 16,
   },
   buttonContainer: {
     marginBottom: 16,

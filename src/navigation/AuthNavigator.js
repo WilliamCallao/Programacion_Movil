@@ -1,4 +1,3 @@
-// navigation/AuthNavigator.js
 import React, { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { onAuthStateChanged } from 'firebase/auth';

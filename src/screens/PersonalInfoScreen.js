@@ -1,4 +1,3 @@
-// screens/PersonalInfoScreen.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';

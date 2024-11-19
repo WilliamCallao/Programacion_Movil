@@ -1,4 +1,3 @@
-// screens/PhysicalInfoScreen.js
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';

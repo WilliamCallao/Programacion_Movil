@@ -1,5 +1,3 @@
-// src/services/usuarioService.js
-
 import { collection, addDoc, updateDoc, doc, arrayUnion, getDoc } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { db } from './firebase';
