@@ -12,7 +12,7 @@ const LoginScreen = ({ navigation }) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log('User signed in successfully!');
-      navigation.navigate('AppNavigator'); // Navega a AppNavigator
+      navigation.navigate('AuthNavigator'); // Navega a AuthNavigator
     } catch (error) {
       console.error('Authentication error:', error.message);
     }

@@ -37,7 +37,9 @@
     "react-native-skeleton-placeholder": "^5.2.4",
     "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.13",
-    "zustand": "^5.0.0-rc.2"
+    "zustand": "^5.0.0-rc.2",
+    "@react-native-community/datetimepicker": "8.2.0",
+    "@react-native-picker/picker": "2.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

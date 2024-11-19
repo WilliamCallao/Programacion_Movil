@@ -5,35 +5,22 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../services/firebase';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
-import AppNavigator from './AppNavigator';
-import UserInfoNavigator from './UserInfoNavigator';
 
 const Stack = createStackNavigator();
 
-const AuthNavigator = () => {
-  const [user, setUser] = useState(null);
-
+const AuthNavigator = ({ setUser }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [setUser]);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {user ? (
-        <>
-          <Stack.Screen name="UserInfoNavigator" component={UserInfoNavigator} />
-          <Stack.Screen name="AppNavigator" component={AppNavigator} />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-        </>
-      )}
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
     </Stack.Navigator>
   );
 };
