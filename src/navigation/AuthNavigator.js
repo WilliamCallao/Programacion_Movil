@@ -6,6 +6,7 @@ import { auth } from '../services/firebase';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import AppNavigator from './AppNavigator';
+import UserInfoNavigator from './UserInfoNavigator';
 
 const Stack = createStackNavigator();
 
@@ -23,7 +24,10 @@ const AuthNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {user ? (
-        <Stack.Screen name="AppNavigator" component={AppNavigator} />
+        <>
+          <Stack.Screen name="UserInfoNavigator" component={UserInfoNavigator} />
+          <Stack.Screen name="AppNavigator" component={AppNavigator} />
+        </>
       ) : (
         <>
           <Stack.Screen name="LoginScreen" component={LoginScreen} />

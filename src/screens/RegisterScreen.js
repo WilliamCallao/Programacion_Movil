@@ -2,17 +2,46 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../services/firebase';
+import { auth, db } from '../services/firebase';
+import { doc, setDoc } from "firebase/firestore";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [nombre, setNombre] = useState('');
 
   const handleRegister = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Guardar datos iniciales del usuario en Firestore
+      await setDoc(doc(db, "usuarios", user.uid), {
+        id_usuario: user.uid,
+        informacion_personal: {
+          nombre: nombre,
+          correo: email,
+          contraseña: password, // No es seguro guardar contraseñas en texto plano
+          foto_perfil_url: "",
+          fecha_nacimiento: null,
+          genero: ""
+        },
+        medidas_fisicas: {
+          peso_kg: null,
+          altura_cm: null,
+          nivel_actividad: ""
+        },
+        preferencias: {
+          preferencias_dietarias: [],
+          condiciones_salud: []
+        },
+        objetivos: {
+          tipo_objetivo: ""
+        }
+      });
+
       console.log('User created successfully!');
-      navigation.navigate('AppNavigator'); // Navega a AppNavigator
+      navigation.navigate('UserInfoNavigator'); // Navega a UserInfoNavigator
     } catch (error) {
       console.error('Authentication error:', error.message);
     }
@@ -22,6 +51,12 @@ const RegisterScreen = ({ navigation }) => {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.authContainer}>
         <Text style={styles.title}>Registrarse</Text>
+        <TextInput
+          style={styles.input}
+          value={nombre}
+          onChangeText={setNombre}
+          placeholder="Nombre"
+        />
         <TextInput
           style={styles.input}
           value={email}

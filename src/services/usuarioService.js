@@ -121,13 +121,23 @@ export const crearUsuario = async (datosUsuario) => {
   }
 };
 
+// Actualizar los datos del usuario en Firebase
+export const actualizarUsuario = async (usuarioId, datosActualizados) => {
+  try {
+    const usuarioDocRef = doc(db, 'usuarios', usuarioId);
+    await updateDoc(usuarioDocRef, datosActualizados);
+    console.log('Datos del usuario actualizados en Firebase.');
+  } catch (error) {
+    console.error('Error al actualizar los datos del usuario:', error);
+  }
+};
+
 export const obtenerUsuario = async (usuarioId) => {
   try {
     const usuarioDocRef = doc(db, 'usuarios', usuarioId);
     const usuarioDoc = await getDoc(usuarioDocRef);
 
     if (usuarioDoc.exists()) {
-      // console.log('Datos del usuario:', JSON.stringify(usuarioDoc.data(), null, 2));
       return usuarioDoc.data();
     } else {
       console.error('No se encontró un usuario con la ID proporcionada.');
