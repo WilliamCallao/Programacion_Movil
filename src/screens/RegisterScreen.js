@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-nat
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../services/firebase';
 import { doc, setDoc } from "firebase/firestore";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -11,16 +12,19 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleRegister = async () => {
     try {
+      if (!auth) {
+        throw new Error('El objeto auth no está inicializado. Verifica la configuración de Firebase.');
+      }
+
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Guardar datos iniciales del usuario en Firestore
       await setDoc(doc(db, "usuarios", user.uid), {
         id_usuario: user.uid,
         informacion_personal: {
           nombre: nombre,
           correo: email,
-          contraseña: password, // No es seguro guardar contraseñas en texto plano
+          contraseña: password,
           foto_perfil_url: "",
           fecha_nacimiento: null,
           genero: ""
@@ -39,8 +43,11 @@ const RegisterScreen = ({ navigation }) => {
         }
       });
 
-      console.log('User created successfully!');
-      navigation.navigate('UserInfoNavigator'); // Navega a UserInfoNavigator
+      await AsyncStorage.setItem('userId', user.uid);
+      console.log('User ID saved in AsyncStorage:', user.uid);
+
+      console.log('User created and user ID saved successfully!');
+      navigation.navigate('UserInfoNavigator');
     } catch (error) {
       console.error('Authentication error:', error.message);
     }
