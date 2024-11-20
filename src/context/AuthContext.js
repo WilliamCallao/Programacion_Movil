@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
           setUser(currentUser);
           const userId = currentUser.uid;
           try {
-            const registroCompleto = await AsyncStorage.getItem('isRegistered');
+            const registroCompleto = await AsyncStorage.getItem(`isRegistered_${userId}`);
             setIsRegistered(registroCompleto === 'true');
           } catch (error) {
             console.error('Error al obtener isRegistered:', error);
@@ -41,12 +41,14 @@ export const AuthProvider = ({ children }) => {
     await auth.signOut();
     setUser(null);
     setIsRegistered(false);
-    await AsyncStorage.removeItem('isRegistered');
+    // No eliminar isRegistered, ya que es específico por usuario
   };
 
   const completeRegistration = async () => {
-    setIsRegistered(true);
-    await AsyncStorage.setItem('isRegistered', 'true');
+    if (user) {
+      setIsRegistered(true);
+      await AsyncStorage.setItem(`isRegistered_${user.uid}`, 'true');
+    }
   };
 
   return (
