@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+// src/screens/LoginScreen.js
+
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../services/firebase';
+import { AuthContext } from '../context/AuthContext';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { } = useContext(AuthContext); // Puedes usar funciones del contexto si es necesario
 
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log('User signed in successfully!');
-      navigation.navigate('AuthNavigator'); // Navega a AuthNavigator
     } catch (error) {
       console.error('Authentication error:', error.message);
     }

@@ -1,9 +1,13 @@
+// src/screens/PhysicalInfoScreen.js
+
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { auth } from '../services/firebase';
-import { actualizarUsuario } from '../services/usuarioService';
 import { Picker } from '@react-native-picker/picker';
+import { actualizarUsuario } from '../services/usuarioService';
+import MultiSelect from 'react-native-multiple-select';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { auth } from '../services/firebase';
+import { useNavigation } from '@react-navigation/native';
 
 const PhysicalInfoScreen = () => {
   const [pesoEntero, setPesoEntero] = useState('35');
@@ -16,6 +20,10 @@ const PhysicalInfoScreen = () => {
     const user = auth.currentUser;
     if (user) {
       const peso = parseFloat(`${pesoEntero}.${pesoDecimal}`);
+      if (!peso || !altura || !nivelActividad) {
+        return;
+      }
+
       const datosActualizados = {
         'medidas_fisicas.peso_kg': peso,
         'medidas_fisicas.altura_cm': parseFloat(altura),
@@ -23,6 +31,7 @@ const PhysicalInfoScreen = () => {
       };
       await actualizarUsuario(user.uid, datosActualizados);
       navigation.navigate('GoalsScreen');
+    } else {
     }
   };
 

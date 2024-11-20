@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+// src/screens/RegisterScreen.js
+
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../services/firebase';
 import { doc, setDoc } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../context/AuthContext';
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [nombre, setNombre] = useState('');
+  const { } = useContext(AuthContext); // Puedes usar funciones del contexto si es necesario
 
   const handleRegister = async () => {
     try {
@@ -47,7 +51,6 @@ const RegisterScreen = ({ navigation }) => {
       console.log('User ID saved in AsyncStorage:', user.uid);
 
       console.log('User created and user ID saved successfully!');
-      navigation.navigate('UserInfoNavigator');
     } catch (error) {
       console.error('Authentication error:', error.message);
     }

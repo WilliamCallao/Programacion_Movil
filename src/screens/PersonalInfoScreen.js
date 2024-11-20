@@ -1,3 +1,5 @@
+// src/screens/PersonalInfoScreen.js
+
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +18,10 @@ const PersonalInfoScreen = () => {
   const handleNext = async () => {
     const user = auth.currentUser;
     if (user) {
+      if (!nombre || !genero || !fechaNacimiento) {
+        return;
+      }
+
       const datosActualizados = {
         'informacion_personal.nombre': nombre,
         'informacion_personal.fecha_nacimiento': fechaNacimiento.toISOString().split('T')[0],
@@ -23,6 +29,7 @@ const PersonalInfoScreen = () => {
       };
       await actualizarUsuario(user.uid, datosActualizados);
       navigation.navigate('PhysicalInfoScreen');
+    } else {
     }
   };
 

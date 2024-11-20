@@ -1,17 +1,20 @@
 // src/screens/GoalsScreen.js
 
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView, Alert } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { actualizarUsuario, generarYAsignarPlanAlimenticio } from '../services/usuarioService';
 import MultiSelect from 'react-native-multiple-select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../services/firebase';
+import { AuthContext } from '../context/AuthContext';
 
 const GoalsScreen = ({ navigation }) => {
   const [preferenciasDietarias, setPreferenciasDietarias] = useState([]);
   const [tipoObjetivo, setTipoObjetivo] = useState('');
+  const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
+  const { completeRegistration } = useContext(AuthContext);
 
   // Función para obtener y mostrar el documento del usuario sin formatear
   const fetchUserDocument = async () => {
@@ -22,18 +25,14 @@ const GoalsScreen = ({ navigation }) => {
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           console.log('Documento del usuario:', JSON.stringify(userDoc.data(), null, 2));
-          Alert.alert('Información', 'Consulta exitosa en la consola.');
         } else {
           console.log('No se encontró el documento del usuario.');
-          Alert.alert('Error', 'No se encontró el documento del usuario.');
         }
       } else {
         console.log('No se encontró usuarioId en AsyncStorage.');
-        Alert.alert('Error', 'No se encontró usuarioId en AsyncStorage.');
       }
     } catch (error) {
       console.error('Error al obtener el documento del usuario:', error.message);
-      Alert.alert('Error', 'Hubo un problema al obtener el documento del usuario.');
     }
   };
 
@@ -45,7 +44,7 @@ const GoalsScreen = ({ navigation }) => {
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           const data = userDoc.data();
-  
+
           // Construir el objeto 'usuario' en la estructura deseada
           const usuario = {
             informacionPersonal: {
@@ -68,20 +67,16 @@ const GoalsScreen = ({ navigation }) => {
               condiciones_salud: data.preferencias.condiciones_salud,
             },
           };
-  
+
           console.log('Usuario Formateado:', JSON.stringify(usuario, null, 2));
-          Alert.alert('Información', 'Usuario logueado en la consola.');
         } else {
           console.log('No se encontró el documento del usuario.');
-          Alert.alert('Error', 'No se encontró el documento del usuario.');
         }
       } else {
         console.log('No se encontró usuarioId en AsyncStorage.');
-        Alert.alert('Error', 'No se encontró usuarioId en AsyncStorage.');
       }
     } catch (error) {
       console.error('Error al loguear el usuario:', error.message);
-      Alert.alert('Error', 'Hubo un problema al loguear el usuario.');
     }
   };
 
@@ -96,31 +91,29 @@ const GoalsScreen = ({ navigation }) => {
         };
         await actualizarUsuario(userId, datosActualizados);
         console.log('Datos del usuario actualizados en Firebase.');
-        Alert.alert('Éxito', 'Datos actualizados correctamente.');
       } else {
         console.log('No se encontró usuarioId en AsyncStorage.');
-        Alert.alert('Error', 'No se encontró usuarioId en AsyncStorage.');
       }
     } catch (error) {
       console.error('Error al actualizar datos del usuario:', error.message);
-      Alert.alert('Error', 'Hubo un problema al actualizar los datos del usuario.');
     }
   };
 
   // Función para generar y asignar el plan alimenticio
   const handleGenerarPlan = async () => {
     try {
+      setIsGeneratingPlan(true);
       const userId = await AsyncStorage.getItem('usuarioId');
       if (userId) {
         await generarYAsignarPlanAlimenticio(userId);
-        Alert.alert('Éxito', 'Plan alimenticio generado y asignado al usuario.');
+        await completeRegistration();
       } else {
         console.log('No se encontró usuarioId en AsyncStorage.');
-        Alert.alert('Error', 'No se encontró usuarioId en AsyncStorage.');
       }
     } catch (error) {
       console.error('Error al generar el plan alimenticio:', error.message);
-      Alert.alert('Error', 'Hubo un problema al generar el plan alimenticio.');
+    } finally {
+      setIsGeneratingPlan(false);
     }
   };
 
@@ -177,7 +170,12 @@ const GoalsScreen = ({ navigation }) => {
           <Button title="Log Usuario" onPress={handleLogUsuario} color="#e67e22" />
         </View>
         <View style={styles.buttonContainer}>
-          <Button title="Generar Plan Alimenticio" onPress={handleGenerarPlan} color="#9b59b6" />
+          <Button
+            title={isGeneratingPlan ? "Generando Plan..." : "Generar Plan Alimenticio"}
+            onPress={handleGenerarPlan}
+            color="#9b59b6"
+            disabled={isGeneratingPlan}
+          />
         </View>
       </View>
     </ScrollView>
