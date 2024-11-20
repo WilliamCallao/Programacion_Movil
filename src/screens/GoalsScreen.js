@@ -1,5 +1,7 @@
+// src/screens/GoalsScreen.js
+
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { auth, db } from '../services/firebase';
 import { actualizarUsuario } from '../services/usuarioService';
@@ -19,6 +21,54 @@ const GoalsScreen = ({ navigation }) => {
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           console.log('Documento del usuario:', JSON.stringify(userDoc.data(), null, 2));
+          Alert.alert('Información', 'Consulta exitosa en la consola.');
+        } else {
+          console.log('No se encontró el documento del usuario.');
+          Alert.alert('Error', 'No se encontró el documento del usuario.');
+        }
+      } else {
+        console.log('No se encontró userId en AsyncStorage.');
+        Alert.alert('Error', 'No se encontró userId en AsyncStorage.');
+      }
+    } catch (error) {
+      console.error('Error al obtener el documento del usuario:', error.message);
+      Alert.alert('Error', 'Hubo un problema al obtener el documento del usuario.');
+    }
+  };
+
+  const handleLogUsuario = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('userId');
+      if (userId) {
+        const userDocRef = doc(db, 'usuarios', userId);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+
+          // Construir el objeto 'usuario'
+          const usuario = {
+            informacionPersonal: {
+              nombre: data.informacion_personal.nombre,
+              correo: data.informacion_personal.correo,
+              genero: data.informacion_personal.genero,
+              fechaNacimiento: data.informacion_personal.fecha_nacimiento,
+              fotoPerfilUrl: data.informacion_personal.foto_perfil_url,
+            },
+            medidasFisicas: {
+              pesoKg: data.medidas_fisicas.peso_kg,
+              alturaCm: data.medidas_fisicas.altura_cm,
+              nivelActividad: data.medidas_fisicas.nivel_actividad,
+            },
+            objetivoPersonal: {
+              tipoObjetivo: data.objetivo_peso.tipo_objetivo,
+            },
+            preferencias: {
+              preferencias_dietarias: data.preferencias.preferencias_dietarias,
+              condiciones_salud: data.preferencias.condiciones_salud,
+            },
+          };
+
+          console.log('Usuario Formateado:', JSON.stringify(usuario, null, 2));
         } else {
           console.log('No se encontró el documento del usuario.');
         }
@@ -26,7 +76,7 @@ const GoalsScreen = ({ navigation }) => {
         console.log('No se encontró userId en AsyncStorage.');
       }
     } catch (error) {
-      console.error('Error al obtener el documento del usuario:', error.message);
+      console.error('Error al loguear el usuario:', error.message);
     }
   };
 
@@ -49,9 +99,11 @@ const GoalsScreen = ({ navigation }) => {
         };
         await actualizarUsuario(user.uid, datosActualizados);
         console.log('Datos del usuario actualizados en Firebase.');
+        Alert.alert('Éxito', 'Datos actualizados correctamente.');
       }
     } catch (error) {
       console.error('Error al actualizar datos del usuario:', error.message);
+      Alert.alert('Error', 'Hubo un problema al actualizar los datos del usuario.');
     }
   };
 
@@ -94,6 +146,10 @@ const GoalsScreen = ({ navigation }) => {
         </View>
         <View style={styles.buttonContainer}>
           <Button title="Ver Documento" onPress={fetchUserDocument} color="#2ecc71" />
+        </View>
+        {/* Nuevo Botón Agregado */}
+        <View style={styles.buttonContainer}>
+          <Button title="Log Usuario" onPress={handleLogUsuario} color="#e67e22" />
         </View>
       </View>
     </ScrollView>
