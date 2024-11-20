@@ -13,6 +13,7 @@ const GoalsScreen = ({ navigation }) => {
   const [tipoObjetivo, setTipoObjetivo] = useState('');
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const { completeRegistration } = useContext(AuthContext);
+  
 
   // preferencias y objetivos del usuario
   const handleFinish = async () => {
