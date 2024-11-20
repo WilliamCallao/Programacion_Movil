@@ -1,13 +1,34 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { auth } from '../services/firebase';
+import { auth, db } from '../services/firebase';
 import { actualizarUsuario } from '../services/usuarioService';
 import MultiSelect from 'react-native-multiple-select';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { doc, getDoc } from 'firebase/firestore';
 
 const GoalsScreen = ({ navigation }) => {
   const [preferenciasDietarias, setPreferenciasDietarias] = useState([]);
   const [tipoObjetivo, setTipoObjetivo] = useState('');
+
+  const fetchUserDocument = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('userId');
+      if (userId) {
+        const userDocRef = doc(db, 'usuarios', userId);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          console.log('Documento del usuario:', JSON.stringify(userDoc.data(), null, 2));
+        } else {
+          console.log('No se encontró el documento del usuario.');
+        }
+      } else {
+        console.log('No se encontró userId en AsyncStorage.');
+      }
+    } catch (error) {
+      console.error('Error al obtener el documento del usuario:', error.message);
+    }
+  };
 
   const opcionesDietarias = [
     { id: 'vegetariano', name: 'Vegetariano' },
@@ -28,7 +49,6 @@ const GoalsScreen = ({ navigation }) => {
         };
         await actualizarUsuario(user.uid, datosActualizados);
         console.log('Datos del usuario actualizados en Firebase.');
-        navigation.navigate('AppNavigator', { screen: 'PlanScreen' }); // Navega a PlanScreen dentro de AppNavigator
       }
     } catch (error) {
       console.error('Error al actualizar datos del usuario:', error.message);
@@ -71,6 +91,9 @@ const GoalsScreen = ({ navigation }) => {
         </Picker>
         <View style={styles.buttonContainer}>
           <Button title="Finalizar" onPress={handleFinish} color="#3498db" />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Ver Documento" onPress={fetchUserDocument} color="#2ecc71" />
         </View>
       </View>
     </ScrollView>
