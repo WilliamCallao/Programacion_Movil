@@ -1,18 +1,29 @@
 // src/services/planAlimenticioService.js
 
+import seedrandom from 'seedrandom';
 import { cargarRecetas } from './recetasService';
 
-export const generarPlanSemanal = async (metaCalorias, preferencias) => {
+export const generarPlanSemanal = async (metaCalorias, preferencias, seed = Math.random()) => {
   try {
     console.log('Generando plan semanal con meta_calorias:', metaCalorias);
     console.log('Preferencias del usuario:', preferencias);
 
+    const rng = seedrandom(seed);
+
+    // Variar ligeramente la distribución calórica
+    const variacion = (rng() - 0.5) * 0.1; // Variación de ±5%
     const distribucion = {
-      Desayuno: { min: 0.25, max: 0.30 },
-      Almuerzo: { min: 0.35, max: 0.40 },
-      Cena: { min: 0.25, max: 0.30 },
-      Snacks: { min: 0.05, max: 0.10 },
+      Desayuno: { min: 0.25 + variacion, max: 0.30 + variacion },
+      Almuerzo: { min: 0.35 + variacion, max: 0.40 + variacion },
+      Cena:     { min: 0.25 + variacion, max: 0.30 + variacion },
+      Snacks:   { min: 0.05 + variacion, max: 0.10 + variacion },
     };
+
+    // Asegurar que los porcentajes estén dentro de 0 y 1
+    for (let categoria in distribucion) {
+      distribucion[categoria].min = Math.max(0, Math.min(1, distribucion[categoria].min));
+      distribucion[categoria].max = Math.max(0, Math.min(1, distribucion[categoria].max));
+    }
 
     const caloriasPorCategoria = {
       Desayuno: {
@@ -35,6 +46,7 @@ export const generarPlanSemanal = async (metaCalorias, preferencias) => {
 
     console.log('Calorías por categoría:', caloriasPorCategoria);
 
+    // Cargar las recetas
     const [desayunos, almuerzos, cenas, snacks] = await Promise.all([
       cargarRecetas('desayuno_recetas.json'),
       cargarRecetas('almuerzo_recetas.json'),
@@ -46,24 +58,35 @@ export const generarPlanSemanal = async (metaCalorias, preferencias) => {
       throw new Error('No hay suficientes recetas en una o más categorías.');
     }
 
+    // Aleatorizar las recetas disponibles
+    shuffleArray(desayunos, rng);
+    shuffleArray(almuerzos, rng);
+    shuffleArray(cenas, rng);
+    shuffleArray(snacks, rng);
+
     console.log('Recetas disponibles por categoría:');
     console.log(`Desayunos: ${desayunos.length}`);
     console.log(`Almuerzos: ${almuerzos.length}`);
     console.log(`Cenas: ${cenas.length}`);
     console.log(`Snacks: ${snacks.length}`);
 
+    // Inicializar 'usados' con contadores
     const usados = {
-      Desayuno: new Set(),
-      Almuerzo: new Set(),
-      Cena: new Set(),
-      Snacks: new Set(),
+      Desayuno: {},
+      Almuerzo: {},
+      Cena: {},
+      Snacks: {},
     };
 
-    const maxRecetasPorCategoria = 2;
+    const maxRecetasPorCategoria = 2; // Máximo de recetas por categoría por día
+    const maxRepeticiones = 2; // Máximo de veces que una receta puede aparecer en la semana
 
     const planSemanal = [];
 
-    for (let dia = 1; dia <= 7; dia++) {
+    // Variar el punto de inicio en la iteración de días
+    const startDay = Math.floor(rng() * 7);
+    for (let i = 0; i < 7; i++) {
+      const dia = (startDay + i) % 7 + 1;
       const planDiario = {};
       let totalCaloriasDia = 0;
 
@@ -89,9 +112,13 @@ export const generarPlanSemanal = async (metaCalorias, preferencias) => {
             recetasDisponibles = [];
         }
 
+        // Aleatorizar el orden de las recetas
+        shuffleArray(recetasDisponibles, rng);
+
+        // Filtrar recetas según preferencias
         const recetasFiltradas = recetasDisponibles.filter(receta => {
-          const dietas = preferencias.preferencias_dietarias;
-          const condiciones = preferencias.condiciones_salud;
+          const dietas = preferencias.preferencias_dietarias || [];
+          const condiciones = preferencias.condiciones_salud || [];
           const cumpleDietas = dietas.every(dieta => {
             const key = dieta.toLowerCase().replace(' ', '-');
             return receta[key] === 1;
@@ -104,35 +131,49 @@ export const generarPlanSemanal = async (metaCalorias, preferencias) => {
           return cumpleDietas && cumpleCondiciones;
         });
 
-        const recetasValidas = recetasFiltradas.filter(receta => 
-          receta.calorias >= min && receta.calorias <= max && !usados[categoria].has(receta.id_receta)
+        let recetasValidas = recetasFiltradas.filter(receta =>
+          receta.calorias >= min &&
+          receta.calorias <= max &&
+          (usados[categoria][receta.id_receta] || 0) < maxRepeticiones
         );
 
-        let recetasSeleccionadas = [];
+        // Si no hay recetas válidas, relajar los criterios
+        if (recetasValidas.length === 0) {
+          recetasValidas = recetasFiltradas.filter(receta =>
+            (usados[categoria][receta.id_receta] || 0) < maxRepeticiones
+          );
+        }
 
-        for (let intento = 0; intento < maxRecetasPorCategoria; intento++) {
-          const caloriasActuales = recetasSeleccionadas.reduce((sum, r) => sum + r.calorias, 0);
+        let recetasSeleccionadas = [];
+        let caloriasActuales = 0;
+
+        for (let intento = 0; intento < recetasValidas.length && recetasSeleccionadas.length < maxRecetasPorCategoria; intento++) {
+          const receta = recetasValidas[intento];
+
+          if ((caloriasActuales + receta.calorias) <= max || caloriasActuales < min) {
+            recetasSeleccionadas.push(receta);
+            caloriasActuales += receta.calorias;
+            usados[categoria][receta.id_receta] = (usados[categoria][receta.id_receta] || 0) + 1;
+          }
 
           if (caloriasActuales >= min) {
             break;
           }
+        }
 
-          if (recetasValidas.length > 0) {
-            const recetaElegida = recetasValidas[Math.floor(Math.random() * recetasValidas.length)];
-            recetasSeleccionadas.push(recetaElegida);
-            usados[categoria].add(recetaElegida.id_receta);
+        // Si no se alcanzó el mínimo de calorías, añadir recetas adicionales
+        if (caloriasActuales < min) {
+          const recetasRestantes = recetasFiltradas.filter(receta =>
+            !recetasSeleccionadas.includes(receta) &&
+            (usados[categoria][receta.id_receta] || 0) < maxRepeticiones
+          );
 
-            recetasValidas.splice(recetasValidas.indexOf(recetaElegida), 1);
-          } else {
-            const recetasOrdenadas = recetasFiltradas
-              .filter(receta => !usados[categoria].has(receta.id_receta))
-              .sort((a, b) => Math.abs(a.calorias - min) - Math.abs(b.calorias - min));
+          for (let receta of recetasRestantes) {
+            recetasSeleccionadas.push(receta);
+            caloriasActuales += receta.calorias;
+            usados[categoria][receta.id_receta] = (usados[categoria][receta.id_receta] || 0) + 1;
 
-            if (recetasOrdenadas.length > 0) {
-              const recetaCercana = recetasOrdenadas[0];
-              recetasSeleccionadas.push(recetaCercana);
-              usados[categoria].add(recetaCercana.id_receta);
-            } else {
+            if (caloriasActuales >= min || recetasSeleccionadas.length >= maxRecetasPorCategoria) {
               break;
             }
           }
@@ -141,7 +182,6 @@ export const generarPlanSemanal = async (metaCalorias, preferencias) => {
         const caloriasCategoria = recetasSeleccionadas.reduce((sum, r) => sum + r.calorias, 0);
         totalCaloriasDia += caloriasCategoria;
 
-        // Incluyendo id_receta en cada objeto del plan.
         planDiario[categoria] = recetasSeleccionadas.map(receta => ({
           id: receta.id_receta,
           titulo: receta.titulo,
@@ -159,3 +199,11 @@ export const generarPlanSemanal = async (metaCalorias, preferencias) => {
     throw error;
   }
 };
+
+// Función para mezclar arrays
+function shuffleArray(array, rng) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
