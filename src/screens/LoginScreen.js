@@ -1,10 +1,11 @@
 // src/screens/LoginScreen.js
 
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert } from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../services/firebase';
 import { AuthContext } from '../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -13,10 +14,22 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
       console.log('User signed in successfully!');
+
+      try {
+        await AsyncStorage.setItem('usuarioId', user.uid);
+        console.log('Usuario ID almacenado en AsyncStorage:', user.uid);
+      } catch (storageError) {
+        console.error('Error al almacenar usuarioId en AsyncStorage:', storageError);
+        Alert.alert('Error', 'No se pudo almacenar la información del usuario. Inténtalo nuevamente.');
+      }
+
     } catch (error) {
       console.error('Authentication error:', error.message);
+      Alert.alert('Error de Autenticación', error.message);
     }
   };
 
@@ -30,6 +43,7 @@ const LoginScreen = ({ navigation }) => {
           onChangeText={setEmail}
           placeholder="Correo Electrónico"
           autoCapitalize="none"
+          keyboardType="email-address"
         />
         <TextInput
           style={styles.input}
