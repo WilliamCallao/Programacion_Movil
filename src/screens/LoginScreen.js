@@ -9,7 +9,7 @@ import { AuthContext } from '../context/AuthContext';
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { } = useContext(AuthContext); // Puedes usar funciones del contexto si es necesario
+  const { } = useContext(AuthContext);
 
   const handleLogin = async () => {
     try {

@@ -1,13 +1,11 @@
 // src/screens/GoalsScreen.js
 
 import React, { useState, useContext } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { actualizarUsuario, generarYAsignarPlanAlimenticio } from '../services/usuarioService';
 import MultiSelect from 'react-native-multiple-select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../services/firebase';
 import { AuthContext } from '../context/AuthContext';
 
 const GoalsScreen = ({ navigation }) => {
@@ -16,103 +14,59 @@ const GoalsScreen = ({ navigation }) => {
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const { completeRegistration } = useContext(AuthContext);
 
-  // Función para obtener y mostrar el documento del usuario sin formatear
-  const fetchUserDocument = async () => {
-    try {
-      const userId = await AsyncStorage.getItem('usuarioId');
-      if (userId) {
-        const userDocRef = doc(db, 'usuarios', userId);
-        const userDoc = await getDoc(userDocRef);
-        if (userDoc.exists()) {
-          console.log('Documento del usuario:', JSON.stringify(userDoc.data(), null, 2));
-        } else {
-          console.log('No se encontró el documento del usuario.');
-        }
-      } else {
-        console.log('No se encontró usuarioId en AsyncStorage.');
-      }
-    } catch (error) {
-      console.error('Error al obtener el documento del usuario:', error.message);
-    }
-  };
-
-  const handleLogUsuario = async () => {
-    try {
-      const userId = await AsyncStorage.getItem('usuarioId');
-      if (userId) {
-        const userDocRef = doc(db, 'usuarios', userId);
-        const userDoc = await getDoc(userDocRef);
-        if (userDoc.exists()) {
-          const data = userDoc.data();
-
-          // Construir el objeto 'usuario' en la estructura deseada
-          const usuario = {
-            informacionPersonal: {
-              nombre: data.informacion_personal.nombre,
-              correo: data.informacion_personal.correo,
-              genero: data.informacion_personal.genero,
-              fechaNacimiento: data.informacion_personal.fecha_nacimiento, // Ya es una cadena
-              fotoPerfilUrl: data.informacion_personal.foto_perfil_url,
-            },
-            medidasFisicas: {
-              pesoKg: data.medidas_fisicas.peso_kg,
-              alturaCm: data.medidas_fisicas.altura_cm,
-              nivelActividad: data.medidas_fisicas.nivel_actividad,
-            },
-            objetivoPersonal: {
-              tipoObjetivo: data.objetivo_peso.tipo_objetivo,
-            },
-            preferencias: {
-              preferencias_dietarias: data.preferencias.preferencias_dietarias,
-              condiciones_salud: data.preferencias.condiciones_salud,
-            },
-          };
-
-          console.log('Usuario Formateado:', JSON.stringify(usuario, null, 2));
-        } else {
-          console.log('No se encontró el documento del usuario.');
-        }
-      } else {
-        console.log('No se encontró usuarioId en AsyncStorage.');
-      }
-    } catch (error) {
-      console.error('Error al loguear el usuario:', error.message);
-    }
-  };
-
-  // Función para actualizar las preferencias y objetivos del usuario
+  // preferencias y objetivos del usuario
   const handleFinish = async () => {
     try {
       const userId = await AsyncStorage.getItem('usuarioId');
       if (userId) {
+        if (!tipoObjetivo) {
+          Alert.alert('Error', 'Por favor, selecciona un tipo de objetivo.');
+          return false;
+        }
+
         const datosActualizados = {
           'preferencias.preferencias_dietarias': preferenciasDietarias,
           'objetivo_peso.tipo_objetivo': tipoObjetivo,
         };
         await actualizarUsuario(userId, datosActualizados);
         console.log('Datos del usuario actualizados en Firebase.');
+        return true;
       } else {
         console.log('No se encontró usuarioId en AsyncStorage.');
+        Alert.alert('Error', 'No se encontró el identificador del usuario. Por favor, inicia sesión nuevamente.');
+        return false;
       }
     } catch (error) {
       console.error('Error al actualizar datos del usuario:', error.message);
+      Alert.alert('Error', 'Ocurrió un error al actualizar tus datos. Por favor, intenta nuevamente.');
+      return false;
     }
   };
 
-  // Función para generar y asignar el plan alimenticio
+  // generar y asignar el plan alimenticio
   const handleGenerarPlan = async () => {
     try {
-      setIsGeneratingPlan(true);
       const userId = await AsyncStorage.getItem('usuarioId');
       if (userId) {
         await generarYAsignarPlanAlimenticio(userId);
         await completeRegistration();
+        Alert.alert('Éxito', 'Tu plan alimenticio ha sido generado exitosamente.');
       } else {
         console.log('No se encontró usuarioId en AsyncStorage.');
+        Alert.alert('Error', 'No se encontró el identificador del usuario. Por favor, inicia sesión nuevamente.');
       }
     } catch (error) {
       console.error('Error al generar el plan alimenticio:', error.message);
-    } finally {
+      Alert.alert('Error', 'Ocurrió un error al generar tu plan alimenticio. Por favor, intenta nuevamente.');
+    }
+  };
+
+  // finalizar y generar el plan
+  const handleFinishAndGeneratePlan = async () => {
+    const finishSuccess = await handleFinish();
+    if (finishSuccess) {
+      setIsGeneratingPlan(true);
+      await handleGenerarPlan();
       setIsGeneratingPlan(false);
     }
   };
@@ -161,18 +115,9 @@ const GoalsScreen = ({ navigation }) => {
           <Picker.Item label="Ganar Peso" value="ganar_peso" />
         </Picker>
         <View style={styles.buttonContainer}>
-          <Button title="Finalizar" onPress={handleFinish} color="#3498db" />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button title="Ver Documento" onPress={fetchUserDocument} color="#2ecc71" />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button title="Log Usuario" onPress={handleLogUsuario} color="#e67e22" />
-        </View>
-        <View style={styles.buttonContainer}>
           <Button
-            title={isGeneratingPlan ? "Generando Plan..." : "Generar Plan Alimenticio"}
-            onPress={handleGenerarPlan}
+            title={isGeneratingPlan ? "Generando Plan..." : "Finalizar y Generar Plan"}
+            onPress={handleFinishAndGeneratePlan}
             color="#9b59b6"
             disabled={isGeneratingPlan}
           />

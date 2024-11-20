@@ -18,7 +18,6 @@ export const AuthProvider = ({ children }) => {
         if (currentUser) {
           setUser(currentUser);
           const userId = currentUser.uid;
-          // Verificar si el usuario ha completado el registro
           try {
             const registroCompleto = await AsyncStorage.getItem('isRegistered');
             setIsRegistered(registroCompleto === 'true');

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderSections from '../components/HeaderSections';
 import PlanSelector from '../components/PlanSelector';
 import { obtenerUsuario } from '../services/usuarioService';
 import { obtenerRecetasPorIds } from '../services/recetaService';
 import Secciones56 from '../components/RecipesPlan';
 import WeeklyView from '../components/WeeklyView';
-
-const USER_ID = 'mz8TIwTVRAMwiLIAshLS';
 
 const getDayName = (offset = 0) => {
   const date = new Date();
@@ -34,10 +33,15 @@ export default function MainScreen() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const datosUsuario = await obtenerUsuario(USER_ID);
-        if (datosUsuario) {
-          setUsuario(datosUsuario);
-          setPlanes(datosUsuario.planes_alimentacion);
+        const userId = await AsyncStorage.getItem('usuarioId');
+        if (userId) {
+          const datosUsuario = await obtenerUsuario(userId);
+          if (datosUsuario) {
+            setUsuario(datosUsuario);
+            setPlanes(datosUsuario.planes_alimentacion);
+          }
+        } else {
+          console.warn('No se encontró el ID de usuario en AsyncStorage.');
         }
       } catch (error) {
         console.error('Error al obtener los datos del usuario:', error);
