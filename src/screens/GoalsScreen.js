@@ -3,19 +3,20 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { auth, db } from '../services/firebase';
-import { actualizarUsuario } from '../services/usuarioService';
+import { actualizarUsuario, generarYAsignarPlanAlimenticio } from '../services/usuarioService';
 import MultiSelect from 'react-native-multiple-select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../services/firebase';
 
 const GoalsScreen = ({ navigation }) => {
   const [preferenciasDietarias, setPreferenciasDietarias] = useState([]);
   const [tipoObjetivo, setTipoObjetivo] = useState('');
 
+  // Función para obtener y mostrar el documento del usuario sin formatear
   const fetchUserDocument = async () => {
     try {
-      const userId = await AsyncStorage.getItem('userId');
+      const userId = await AsyncStorage.getItem('usuarioId');
       if (userId) {
         const userDocRef = doc(db, 'usuarios', userId);
         const userDoc = await getDoc(userDocRef);
@@ -27,8 +28,8 @@ const GoalsScreen = ({ navigation }) => {
           Alert.alert('Error', 'No se encontró el documento del usuario.');
         }
       } else {
-        console.log('No se encontró userId en AsyncStorage.');
-        Alert.alert('Error', 'No se encontró userId en AsyncStorage.');
+        console.log('No se encontró usuarioId en AsyncStorage.');
+        Alert.alert('Error', 'No se encontró usuarioId en AsyncStorage.');
       }
     } catch (error) {
       console.error('Error al obtener el documento del usuario:', error.message);
@@ -38,20 +39,20 @@ const GoalsScreen = ({ navigation }) => {
 
   const handleLogUsuario = async () => {
     try {
-      const userId = await AsyncStorage.getItem('userId');
+      const userId = await AsyncStorage.getItem('usuarioId');
       if (userId) {
         const userDocRef = doc(db, 'usuarios', userId);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           const data = userDoc.data();
-
-          // Construir el objeto 'usuario'
+  
+          // Construir el objeto 'usuario' en la estructura deseada
           const usuario = {
             informacionPersonal: {
               nombre: data.informacion_personal.nombre,
               correo: data.informacion_personal.correo,
               genero: data.informacion_personal.genero,
-              fechaNacimiento: data.informacion_personal.fecha_nacimiento,
+              fechaNacimiento: data.informacion_personal.fecha_nacimiento, // Ya es una cadena
               fotoPerfilUrl: data.informacion_personal.foto_perfil_url,
             },
             medidasFisicas: {
@@ -67,45 +68,70 @@ const GoalsScreen = ({ navigation }) => {
               condiciones_salud: data.preferencias.condiciones_salud,
             },
           };
-
+  
           console.log('Usuario Formateado:', JSON.stringify(usuario, null, 2));
+          Alert.alert('Información', 'Usuario logueado en la consola.');
         } else {
           console.log('No se encontró el documento del usuario.');
+          Alert.alert('Error', 'No se encontró el documento del usuario.');
         }
       } else {
-        console.log('No se encontró userId en AsyncStorage.');
+        console.log('No se encontró usuarioId en AsyncStorage.');
+        Alert.alert('Error', 'No se encontró usuarioId en AsyncStorage.');
       }
     } catch (error) {
       console.error('Error al loguear el usuario:', error.message);
+      Alert.alert('Error', 'Hubo un problema al loguear el usuario.');
     }
   };
 
-  const opcionesDietarias = [
-    { id: 'vegetariano', name: 'Vegetariano' },
-    { id: 'vegano', name: 'Vegano' },
-    { id: 'gluten-free', name: 'Gluten-Free' },
-    { id: 'low sodium', name: 'Low Sodium' },
-    { id: 'lower carb', name: 'Lower Carb' },
-    { id: 'high in fiber', name: 'High in Fiber' },
-  ];
-
+  // Función para actualizar las preferencias y objetivos del usuario
   const handleFinish = async () => {
     try {
-      const user = auth.currentUser;
-      if (user) {
+      const userId = await AsyncStorage.getItem('usuarioId');
+      if (userId) {
         const datosActualizados = {
           'preferencias.preferencias_dietarias': preferenciasDietarias,
           'objetivo_peso.tipo_objetivo': tipoObjetivo,
         };
-        await actualizarUsuario(user.uid, datosActualizados);
+        await actualizarUsuario(userId, datosActualizados);
         console.log('Datos del usuario actualizados en Firebase.');
         Alert.alert('Éxito', 'Datos actualizados correctamente.');
+      } else {
+        console.log('No se encontró usuarioId en AsyncStorage.');
+        Alert.alert('Error', 'No se encontró usuarioId en AsyncStorage.');
       }
     } catch (error) {
       console.error('Error al actualizar datos del usuario:', error.message);
       Alert.alert('Error', 'Hubo un problema al actualizar los datos del usuario.');
     }
   };
+
+  // Función para generar y asignar el plan alimenticio
+  const handleGenerarPlan = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('usuarioId');
+      if (userId) {
+        await generarYAsignarPlanAlimenticio(userId);
+        Alert.alert('Éxito', 'Plan alimenticio generado y asignado al usuario.');
+      } else {
+        console.log('No se encontró usuarioId en AsyncStorage.');
+        Alert.alert('Error', 'No se encontró usuarioId en AsyncStorage.');
+      }
+    } catch (error) {
+      console.error('Error al generar el plan alimenticio:', error.message);
+      Alert.alert('Error', 'Hubo un problema al generar el plan alimenticio.');
+    }
+  };
+
+  const opcionesDietarias = [
+    { id: 'Vegetariano', name: 'Vegetariano' },
+    { id: 'Vegano', name: 'Vegano' },
+    { id: 'Gluten-Free', name: 'Gluten-Free' },
+    { id: 'Low Sodium', name: 'Low Sodium' },
+    { id: 'Lower Carb', name: 'Lower Carb' },
+    { id: 'High in Fiber', name: 'High in Fiber' },
+  ];
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -147,9 +173,11 @@ const GoalsScreen = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <Button title="Ver Documento" onPress={fetchUserDocument} color="#2ecc71" />
         </View>
-        {/* Nuevo Botón Agregado */}
         <View style={styles.buttonContainer}>
           <Button title="Log Usuario" onPress={handleLogUsuario} color="#e67e22" />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Generar Plan Alimenticio" onPress={handleGenerarPlan} color="#9b59b6" />
         </View>
       </View>
     </ScrollView>

@@ -43,7 +43,7 @@ const RegisterScreen = ({ navigation }) => {
         }
       });
 
-      await AsyncStorage.setItem('userId', user.uid);
+      await AsyncStorage.setItem('usuarioId', user.uid);
       console.log('User ID saved in AsyncStorage:', user.uid);
 
       console.log('User created and user ID saved successfully!');
