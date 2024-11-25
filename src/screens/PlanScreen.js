@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+// screens/MainScreen.js
+import React, { useEffect, useState, useContext } from 'react';
+import { View, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderSections from '../components/HeaderSections';
 import PlanSelector from '../components/PlanSelector';
 import { obtenerUsuario } from '../services/usuarioService';
 import { obtenerRecetasPorIds } from '../services/recetaService';
-import Secciones56 from '../components/RecipesPlan';
+import Secciones56 from '../components/RecipesPlan'; 
 import WeeklyView from '../components/WeeklyView';
+import { FavoritesContext } from '../contexts/FavoritesContext';
+import ThreeBodyLoader from '../components/ThreeBodyLoader';
 
 const getDayName = (offset = 0) => {
   const date = new Date();
@@ -29,6 +32,9 @@ export default function MainScreen() {
   const [planes, setPlanes] = useState([]);
   const [recetasCompletas, setRecetasCompletas] = useState([]);
   const [totalCalorias, setTotalCalorias] = useState(0);
+  const [loadingRecetas, setLoadingRecetas] = useState(true);
+
+  const { favoritos, isFavorite, toggleFavorite, loading: loadingFavoritos } = useContext(FavoritesContext);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -45,6 +51,7 @@ export default function MainScreen() {
         }
       } catch (error) {
         console.error('Error al obtener los datos del usuario:', error);
+        Alert.alert('Error', 'No se pudieron obtener los datos del usuario.');
       }
     };
 
@@ -79,13 +86,21 @@ export default function MainScreen() {
   useEffect(() => {
     const cargarRecetasIniciales = async () => {
       if (usuario) {
-        const recetasHoy = await fetchRecetasPorDia(0);
-        setRecetasDeHoy(recetasHoy);
+        setLoadingRecetas(true);
+        try {
+          const recetasHoy = await fetchRecetasPorDia(0);
+          setRecetasDeHoy(recetasHoy);
 
-        const recetasMañana = await fetchRecetasPorDia(1);
-        setRecetasDeMañana(recetasMañana);
+          const recetasMañana = await fetchRecetasPorDia(1);
+          setRecetasDeMañana(recetasMañana);
 
-        fetchRecetasSemanales();
+          await fetchRecetasSemanales();
+        } catch (error) {
+          console.error('Error al cargar las recetas iniciales:', error);
+          Alert.alert('Error', 'No se pudieron cargar las recetas.');
+        } finally {
+          setLoadingRecetas(false);
+        }
       }
     };
 
@@ -102,6 +117,7 @@ export default function MainScreen() {
       setRecetasCompletas(recetasPlanificadas);
     } catch (error) {
       console.error('Error al obtener las recetas semanales:', error);
+      Alert.alert('Error', 'No se pudieron cargar las recetas semanales.');
     }
   };
 
@@ -125,6 +141,14 @@ export default function MainScreen() {
     setTotalCalorias(totalCal);
   }, [selectedButton, recetasDeHoy, recetasDeMañana]);
 
+  if (loadingFavoritos || loadingRecetas) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ThreeBodyLoader />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <HeaderSections dia={getDayName(selectedButton === 'Mañana' ? 1 : 0)} calorias={totalCalorias} />
@@ -138,7 +162,11 @@ export default function MainScreen() {
           />
         </View>
       ) : (
-        <Secciones56 recetas={selectedButton === 'Hoy' ? recetasDeHoy : recetasDeMañana} />
+        <Secciones56 
+          recetas={selectedButton === 'Hoy' ? recetasDeHoy : recetasDeMañana}
+          favoritos={favoritos}
+          toggleFavorite={toggleFavorite}
+        />
       )}
     </View>
   );
@@ -152,5 +180,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#F5F5F5',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
