@@ -33,3 +33,20 @@ export const obtenerRecetaPorId = (recetaId) => {
     return null;
   }
 };
+
+/**
+ * Obtener todas las recetas.
+ * @returns {Promise<Object[]>} - Promesa que resuelve a un arreglo de todas las recetas.
+ */
+export const obtenerTodasLasRecetas = async () => {
+  try {
+    const todasLasRecetas = Object.entries(recetas).map(([id, receta]) => ({
+      id,
+      ...receta,
+    }));
+    return todasLasRecetas;
+  } catch (error) {
+    console.error('Error al obtener todas las recetas:', error);
+    throw error;
+  }
+};
