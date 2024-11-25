@@ -96,7 +96,6 @@ export default function WeeklyView({ planes, recetasCompletas, currentDay }) {
         })}
       </ScrollView>
 
-      {/* Incluir el RecipeModal */}
       {selectedRecipe && (
         <RecipeModal
           visible={modalVisible}
