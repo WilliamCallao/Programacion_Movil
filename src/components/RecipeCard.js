@@ -1,5 +1,6 @@
+// components/RecipeCard.js
 import React, { memo, useState } from 'react';
-import { Text, StyleSheet, Image, Dimensions, View } from 'react-native';
+import { Text, StyleSheet, Image, Dimensions, View, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import RecipeModal from './RecipeModal';
@@ -7,23 +8,34 @@ import RecipeModal from './RecipeModal';
 const { width: screenWidth } = Dimensions.get('window');
 const ITEM_WIDTH = screenWidth * 0.75;
 
-const RecipeCard = ({ item, onImageError }) => {
+const RecipeCard = ({ item, index, scrollX, onImageError, isFavorite, onToggleFavorite }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
- 
+
   return (
     <>
-      <View onTouchEnd={openModal} style={styles.cardContainer}>
+      <TouchableOpacity onPress={openModal} style={styles.cardContainer} activeOpacity={0.8}>
         <View style={styles.card}>
           <View style={styles.imageContainer}>
             {item.imagen_url && !item.imageError ? (
-              <Image
-                source={{ uri: item.imagen_url }}
-                style={styles.image}
-                onError={() => onImageError(item.id)}
-                resizeMode="cover"
-              />
+              <>
+                <Image
+                  source={{ uri: item.imagen_url }}
+                  style={styles.image}
+                  onError={() => onImageError(item.id)}
+                  resizeMode="cover"
+                  onLoadStart={() => setIsLoading(true)}
+                  onLoadEnd={() => setIsLoading(false)}
+                />
+                {isLoading && (
+                  <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="small" color="#888" />
+                  </View>
+                )}
+              </>
             ) : (
               <View style={styles.imagePlaceholder}>
                 <Text style={styles.placeholderText}>Sin Imagen</Text>
@@ -48,12 +60,14 @@ const RecipeCard = ({ item, onImageError }) => {
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
 
       <RecipeModal
         visible={modalVisible}
         onClose={closeModal}
         recipe={item}
+        isFavorite={isFavorite}
+        onToggleFavorite={onToggleFavorite}
       />
     </>
   );
@@ -92,10 +106,20 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: '100%',
     height: '100%',
+    position: 'relative',
   },
   image: {
     width: '100%',
     height: '100%',
+    backgroundColor: '#6A6A6A',
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -10 }, { translateY: -10 }],
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   gradient: {
     position: 'absolute',
@@ -137,7 +161,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ccc',
+    backgroundColor: '#6A6A6A',
   },
   placeholderText: {
     color: '#fff',
