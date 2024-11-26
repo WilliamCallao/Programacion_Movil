@@ -41,7 +41,8 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.13",
     "seedrandom": "^3.0.5",
-    "zustand": "^5.0.0-rc.2"
+    "zustand": "^5.0.0-rc.2",
+    "@expo/vector-icons": "^14.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

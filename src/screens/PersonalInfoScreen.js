@@ -1,12 +1,12 @@
-// src/screens/PersonalInfoScreen.js
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView, Platform } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, Platform, TouchableOpacity, Animated, Easing } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { auth } from '../services/firebase';
 import { actualizarUsuario } from '../services/usuarioService';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const PersonalInfoScreen = () => {
   const [nombre, setNombre] = useState('');
@@ -30,6 +30,7 @@ const PersonalInfoScreen = () => {
       await actualizarUsuario(user.uid, datosActualizados);
       navigation.navigate('PhysicalInfoScreen');
     } else {
+      console.log('No se encontró usuario.');
     }
   };
 
@@ -43,8 +44,30 @@ const PersonalInfoScreen = () => {
     setFechaNacimiento(currentDate);
   };
 
+  // Animación para los iconos
+  const spinValue = new Animated.Value(0);
+  Animated.loop(
+    Animated.timing(
+      spinValue,
+      {
+        toValue: 1,
+        duration: 4000,
+        easing: Easing.linear,
+        useNativeDriver: true
+      }
+    )
+  ).start();
+
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg']
+  });
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Animated.View style={{ transform: [{ rotate: spin }] }}>
+        <FontAwesome5 name="lemon" size={50} color="#fff" />
+      </Animated.View>
       <View style={styles.authContainer}>
         <Text style={styles.title}>Información Personal</Text>
         <TextInput
@@ -52,15 +75,19 @@ const PersonalInfoScreen = () => {
           value={nombre}
           onChangeText={setNombre}
           placeholder="Nombre"
+          placeholderTextColor="#888"
         />
         <Text style={styles.label}>Fecha de Nacimiento</Text>
-        <Button onPress={showDatepicker} title={fechaNacimiento.toDateString()} />
+        <TouchableOpacity onPress={showDatepicker} style={styles.dateButton}>
+          <Text style={styles.dateButtonText}>{fechaNacimiento.toDateString()}</Text>
+        </TouchableOpacity>
         {showDatePicker && (
           <DateTimePicker
             value={fechaNacimiento}
             mode="date"
             display="default"
             onChange={onDateChange}
+            style={styles.datePicker}
           />
         )}
         <Text style={styles.label}>Género</Text>
@@ -69,7 +96,7 @@ const PersonalInfoScreen = () => {
           style={styles.picker}
           onValueChange={(itemValue) => setGenero(itemValue)}
         >
-          <Picker.Item label="Selecciona tu género" value="" />
+          <Picker.Item label="Selecciona tu sexo" value="" />
           <Picker.Item label="Masculino" value="masculino" />
           <Picker.Item label="Femenino" value="femenino" />
           <Picker.Item label="Otro" value="otro" />
@@ -88,39 +115,67 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#2c3e50',
   },
   authContainer: {
     width: '80%',
     maxWidth: 400,
     backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 8,
+    padding: 24,
+    borderRadius: 12,
     elevation: 3,
+    marginTop: 20,
   },
   title: {
-    fontSize: 24,
-    marginBottom: 16,
+    fontSize: 28,
+    marginBottom: 24,
     textAlign: 'center',
+    color: '#2c3e50',
   },
   input: {
-    height: 40,
+    height: 50,
     borderColor: '#ddd',
     borderWidth: 1,
     marginBottom: 16,
-    padding: 8,
-    borderRadius: 4,
+    padding: 12,
+    borderRadius: 8,
+    fontSize: 16,
+    backgroundColor: '#f0f0f0',
+    color: '#333',
   },
   label: {
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 8,
+    color: '#2c3e50',
+    fontWeight: 'bold',
   },
   picker: {
     height: 50,
     width: '100%',
     marginBottom: 16,
+    backgroundColor: '#f0f0f0',
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 8,
   },
   buttonContainer: {
+    marginBottom: 16,
+  },
+  dateButton: {
+    backgroundColor: '#3498db',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  dateButtonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  datePicker: {
+    width: '100%',
+    backgroundColor: '#fff',
+    borderRadius: 8,
     marginBottom: 16,
   },
 });
