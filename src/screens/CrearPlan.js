@@ -1,7 +1,7 @@
 // src/screens/MainScreen.js
 
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
 import { 
   calcularEdad, 
   calcularPesoObjetivo, 
@@ -109,7 +109,6 @@ export default function MainScreen() {
     } catch (error) {
       console.error(error);
       setMensaje('Error al crear el usuario y el plan alimenticio.');
-      Alert.alert('Error', 'Hubo un problema al crear tu usuario y plan alimenticio.');
     }
   };
 
