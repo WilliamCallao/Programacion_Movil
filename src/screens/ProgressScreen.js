@@ -1,11 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import CalendarProgress from '../components/ProgressCalendar';
+import ButtonWeight from '../components/ButtonWeight';
+import PesoActualCard from '../components/WeightCard';
 
 export default function ProgressScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Progress</Text>
+      <PesoActualCard />
+      <ButtonWeight />
       <CalendarProgress />
     </View>
   );
