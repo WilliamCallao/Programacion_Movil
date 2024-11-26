@@ -1,4 +1,5 @@
-// src/components/RecipePlan.js
+// components/RecipesPlan.js
+
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import Animated, { useSharedValue, useAnimatedScrollHandler } from 'react-native-reanimated';
@@ -28,9 +29,15 @@ const calcularResumenNutricional = (recetas) => {
 
   const totalCaloriasMacronutrientes = caloriasProteina + caloriasCarbohidratos + caloriasGrasa;
 
-  const porcentajeProteina = ((caloriasProteina / totalCaloriasMacronutrientes) * 100).toFixed(1);
-  const porcentajeCarbohidratos = ((caloriasCarbohidratos / totalCaloriasMacronutrientes) * 100).toFixed(1);
-  const porcentajeGrasa = ((caloriasGrasa / totalCaloriasMacronutrientes) * 100).toFixed(1);
+  const porcentajeProteina = totalCaloriasMacronutrientes
+    ? ((caloriasProteina / totalCaloriasMacronutrientes) * 100).toFixed(1)
+    : 0;
+  const porcentajeCarbohidratos = totalCaloriasMacronutrientes
+    ? ((caloriasCarbohidratos / totalCaloriasMacronutrientes) * 100).toFixed(1)
+    : 0;
+  const porcentajeGrasa = totalCaloriasMacronutrientes
+    ? ((caloriasGrasa / totalCaloriasMacronutrientes) * 100).toFixed(1)
+    : 0;
 
   return {
     totalRecetas: recetas.length,
@@ -44,7 +51,7 @@ const calcularResumenNutricional = (recetas) => {
   };
 };
 
-export default function Secciones56({ recetas }) {
+export default function Secciones56({ recetas, favoritos, toggleFavorite }) {
   const scrollX = useSharedValue(0);
 
   useEffect(() => {
@@ -60,7 +67,14 @@ export default function Secciones56({ recetas }) {
   });
 
   const renderRecipeCard = ({ item, index }) => (
-    <RecipeCard item={item} index={index} scrollX={scrollX} onImageError={() => {}} />
+    <RecipeCard 
+      item={item} 
+      index={index} 
+      scrollX={scrollX} 
+      onImageError={() => {}} 
+      isFavorite={favoritos.includes(item.id)}
+      onToggleFavorite={toggleFavorite}
+    />
   );
 
   return (
@@ -157,5 +171,11 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans_500Medium',
     marginTop: 2,
     color: '#000',
+  },
+  text: {
+    textAlign: 'center',
+    color: '#666',
+    fontSize: 16,
+    marginTop: 20,
   },
 });

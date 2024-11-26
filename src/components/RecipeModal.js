@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+// components/RecipeModal.js
+
+import React, { useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -17,14 +19,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
 
-const RecipeModal = ({ visible, onClose, recipe }) => {
+const RecipeModal = ({ visible, onClose, recipe, isFavorite, onToggleFavorite }) => {
   const translateY = useRef(new Animated.Value(screenHeight)).current;
   const opacity = useRef(new Animated.Value(0)).current;
-  const [scrollY, setScrollY] = useState(0);
+  const scrollY = useRef(0);
 
   useEffect(() => {
-    // console.log("Datos recibidos en RecipeModal:", JSON.stringify(recipe, null, 2));
-    if (visible) {
+    if (visible && recipe) {
       Animated.parallel([
         Animated.timing(translateY, {
           toValue: 0,
@@ -55,26 +56,30 @@ const RecipeModal = ({ visible, onClose, recipe }) => {
         }),
       ]).start();
     }
-  }, [visible]);
+  }, [visible, recipe]);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { contentOffset } = event.nativeEvent;
-    setScrollY(contentOffset.y);
+    scrollY.current = contentOffset.y;
   };
 
   const handleScrollEndDrag = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { contentOffset } = event.nativeEvent;
-    if (contentOffset.y <= 0 && scrollY <= 0) {
+    if (contentOffset.y <= 0 && scrollY.current <= 0) {
       onClose();
     }
   };
 
   const formatTime = (isoTime) => {
-    if (isoTime === 'Desconocido') return null;
+    if (isoTime === 'Desconocido') return 'Desconocido';
     const regex = /PT(\d+)M/;
     const match = isoTime.match(regex);
     return match ? `${match[1]} min.` : isoTime;
   };
+
+  if (!recipe) {
+    return null; // Si `recipe` es null o undefined, no se renderiza el contenido del modal.
+  }
 
   return (
     <Modal transparent visible={visible} animationType="none">
@@ -84,10 +89,14 @@ const RecipeModal = ({ visible, onClose, recipe }) => {
       <Animated.View style={[styles.modalContainer, { transform: [{ translateY }] }]}>
         <View style={styles.header}>
           <TouchableOpacity onPress={onClose} style={styles.iconButton}>
-            <MaterialCommunityIcons name="close" size={28} color="#000" />
+            <MaterialCommunityIcons name="close" size={35} color="#000" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
-            <MaterialCommunityIcons name="heart-outline" size={28} color="#000" />
+          <TouchableOpacity onPress={() => onToggleFavorite(recipe.id)} style={styles.iconButton}>
+            <MaterialCommunityIcons
+              name={isFavorite ? 'heart' : 'heart-outline'}
+              size={35}
+              color={isFavorite ? '#FF0000' : '#000'}
+            />
           </TouchableOpacity>
         </View>
 
@@ -173,7 +182,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0,0,0,0.2)',
   },
   overlayTouchable: {
     flex: 1,
