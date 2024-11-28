@@ -1,10 +1,9 @@
-// components/RecipesPlan.js
-
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, Dimensions } from 'react-native'; // Asegúrate de incluir Text
 import Animated, { useSharedValue, useAnimatedScrollHandler } from 'react-native-reanimated';
 import RecipeCard from './RecipeCard';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ThreeBodyLoader from './ThreeBodyLoader';
 
 const ITEM_WIDTH = Dimensions.get('window').width * 0.75;
 
@@ -55,7 +54,7 @@ export default function Secciones56({ recetas, favoritos, toggleFavorite }) {
   const scrollX = useSharedValue(0);
 
   useEffect(() => {
-    // console.log('Datos recibidos por Secciones56:', JSON.stringify(recetas, null, 2));
+    console.log('Datos recibidos por Secciones56:', JSON.stringify(recetas, null, 2));
   }, [recetas]);
 
   const resumen = calcularResumenNutricional(recetas);
@@ -78,35 +77,32 @@ export default function Secciones56({ recetas, favoritos, toggleFavorite }) {
   );
 
   return (
-    <>
-      <View style={styles.section5}>
-        <View style={styles.macronutrients}>
-          <View style={styles.macroItem}>
-            <MaterialCommunityIcons name="food-apple-outline" size={20} color="#4CAF50" />
-            <Text style={styles.macroText}>Proteína</Text>
-            <Text style={styles.macroValue}>
-              {resumen.totalProteina} g ({resumen.porcentajeProteina}%)
-            </Text>
+    <View style={styles.container}>
+      {recetas.length > 0 ? (
+        <>
+          <View style={styles.macronutrients}>
+            <View style={styles.macroItem}>
+              <MaterialCommunityIcons name="food-apple-outline" size={20} color="#4CAF50" />
+              <Text style={styles.macroText}>Proteína</Text>
+              <Text style={styles.macroValue}>
+                {resumen.totalProteina} g ({resumen.porcentajeProteina}%)
+              </Text>
+            </View>
+            <View style={styles.macroItem}>
+              <MaterialCommunityIcons name="bread-slice-outline" size={20} color="#FF9800" />
+              <Text style={styles.macroText}>Carbohidratos</Text>
+              <Text style={styles.macroValue}>
+                {resumen.totalCarbohidratos} g ({resumen.porcentajeCarbohidratos}%)
+              </Text>
+            </View>
+            <View style={styles.macroItem}>
+              <MaterialCommunityIcons name="oil" size={20} color="#FFC107" />
+              <Text style={styles.macroText}>Grasa</Text>
+              <Text style={styles.macroValue}>
+                {resumen.totalGrasa} g ({resumen.porcentajeGrasa}%)
+              </Text>
+            </View>
           </View>
-          <View style={styles.macroItem}>
-            <MaterialCommunityIcons name="bread-slice-outline" size={20} color="#FF9800" />
-            <Text style={styles.macroText}>Carbohidratos</Text>
-            <Text style={styles.macroValue}>
-              {resumen.totalCarbohidratos} g ({resumen.porcentajeCarbohidratos}%)
-            </Text>
-          </View>
-          <View style={styles.macroItem}>
-            <MaterialCommunityIcons name="oil" size={20} color="#FFC107" />
-            <Text style={styles.macroText}>Grasa</Text>
-            <Text style={styles.macroValue}>
-              {resumen.totalGrasa} g ({resumen.porcentajeGrasa}%)
-            </Text>
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.section6}>
-        {recetas.length > 0 ? (
           <Animated.FlatList
             data={recetas}
             keyExtractor={(item) => item.id}
@@ -119,63 +115,45 @@ export default function Secciones56({ recetas, favoritos, toggleFavorite }) {
             decelerationRate="fast"
             contentContainerStyle={{ alignItems: 'center' }}
           />
-        ) : (
-          <Text style={styles.text}>Cargando recetas...</Text>
-        )}
-      </View>
-    </>
+        </>
+      ) : (
+        <View style={styles.loaderContainer}>
+          <ThreeBodyLoader />
+        </View>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  section5: {
-    paddingHorizontal: 15,
-  },
-  section6: {
+  container: {
     flex: 1,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
-  },
-  titleText: {
-    fontSize: 16,
-    fontFamily: 'DMSans_400Regular',
-    marginLeft: 8,
-    color: '#333',
-  },
-  valueText: {
-    fontSize: 16,
-    fontFamily: 'DMSans_500Medium',
-    marginLeft: 5,
-    color: '#000',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   macronutrients: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginVertical: 10,
+    width: '100%',
   },
   macroItem: {
     alignItems: 'center',
   },
   macroText: {
     fontSize: 14,
-    fontFamily: 'DMSans_400Regular',
     marginTop: 5,
     color: '#333',
   },
   macroValue: {
     fontSize: 14,
-    fontFamily: 'DMSans_500Medium',
     marginTop: 2,
     color: '#000',
   },
-  text: {
-    textAlign: 'center',
-    color: '#666',
-    fontSize: 16,
-    marginTop: 20,
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
