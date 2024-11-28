@@ -1,12 +1,11 @@
-// screens/MainScreen.js
 import React, { useEffect, useState, useContext } from 'react';
-import { View, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderSections from '../components/HeaderSections';
 import PlanSelector from '../components/PlanSelector';
 import { obtenerUsuario } from '../services/usuarioService';
 import { obtenerRecetasPorIds } from '../services/recetaService';
-import Secciones56 from '../components/RecipesPlan'; 
+import Secciones56 from '../components/RecipesPlan';
 import WeeklyView from '../components/WeeklyView';
 import { FavoritesContext } from '../contexts/FavoritesContext';
 import ThreeBodyLoader from '../components/ThreeBodyLoader';
@@ -24,7 +23,7 @@ const getCurrentDayIndex = () => {
   return index;
 };
 
-export default function MainScreen() {
+const MainScreen = () => {
   const [selectedButton, setSelectedButton] = useState('Hoy');
   const [usuario, setUsuario] = useState(null);
   const [recetasDeHoy, setRecetasDeHoy] = useState([]);
@@ -33,8 +32,9 @@ export default function MainScreen() {
   const [recetasCompletas, setRecetasCompletas] = useState([]);
   const [totalCalorias, setTotalCalorias] = useState(0);
   const [loadingRecetas, setLoadingRecetas] = useState(true);
+  const [loadingTabChange, setLoadingTabChange] = useState(false);
 
-  const { favoritos, isFavorite, toggleFavorite, loading: loadingFavoritos } = useContext(FavoritesContext);
+  const { favoritos, toggleFavorite, loading: loadingFavoritos } = useContext(FavoritesContext);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -121,7 +121,13 @@ export default function MainScreen() {
     }
   };
 
-  const handleButtonPress = (button) => setSelectedButton(button);
+  const handleButtonPress = async (button) => {
+    if (button !== selectedButton) {
+      setLoadingTabChange(true);
+      setSelectedButton(button);
+      setTimeout(() => setLoadingTabChange(false), 500);
+    }
+  };
 
   useEffect(() => {
     let recetasSeleccionadas = [];
@@ -130,8 +136,6 @@ export default function MainScreen() {
       recetasSeleccionadas = recetasDeHoy;
     } else if (selectedButton === 'Mañana') {
       recetasSeleccionadas = recetasDeMañana;
-    } else {
-      recetasSeleccionadas = recetasDeHoy;
     }
 
     const totalCal = recetasSeleccionadas.reduce(
@@ -141,36 +145,36 @@ export default function MainScreen() {
     setTotalCalorias(totalCal);
   }, [selectedButton, recetasDeHoy, recetasDeMañana]);
 
-  if (loadingFavoritos || loadingRecetas) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ThreeBodyLoader />
-      </View>
-    );
-  }
-
   return (
     <View style={styles.container}>
       <HeaderSections dia={getDayName(selectedButton === 'Mañana' ? 1 : 0)} calorias={totalCalorias} />
       <PlanSelector selectedButton={selectedButton} onButtonPress={handleButtonPress} />
       {selectedButton === 'Semanal' ? (
         <View style={styles.section7}>
-          <WeeklyView 
-            planes={planes} 
-            recetasCompletas={recetasCompletas} 
+          <WeeklyView
+            planes={planes}
+            recetasCompletas={recetasCompletas}
             currentDay={getCurrentDayIndex()}
           />
         </View>
       ) : (
-        <Secciones56 
-          recetas={selectedButton === 'Hoy' ? recetasDeHoy : recetasDeMañana}
-          favoritos={favoritos}
-          toggleFavorite={toggleFavorite}
-        />
+        <View style={styles.seccionesContainer}>
+          {loadingTabChange ? (
+            <View style={styles.loaderContainer}>
+              <ThreeBodyLoader />
+            </View>
+          ) : (
+            <Secciones56 
+              recetas={selectedButton === 'Hoy' ? recetasDeHoy : recetasDeMañana}
+              favoritos={favoritos}
+              toggleFavorite={toggleFavorite}
+            />
+          )}
+        </View>
       )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -181,9 +185,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F5F5F5',
   },
-  loadingContainer: {
+  seccionesContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loaderContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
 });
+
+export default MainScreen;
