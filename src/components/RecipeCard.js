@@ -38,7 +38,7 @@ const RecipeCard = ({ item, index, scrollX, onImageError, isFavorite, onToggleFa
               </>
             ) : (
               <View style={styles.imagePlaceholder}>
-                <Text style={styles.placeholderText}>Sin Imagen</Text>
+                <Text style={styles.placeholderText}> </Text>
               </View>
             )}
             <LinearGradient
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#6A6A6A',
+    backgroundColor: '#D4D4D4',
   },
   loadingContainer: {
     position: 'absolute',
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#6A6A6A',
+    backgroundColor: '#D4D4D4',
   },
   placeholderText: {
     color: '#fff',
