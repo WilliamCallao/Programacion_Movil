@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 5,
-    borderWidth: 2,
-    borderColor: '#222222',
+    borderWidth: 1,
+    borderColor: '#C7C6C6',
     borderRadius: 30,
     paddingHorizontal: 10,
     textAlign: 'center',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   buttonSelected: {
-    backgroundColor: 'black',
+    backgroundColor: '#000',
   },
   buttonText: {
     color: 'black',
