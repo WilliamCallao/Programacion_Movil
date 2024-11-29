@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingHorizontal: 10,
     textAlign: 'center',
-    paddingVertical: 5,
+    paddingVertical: 10,
   },
   smallButton: {
     flex: 1,
@@ -81,15 +81,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'DMSans_400Regular',
     textAlign: 'center',
-    paddingVertical: 4,
-    paddingBottom: 6,
   },
   buttonTextSelected: {
     color: 'white',
     fontSize: 14,
     fontFamily: 'DMSans_500Medium',
     textAlign: 'center',
-    paddingVertical: 4,
-    paddingBottom: 6,
   },
 });
