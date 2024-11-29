@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingVertical: 9,
     paddingHorizontal: 14,
     borderRadius: 25,
     borderWidth: 1,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#929292',
-    fontSize: 14,
+    fontSize: 13,
     marginLeft: 4,
     fontFamily: 'DMSans_400Medium',
     textAlign: 'center',
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   buttonTextSelected: {
     color: '#fff',
     fontSize: 14,
-    marginLeft: 5,
+    marginLeft: 4,
     fontFamily: 'DMSans_500Medium',
     textAlign: 'center',
   },
