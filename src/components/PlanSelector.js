@@ -58,9 +58,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderWidth: 1,
     borderColor: '#C7C6C6',
-    borderRadius: 30,
+    borderRadius: 25,
     paddingHorizontal: 10,
     textAlign: 'center',
+    paddingVertical: 5,
   },
   smallButton: {
     flex: 1,
@@ -72,7 +73,8 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   buttonSelected: {
-    backgroundColor: '#000',
+    backgroundColor: 'black',
+    borderColor: 'black',
   },
   buttonText: {
     color: 'black',
