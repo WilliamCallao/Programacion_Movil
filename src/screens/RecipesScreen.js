@@ -1,6 +1,6 @@
 // RecipesScreen.js
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
   StyleSheet,
@@ -13,7 +13,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import TopTabs from '../components/TopTabs';
+import TopTabs from '../components/TopTabs'; // Asegúrate de que la ruta sea correcta
 import { obtenerTodasLasRecetas } from '../services/recetaService';
 import {
   obtenerFavoritos,
@@ -33,6 +33,7 @@ export default function RecipesScreen({ route }) {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [favoritos, setFavoritos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingFavorites, setLoadingFavorites] = useState(false);
   const [busqueda, setBusqueda] = useState('');
   const [recetasVisibles, setRecetasVisibles] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
@@ -42,6 +43,13 @@ export default function RecipesScreen({ route }) {
   const { width } = Dimensions.get('window');
   const TAB_WIDTH = width / 2;
 
+  // Memoizar favoritosRecetas para optimizar rendimiento
+  const favoritosRecetas = useMemo(() => 
+    recetas.filter((receta) => favoritos.includes(receta.id)),
+    [recetas, favoritos]
+  );
+
+  // Fetch inicial de recetas y favoritos
   useEffect(() => {
     const cargarDatos = async () => {
       try {
@@ -66,17 +74,48 @@ export default function RecipesScreen({ route }) {
     cargarDatos();
   }, [recetasFiltradas]);
 
+  // Re-Fetch de favoritos cuando se selecciona la pestaña "Favoritos"
+  useEffect(() => {
+    if (selectedTab === 'favoritos') {
+      const fetchFavorites = async () => {
+        setLoadingFavorites(true);
+        try {
+          const favoritosObtenidos = await obtenerFavoritos();
+          setFavoritos(favoritosObtenidos);
+        } catch (error) {
+          console.error('Error al obtener los favoritos:', error);
+          Alert.alert('Error', 'No se pudieron obtener los favoritos.');
+        } finally {
+          setLoadingFavorites(false);
+        }
+      };
+      fetchFavorites();
+    }
+  }, [selectedTab]);
+
+  // Filtrar recetas visibles según la búsqueda y la pestaña seleccionada
   useEffect(() => {
     if (busqueda.trim() === '') {
-      setRecetasVisibles(recetas);
+      if (selectedTab === 'recetas') {
+        setRecetasVisibles(recetas);
+      } else if (selectedTab === 'favoritos') {
+        setRecetasVisibles(favoritosRecetas);
+      }
     } else {
       const busquedaLower = busqueda.toLowerCase();
-      const filtradas = recetas.filter((receta) =>
-        receta.titulo.toLowerCase().includes(busquedaLower)
-      );
-      setRecetasVisibles(filtradas);
+      if (selectedTab === 'recetas') {
+        const filtradas = recetas.filter((receta) =>
+          receta.titulo.toLowerCase().includes(busquedaLower)
+        );
+        setRecetasVisibles(filtradas);
+      } else if (selectedTab === 'favoritos') {
+        const filtradas = favoritosRecetas.filter((receta) =>
+          receta.titulo.toLowerCase().includes(busquedaLower)
+        );
+        setRecetasVisibles(filtradas);
+      }
     }
-  }, [busqueda, recetas]);
+  }, [busqueda, recetas, favoritosRecetas, selectedTab]);
 
   const handleOpenModal = (recipe) => {
     setSelectedRecipe(recipe);
@@ -153,11 +192,6 @@ export default function RecipesScreen({ route }) {
     );
   }
 
-  // Definir las recetas favoritas
-  const favoritosRecetas = recetas.filter((receta) =>
-    favoritos.includes(receta.id)
-  );
-
   const tabs = [
     { key: 'recetas', title: 'Recetas' },
     { key: 'favoritos', title: 'Favoritos' },
@@ -169,8 +203,15 @@ export default function RecipesScreen({ route }) {
         <RecipeList recipes={recetasVisibles} onRecipePress={handleOpenModal} />
       );
     } else if (selectedTab === 'favoritos') {
+      if (loadingFavorites) {
+        return (
+          <View style={styles.loadingContainer}>
+            <ThreeBodyLoader />
+          </View>
+        );
+      }
       return (
-        <RecipeList recipes={favoritosRecetas} onRecipePress={handleOpenModal} />
+        <RecipeList recipes={recetasVisibles} onRecipePress={handleOpenModal} />
       );
     }
     return null;
@@ -237,6 +278,7 @@ export default function RecipesScreen({ route }) {
           {renderContent()}
         </View>
 
+        {/* Modales */}
         <RecipeModal
           visible={modalVisible}
           onClose={handleCloseModal}
