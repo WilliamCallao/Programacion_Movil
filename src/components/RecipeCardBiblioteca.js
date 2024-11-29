@@ -119,8 +119,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 220,
     borderRadius: 20,
-    // elevation: 5,
-    backgroundColor: '#6A6A6A', 
+    backgroundColor: '#D4D4D4', 
   },
   loadingContainer: {
     position: 'absolute',

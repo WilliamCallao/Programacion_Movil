@@ -1,27 +1,69 @@
 // components/FiltrosModal.js
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
-  Modal,
-  StyleSheet,
-  TouchableOpacity,
-  Animated,
-  Easing,
-  Dimensions,
-  ScrollView,
   Text,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Animated,
+  Dimensions,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { obtenerTodasLasRecetas } from '../services/recetaService'; // Importamos la función existente
 
 const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
 
-const FiltrosModal = ({ visible, onClose }) => {
+const categorias = {
+  "Comidas Principales": [
+    { id: "Breakfast and Brunch", label: "Desayuno y Brunch" },
+    { id: "Lunch", label: "Almuerzo" },
+    { id: "Dinner", label: "Cena" },
+    { id: "Snacks", label: "Bocadillos" },
+    { id: "Soup", label: "Sopa" },
+    { id: "Main Dish", label: "Plato Principal" },
+  ],
+  "Especiales": [
+    { id: "Appetizers", label: "Aperitivos" },
+    { id: "Dessert", label: "Postre" },
+    { id: "Salads", label: "Ensaladas" },
+    { id: "Sandwiches", label: "Sándwiches" },
+    { id: "Sides", label: "Acompañamientos" },
+    { id: "Budget Friendly", label: "Económico" },
+    { id: "One Pot", label: "Una Olla" },
+    { id: "Meal Kit Recipes", label: "Recetas de Kits de Comida" },
+  ],
+  "Preferencias Alimentarias": [
+    { id: "Gluten-Free", label: "Sin Gluten" },
+    { id: "Vegan", label: "Vegano" },
+    { id: "Vegetarian", label: "Vegetariano" },
+    { id: "Easy Pantry Recipes", label: "Recetas Fácil de la Despensa" },
+  ],
+  "Sabores": [
+    { id: "Sauces", label: "Salsas" },
+    { id: "Salad Dressings & Condiments", label: "Aderezos para Ensaladas y Condimentos" },
+    { id: "Beverages", label: "Bebidas" },
+  ],
+  "Herramientas": [
+    { id: "No Cook", label: "Sin Cocinar" },
+    { id: "Slow Cooker", label: "Olla de Cocción Lenta" },
+    { id: "Quick & Easy", label: "Rápido y Fácil" },
+    { id: "Holidays & Entertaining", label: "Fiestas y Entretenimiento" },
+  ],
+};
+
+export default function FiltrosModal({ visible, onClose }) {
+  const navigation = useNavigation();
+  const [selectedFilters, setSelectedFilters] = useState([]); // Filtros seleccionados
+  const [filteredRecipes, setFilteredRecipes] = useState([]); // Recetas filtradas
+  const [loadingFilters, setLoadingFilters] = useState(false); // Loader para filtros
+
   const translateY = useRef(new Animated.Value(screenHeight)).current;
   const opacity = useRef(new Animated.Value(0)).current;
-  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     if (visible) {
@@ -29,13 +71,11 @@ const FiltrosModal = ({ visible, onClose }) => {
         Animated.timing(translateY, {
           toValue: 0,
           duration: 300,
-          easing: Easing.out(Easing.cubic),
           useNativeDriver: true,
         }),
         Animated.timing(opacity, {
           toValue: 1,
           duration: 300,
-          easing: Easing.out(Easing.cubic),
           useNativeDriver: true,
         }),
       ]).start();
@@ -44,106 +84,194 @@ const FiltrosModal = ({ visible, onClose }) => {
         Animated.timing(translateY, {
           toValue: screenHeight,
           duration: 300,
-          easing: Easing.in(Easing.cubic),
           useNativeDriver: true,
         }),
         Animated.timing(opacity, {
           toValue: 0,
           duration: 300,
-          easing: Easing.in(Easing.cubic),
           useNativeDriver: true,
         }),
       ]).start();
     }
   }, [visible]);
 
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { contentOffset } = event.nativeEvent;
-    setScrollY(contentOffset.y);
+  // Función para alternar la selección de filtros
+  const toggleFilter = (filterId) => {
+    setSelectedFilters((prevFilters) =>
+      prevFilters.includes(filterId)
+        ? prevFilters.filter((item) => item !== filterId) // Deseleccionar
+        : [...prevFilters, filterId] // Seleccionar
+    );
   };
 
-  const handleScrollEndDrag = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { contentOffset } = event.nativeEvent;
-    if (contentOffset.y <= 0 && scrollY <= 0) {
-      onClose();
-    }
-  };
+  // Filtrar recetas dinámicamente según los filtros seleccionados
+  useEffect(() => {
+    const fetchFilteredRecipes = async () => {
+      setLoadingFilters(true);
+      try {
+        const todasLasRecetas = await obtenerTodasLasRecetas();
+        if (selectedFilters.length === 0) {
+          setFilteredRecipes(todasLasRecetas);
+        } else {
+          const recetasFiltradas = todasLasRecetas.filter((receta) =>
+            selectedFilters.every((filtro) => receta.categorias.includes(filtro))
+          );
+          setFilteredRecipes(recetasFiltradas);
+        }
+      } catch (error) {
+        console.error('Error al filtrar recetas:', error);
+      } finally {
+        setLoadingFilters(false);
+      }
+    };
 
-  if (!visible) {
-    return null;
-  }
+    fetchFilteredRecipes();
+  }, [selectedFilters]);
+
+  const handleViewRecipes = () => {
+    onClose();
+    navigation.navigate('RecipesScreen', { recetasFiltradas: filteredRecipes });
+  };
 
   return (
     <Modal transparent visible={visible} animationType="none">
       <Animated.View style={[styles.overlay, { opacity }]}>
         <TouchableOpacity style={styles.overlayTouchable} onPress={onClose} />
       </Animated.View>
-      <Animated.View style={[styles.modalContainer, { transform: [{ translateY }] }]}>
+      <Animated.View style={[styles.container, { transform: [{ translateY }] }]}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={onClose} style={styles.iconButton}>
-            <MaterialCommunityIcons name="close" size={35} color="#000" />
+          <Text style={styles.title}>Filtros</Text>
+          <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
+            <Ionicons name="close-outline" size={32} color="#000" />
           </TouchableOpacity>
         </View>
 
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          onScroll={handleScroll}
-          onScrollEndDrag={handleScrollEndDrag}
-          scrollEventThrottle={16}
-        >
-          {/* Contenido del modal de filtros. Por ahora está vacío. */}
-          <Text style={styles.placeholderText}>Contenido de Filtros</Text>
+        <ScrollView>
+          {Object.keys(categorias).map((grupo) => (
+            <View key={grupo} style={styles.groupContainer}>
+              <Text style={styles.groupTitle}>{grupo}</Text>
+              <View style={styles.buttonContainer}>
+                {categorias[grupo].map((categoria) => (
+                  <TouchableOpacity
+                    key={categoria.id}
+                    style={[
+                      styles.filterButton,
+                      selectedFilters.includes(categoria.id) && styles.filterButtonSelected,
+                    ]}
+                    onPress={() => toggleFilter(categoria.id)}
+                  >
+                    <Text
+                      style={[
+                        styles.filterText,
+                        selectedFilters.includes(categoria.id) && styles.filterTextSelected,
+                      ]}
+                    >
+                      {categoria.label}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          ))}
         </ScrollView>
+
+        {/* Botón Ver Recetas */}
+        <TouchableOpacity
+          style={styles.viewRecipesButton}
+          onPress={handleViewRecipes}
+          disabled={loadingFilters}
+        >
+          {loadingFilters ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.viewRecipesButtonText}>
+              Ver recetas ({filteredRecipes.length})
+            </Text>
+          )}
+        </TouchableOpacity>
       </Animated.View>
     </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   overlayTouchable: {
     flex: 1,
   },
-  modalContainer: {
+  container: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
     height: '90%',
-    backgroundColor: 'white',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    overflow: 'hidden',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    padding: 15,
-    borderBottomWidth: 1,
-    borderColor: '#e0e0e0',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
   },
-  iconButton: {
+  closeIcon: {
     padding: 5,
   },
-  scrollContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+  title: {
+    fontSize: 24,
+    fontFamily: 'DMSans_700Bold',
+    color: '#000',
   },
-  placeholderText: {
-    fontFamily: 'DMSans_400Regular',
+  groupContainer: {
+    marginBottom: 20,
+  },
+  groupTitle: {
     fontSize: 18,
-    color: '#999',
-    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 10,
+    fontFamily: 'DMSans_500Medium',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  filterButton: {
+    padding: 10,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 20,
+    margin: 5,
+    borderWidth: 2,
+    borderColor: 'transparent',
+  },
+  filterButtonSelected: {
+    borderColor: '#1E90FF',
+  },
+  filterText: {
+    fontSize: 14,
+    color: '#000',
+    fontFamily: 'DMSans_400Regular',
+  },
+  filterTextSelected: {
+    color: '#1E90FF',
+    fontWeight: 'bold',
+    fontFamily: 'DMSans_500Medium',
+  },
+  viewRecipesButton: {
+    backgroundColor: '#1E90FF',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  viewRecipesButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    fontFamily: 'DMSans_500Medium',
   },
 });
-
-export default FiltrosModal;
