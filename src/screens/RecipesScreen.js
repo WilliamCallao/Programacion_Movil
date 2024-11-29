@@ -10,8 +10,10 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import TopTabs from '../components/TopTabs';
 import { obtenerTodasLasRecetas } from '../services/recetaService';
 import {
   obtenerFavoritos,
@@ -34,8 +36,11 @@ export default function RecipesScreen({ route }) {
   const [busqueda, setBusqueda] = useState('');
   const [recetasVisibles, setRecetasVisibles] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
+  const [selectedTab, setSelectedTab] = useState('recetas');
 
   const searchInputRef = useRef(null);
+  const { width } = Dimensions.get('window');
+  const TAB_WIDTH = width / 2;
 
   useEffect(() => {
     const cargarDatos = async () => {
@@ -148,9 +153,33 @@ export default function RecipesScreen({ route }) {
     );
   }
 
+  // Definir las recetas favoritas
+  const favoritosRecetas = recetas.filter((receta) =>
+    favoritos.includes(receta.id)
+  );
+
+  const tabs = [
+    { key: 'recetas', title: 'Recetas' },
+    { key: 'favoritos', title: 'Favoritos' },
+  ];
+
+  const renderContent = () => {
+    if (selectedTab === 'recetas') {
+      return (
+        <RecipeList recipes={recetasVisibles} onRecipePress={handleOpenModal} />
+      );
+    } else if (selectedTab === 'favoritos') {
+      return (
+        <RecipeList recipes={favoritosRecetas} onRecipePress={handleOpenModal} />
+      );
+    }
+    return null;
+  };
+
   return (
     <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
       <View style={styles.container}>
+        {/* Header con Filtros y Barra de Búsqueda */}
         <View style={styles.headerContainer}>
           <TouchableOpacity
             style={styles.filtrosButton}
@@ -196,7 +225,17 @@ export default function RecipesScreen({ route }) {
           </TouchableWithoutFeedback>
         </View>
 
-        <RecipeList recipes={recetasVisibles} onRecipePress={handleOpenModal} />
+        {/* Componente de Pestañas */}
+        <TopTabs
+          tabs={tabs}
+          selectedTab={selectedTab}
+          onTabPress={setSelectedTab}
+        />
+
+        {/* Contenido según la pestaña seleccionada */}
+        <View style={styles.contentContainer}>
+          {renderContent()}
+        </View>
 
         <RecipeModal
           visible={modalVisible}
@@ -207,7 +246,6 @@ export default function RecipesScreen({ route }) {
           }
           onToggleFavorite={handleToggleFavorite}
         />
-
         <FiltrosModal visible={filtrosVisible} onClose={handleCloseFiltros} />
       </View>
     </TouchableWithoutFeedback>
@@ -224,7 +262,6 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15,
     paddingHorizontal: 10,
     position: 'relative',
   },
@@ -285,5 +322,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  contentContainer: {
+    flex: 1,
   },
 });
