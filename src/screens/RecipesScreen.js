@@ -1,17 +1,30 @@
 // RecipesScreen.js
 
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Alert, TextInput } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Alert,
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { obtenerTodasLasRecetas } from '../services/recetaService';
-import { obtenerFavoritos, agregarFavorito, quitarFavorito } from '../services/favoritoService';
+import {
+  obtenerFavoritos,
+  agregarFavorito,
+  quitarFavorito,
+} from '../services/favoritoService';
 import RecipeModal from '../components/RecipeModal';
 import FiltrosModal from '../components/FiltrosModal';
 import RecipeList from '../components/RecipeList';
-import ThreeBodyLoader from '../components/ThreeBodyLoader'; // Importamos el loader personalizado
+import ThreeBodyLoader from '../components/ThreeBodyLoader';
 
 export default function RecipesScreen({ route }) {
-  const { recetasFiltradas } = route.params || {}; // Recetas filtradas recibidas desde FiltrosModal
+  const { recetasFiltradas } = route.params || {};
   const [recetas, setRecetas] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [filtrosVisible, setFiltrosVisible] = useState(false);
@@ -19,21 +32,27 @@ export default function RecipesScreen({ route }) {
   const [favoritos, setFavoritos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [busqueda, setBusqueda] = useState('');
-  const [recetasVisibles, setRecetasVisibles] = useState([]); // Para manejar recetas visibles (búsqueda)
+  const [recetasVisibles, setRecetasVisibles] = useState([]);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const searchInputRef = useRef(null);
 
   useEffect(() => {
     const cargarDatos = async () => {
       try {
-        // Si hay recetas filtradas, úsala directamente; de lo contrario, carga todas las recetas
-        const recetasObtenidas = recetasFiltradas || (await obtenerTodasLasRecetas());
+        const recetasObtenidas =
+          recetasFiltradas || (await obtenerTodasLasRecetas());
         const favoritosObtenidos = await obtenerFavoritos();
 
         setRecetas(recetasObtenidas);
-        setRecetasVisibles(recetasObtenidas); // Inicialmente todas las recetas son visibles
+        setRecetasVisibles(recetasObtenidas);
         setFavoritos(favoritosObtenidos);
       } catch (error) {
         console.error('Error al cargar las recetas o favoritos:', error);
-        Alert.alert('Error', 'No se pudieron cargar las recetas o favoritos.');
+        Alert.alert(
+          'Error',
+          'No se pudieron cargar las recetas o favoritos.'
+        );
       } finally {
         setLoading(false);
       }
@@ -42,10 +61,9 @@ export default function RecipesScreen({ route }) {
     cargarDatos();
   }, [recetasFiltradas]);
 
-  // Actualizar recetas visibles al cambiar el término de búsqueda
   useEffect(() => {
     if (busqueda.trim() === '') {
-      setRecetasVisibles(recetas); // Si la búsqueda está vacía, muestra todas las recetas
+      setRecetasVisibles(recetas);
     } else {
       const busquedaLower = busqueda.toLowerCase();
       const filtradas = recetas.filter((receta) =>
@@ -112,6 +130,16 @@ export default function RecipesScreen({ route }) {
     }
   };
 
+  const handleFocusSearch = () => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  };
+
+  const handleDismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -121,36 +149,68 @@ export default function RecipesScreen({ route }) {
   }
 
   return (
-    <View style={styles.container}>
-      {/* Contenedor del botón de filtros y barra de búsqueda */}
-      <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.filtrosButton} onPress={handleOpenFiltros}>
-          <Ionicons name="filter" size={24} color="#fff" />
-          <Text style={styles.filtrosButtonText}>Filtros</Text>
-        </TouchableOpacity>
+    <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity
+            style={styles.filtrosButton}
+            onPress={handleOpenFiltros}
+          >
+            <Ionicons name="filter" size={24} color="#fff" />
+            <Text style={styles.filtrosButtonText}>Filtros</Text>
+          </TouchableOpacity>
 
-        {/* Barra de búsqueda */}
-        <TextInput
-          style={styles.searchBar}
-          placeholder="Buscar recetas"
-          placeholderTextColor="#1E90FF"
-          value={busqueda}
-          onChangeText={setBusqueda}
+          <TouchableWithoutFeedback onPress={handleFocusSearch}>
+            <View style={styles.searchBarContainer}>
+              <TextInput
+                ref={searchInputRef}
+                style={styles.searchInput}
+                value={busqueda}
+                onChangeText={setBusqueda}
+                textAlignVertical="center"
+                selectionColor="#000"
+                caretHidden={!isFocused}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+              />
+              {busqueda !== '' ? (
+                <TouchableOpacity
+                  style={styles.iconContainer}
+                  onPress={() => setBusqueda('')}
+                >
+                  <Ionicons name="close" size={24} color="black" />
+                </TouchableOpacity>
+              ) : (
+                <Ionicons
+                  name="search"
+                  size={24}
+                  color="black"
+                  style={styles.iconSearch}
+                />
+              )}
+              {/* Placeholder personalizado */}
+              {busqueda === '' && (
+                <Text style={styles.placeholderText}>Buscar recetas</Text>
+              )}
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+
+        <RecipeList recipes={recetasVisibles} onRecipePress={handleOpenModal} />
+
+        <RecipeModal
+          visible={modalVisible}
+          onClose={handleCloseModal}
+          recipe={selectedRecipe}
+          isFavorite={
+            selectedRecipe ? favoritos.includes(selectedRecipe.id) : false
+          }
+          onToggleFavorite={handleToggleFavorite}
         />
+
+        <FiltrosModal visible={filtrosVisible} onClose={handleCloseFiltros} />
       </View>
-
-      <RecipeList recipes={recetasVisibles} onRecipePress={handleOpenModal} />
-
-      <RecipeModal
-        visible={modalVisible}
-        onClose={handleCloseModal}
-        recipe={selectedRecipe}
-        isFavorite={selectedRecipe ? favoritos.includes(selectedRecipe.id) : false}
-        onToggleFavorite={handleToggleFavorite}
-      />
-
-      <FiltrosModal visible={filtrosVisible} onClose={handleCloseFiltros} />
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -166,12 +226,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 15,
     paddingHorizontal: 10,
+    position: 'relative',
   },
   filtrosButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'black',
-    padding: 10,
+    paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 25,
     marginRight: 10,
@@ -182,18 +243,43 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontFamily: 'DMSans_500Medium',
   },
-  searchBar: {
+  searchBarContainer: {
     flex: 1,
-    height: 40,
-    backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#C7C6C6',
     paddingHorizontal: 15,
-    fontSize: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    paddingVertical: 9,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 14,
+    fontFamily: 'DMSans_400Medium',
+    color: '#000',
+    paddingVertical: 0,
+    paddingRight: 30,
+  },
+  iconContainer: {
+    marginLeft: 10,
+  },
+  iconSearch: {
+    position: 'absolute',
+    right: 10,
+  },
+  placeholderText: {
+    position: 'absolute',
+    left: 20,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    color: '#929292',
+    fontSize: 14,
+    fontFamily: 'DMSans_400Medium',
+    textAlignVertical: 'center',
   },
   loadingContainer: {
     flex: 1,
@@ -201,6 +287,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-
-
