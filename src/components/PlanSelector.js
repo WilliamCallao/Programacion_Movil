@@ -20,7 +20,7 @@ export default function PlanSelector({ selectedButton, onButtonPress }) {
         >
           <Ionicons
             name="sunny-outline"
-            size={24}
+            size={23}
             color={selectedButton === 'Hoy' ? '#fff' : '#929292'}
           />
           <Text
@@ -41,7 +41,7 @@ export default function PlanSelector({ selectedButton, onButtonPress }) {
         >
           <Ionicons
             name="time-outline"
-            size={24}
+            size={23}
             color={selectedButton === 'Mañana' ? '#fff' : '#929292'}
           />
           <Text
@@ -63,7 +63,7 @@ export default function PlanSelector({ selectedButton, onButtonPress }) {
         >
           <Ionicons
             name="calendar-outline"
-            size={24}
+            size={23}
             color={selectedButton === 'Semana' ? '#fff' : '#929292'}
           />
           <Text
