@@ -149,7 +149,7 @@ const MainScreen = () => {
     <View style={styles.container}>
       <HeaderSections dia={getDayName(selectedButton === 'Mañana' ? 1 : 0)} calorias={totalCalorias} />
       <PlanSelector selectedButton={selectedButton} onButtonPress={handleButtonPress} />
-      {selectedButton === 'Semanal' ? (
+      {selectedButton === 'Semana' ? (
         <View style={styles.section7}>
           <WeeklyView
             planes={planes}
