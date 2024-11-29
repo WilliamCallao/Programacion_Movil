@@ -1,42 +1,77 @@
 // components/PlanSelector.js
+
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Dimensions } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function PlanSelector({ selectedButton, onButtonPress }) {
-  const { height } = Dimensions.get('window');
+  const { width } = Dimensions.get('window');
 
   return (
-    <View style={[styles.section4, { height: (height * 9) / 100 }]}>
+    <View style={styles.section4}>
       <View style={styles.buttonContainer}>
+        {/* Botón Hoy */}
         <TouchableOpacity
           style={[
             styles.button,
-            styles.largeButton,
-            selectedButton === 'Semanal' && styles.buttonSelected,
-          ]}
-          onPress={() => onButtonPress('Semanal')}
-        >
-          <Text style={selectedButton === 'Semanal' ? styles.buttonTextSelected : styles.buttonText} numberOfLines={1}>Semanal</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            styles.smallButton,
             selectedButton === 'Hoy' && styles.buttonSelected,
           ]}
           onPress={() => onButtonPress('Hoy')}
         >
-          <Text style={selectedButton === 'Hoy' ? styles.buttonTextSelected : styles.buttonText} numberOfLines={1}>Hoy</Text>
+          <Ionicons
+            name="sunny-outline"
+            size={24}
+            color={selectedButton === 'Hoy' ? '#fff' : '#929292'}
+          />
+          <Text
+            style={selectedButton === 'Hoy' ? styles.buttonTextSelected : styles.buttonText}
+            numberOfLines={1}
+          >
+            Hoy
+          </Text>
         </TouchableOpacity>
+
+        {/* Botón Mañana */}
         <TouchableOpacity
           style={[
             styles.button,
-            styles.mediumButton,
             selectedButton === 'Mañana' && styles.buttonSelected,
           ]}
           onPress={() => onButtonPress('Mañana')}
         >
-          <Text style={selectedButton === 'Mañana' ? styles.buttonTextSelected : styles.buttonText} numberOfLines={1}>Mañana</Text>
+          <Ionicons
+            name="time-outline"
+            size={24}
+            color={selectedButton === 'Mañana' ? '#fff' : '#929292'}
+          />
+          <Text
+            style={selectedButton === 'Mañana' ? styles.buttonTextSelected : styles.buttonText}
+            numberOfLines={1}
+          >
+            Mañana
+          </Text>
+        </TouchableOpacity>
+
+        {/* Botón Plan Semanal */}
+        <TouchableOpacity
+          style={[
+            styles.button,
+            styles.semanaButton,
+            selectedButton === 'Semana' && styles.buttonSelected,
+          ]}
+          onPress={() => onButtonPress('Semana')}
+        >
+          <Ionicons
+            name="calendar-outline"
+            size={24}
+            color={selectedButton === 'Semana' ? '#fff' : '#929292'}
+          />
+          <Text
+            style={selectedButton === 'Semana' ? styles.buttonTextSelected : styles.buttonText}
+            numberOfLines={1}
+          >
+            Semana
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -51,40 +86,41 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    alignItems: 'center',
+    marginTop: 15,
+    paddingRight: 5,
+    paddingLeft: 15,
+    width: '100%',
   },
   button: {
-    marginHorizontal: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 25,
     borderWidth: 1,
     borderColor: '#C7C6C6',
-    borderRadius: 25,
-    paddingHorizontal: 10,
-    textAlign: 'center',
-    paddingVertical: 10,
+    marginRight: 10,
   },
-  smallButton: {
+  semanaButton: {
     flex: 1,
-  },
-  mediumButton: {
-    flex: 1.5,
-  },
-  largeButton: {
-    flex: 2,
+    justifyContent: 'center',
   },
   buttonSelected: {
     backgroundColor: 'black',
     borderColor: 'black',
   },
   buttonText: {
-    color: 'black',
+    color: '#929292',
     fontSize: 14,
-    fontFamily: 'DMSans_400Regular',
+    marginLeft: 4,
+    fontFamily: 'DMSans_400Medium',
     textAlign: 'center',
   },
   buttonTextSelected: {
-    color: 'white',
+    color: '#fff',
     fontSize: 14,
+    marginLeft: 5,
     fontFamily: 'DMSans_500Medium',
     textAlign: 'center',
   },
