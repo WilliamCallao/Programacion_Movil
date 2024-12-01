@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderSections from '../components/HeaderSections';
 import PlanSelector from '../components/PlanSelector';
-import { obtenerUsuario } from '../services/usuarioService';
+import { obtenerUsuario, verificarYActualizarPlan  } from '../services/usuarioService';
 import { obtenerRecetasPorIds } from '../services/recetaService';
 import Secciones56 from '../components/RecipesPlan';
 import WeeklyView from '../components/WeeklyView';
@@ -120,6 +121,16 @@ const MainScreen = () => {
       Alert.alert('Error', 'No se pudieron cargar las recetas semanales.');
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const verificar = async () => {
+        await verificarYActualizarPlan();
+      };
+      verificar();
+    }, [])
+  );
+  
 
   const handleButtonPress = async (button) => {
     if (button !== selectedButton) {
