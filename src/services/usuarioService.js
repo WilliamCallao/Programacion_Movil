@@ -215,3 +215,30 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
     throw error;
   }
 };
+
+export const verificarYActualizarPlan = async () => {
+  try {
+    const userId = await AsyncStorage.getItem("usuarioId");
+    if (!userId) {
+      console.error("(1245) No se encontró el ID del usuario en AsyncStorage.");
+      return;
+    }
+    const usuarioDocRef = doc(db, "usuarios", userId);
+    const usuarioDoc = await getDoc(usuarioDocRef);
+    if (usuarioDoc.exists()) {
+      let usuarioData = usuarioDoc.data();
+      // Verificar si el atributo 'actualizar_plan' existe
+      if (usuarioData.actualizar_plan === undefined) {
+        // Si no existe, crearlocon el valor 'false'
+        await updateDoc(usuarioDocRef, { actualizar_plan: false });
+        console.log("(1245) Atributo 'actualizar_plan' creado con el valor predeterminado: false.");
+        usuarioData = { ...usuarioData, actualizar_plan: false };
+      }
+      console.log(`actualizar_plan : ${usuarioData.actualizar_plan}`);
+    } else {
+      console.error("(1245) No se encontró un documento para el usuario proporcionado.");
+    }
+  } catch (error) {
+    console.error("(1245) Error al verificar o actualizar el atributo 'actualizar_plan':", error);
+  }
+};
