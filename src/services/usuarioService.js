@@ -160,34 +160,31 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
       let metaCalorias = datosUsuario.objetivos?.meta_calorias;
       const preferencias = datosUsuario.preferencias;
 
-      // Si no tenemos meta_calorias, necesitamos calcularla
-      if (!metaCalorias) {
-        // Necesitamos calcular la edad, peso objetivo, distribución, calorías y macronutrientes
-        const edad = calcularEdad(datosUsuario.informacion_personal.fecha_nacimiento); // Es una cadena
-        const pesoObjetivo = calcularPesoObjetivo(
-          datosUsuario.medidas_fisicas.peso_kg,
-          datosUsuario.objetivo_peso.tipo_objetivo
-        );
-        const distribucion = obtenerDistribucionMacronutrientes(datosUsuario.objetivo_peso.tipo_objetivo);
+      // Necesitamos calcular la edad, peso objetivo, distribución, calorías y macronutrientes
+      const edad = calcularEdad(datosUsuario.informacion_personal.fecha_nacimiento);
+      const pesoObjetivo = calcularPesoObjetivo(
+        datosUsuario.medidas_fisicas.peso_kg,
+        datosUsuario.objetivo_peso.tipo_objetivo
+      );
+      const distribucion = obtenerDistribucionMacronutrientes(datosUsuario.objetivo_peso.tipo_objetivo);
 
-        metaCalorias = calcularCalorias(
-          datosUsuario.medidas_fisicas.peso_kg,
-          datosUsuario.medidas_fisicas.altura_cm,
-          edad,
-          datosUsuario.informacion_personal.genero,
-          datosUsuario.medidas_fisicas.nivel_actividad
-        );
+      metaCalorias = calcularCalorias(
+        datosUsuario.medidas_fisicas.peso_kg,
+        datosUsuario.medidas_fisicas.altura_cm,
+        edad,
+        datosUsuario.informacion_personal.genero,
+        datosUsuario.medidas_fisicas.nivel_actividad
+      );
 
-        const macros = calcularMacronutrientes(metaCalorias, distribucion);
+      const macros = calcularMacronutrientes(metaCalorias, distribucion);
 
-        // Actualizar el usuario con estos datos
-        await updateDoc(usuarioDocRef, {
-          'objetivos.meta_calorias': metaCalorias,
-          'objetivos.peso_objetivo_kg': pesoObjetivo,
-          'objetivos.distribucion_macronutrientes': distribucion,
-          'objetivos.macronutrientes': macros,
-        });
-      }
+      // Actualizar el usuario con estos datos
+      await updateDoc(usuarioDocRef, {
+        'objetivos.meta_calorias': metaCalorias,
+        'objetivos.peso_objetivo_kg': pesoObjetivo,
+        'objetivos.distribucion_macronutrientes': distribucion,
+        'objetivos.macronutrientes': macros,
+      });
 
       // Generar el plan semanal
       const planSemanal = await generarPlanSemanal(metaCalorias, preferencias);
@@ -223,18 +220,34 @@ export const verificarYActualizarPlan = async () => {
       console.error("(1245) No se encontró el ID del usuario en AsyncStorage.");
       return;
     }
+
     const usuarioDocRef = doc(db, "usuarios", userId);
     const usuarioDoc = await getDoc(usuarioDocRef);
+
     if (usuarioDoc.exists()) {
       let usuarioData = usuarioDoc.data();
+
       // Verificar si el atributo 'actualizar_plan' existe
       if (usuarioData.actualizar_plan === undefined) {
-        // Si no existe, crearlocon el valor 'false'
+        // Si no existe, crearlo con el valor 'false'
         await updateDoc(usuarioDocRef, { actualizar_plan: false });
         console.log("(1245) Atributo 'actualizar_plan' creado con el valor predeterminado: false.");
         usuarioData = { ...usuarioData, actualizar_plan: false };
       }
-      console.log(`actualizar_plan : ${usuarioData.actualizar_plan}`);
+
+      // Si 'actualizar_plan' es true, generar un nuevo plan y actualizarlo
+      if (usuarioData.actualizar_plan) {
+        console.log("(1245) Actualizando el plan alimenticio del usuario...");
+
+        // Generar y asignar un nuevo plan alimenticio
+        await generarYAsignarPlanAlimenticio(userId);
+
+        // Restablecer 'actualizar_plan' a false después de actualizar
+        await updateDoc(usuarioDocRef, { actualizar_plan: false });
+        console.log("(1245) Plan alimenticio actualizado y 'actualizar_plan' restablecido a false.");
+      } else {
+        console.log("(1245) No se requiere actualizar el plan alimenticio.");
+      }
     } else {
       console.error("(1245) No se encontró un documento para el usuario proporcionado.");
     }
