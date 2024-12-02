@@ -10,7 +10,7 @@ export const generarPlanSemanal = async (metaCalorias, preferencias, seed = Math
 
     const rng = seedrandom(seed);
 
-    const variacion = (rng() - 0.5) * 0.1; // Variación de ±5%
+    const variacion = (rng() - 0.5) * 0.1; 
     const distribucion = {
       Desayuno: { min: 0.25 + variacion, max: 0.30 + variacion },
       Almuerzo: { min: 0.35 + variacion, max: 0.40 + variacion },
@@ -65,7 +65,6 @@ export const generarPlanSemanal = async (metaCalorias, preferencias, seed = Math
       Snacks: {},
     };
 
-    const maxRecetasPorCategoria = 2;
     const maxRepeticiones = 2;
 
     const planSemanal = [];
@@ -75,10 +74,16 @@ export const generarPlanSemanal = async (metaCalorias, preferencias, seed = Math
       const dia = (startDay + i) % 7 + 1;
       const planDiario = {};
       let totalCaloriasDia = 0;
+      let totalRecetasDia = 0;
 
       console.log(`Día ${dia}:`);
       const categorias = ['Desayuno', 'Almuerzo', 'Cena', 'Snacks'];
       for (let categoria of categorias) {
+        if (totalRecetasDia >= 5) {
+          console.log('Se ha alcanzado el número máximo de recetas por día.');
+          break;
+        }
+
         const { min, max } = caloriasPorCategoria[categoria];
         let recetasDisponibles;
 
@@ -108,36 +113,82 @@ export const generarPlanSemanal = async (metaCalorias, preferencias, seed = Math
           return cumpleDietas && cumpleCondiciones;
         });
 
+        if (recetasFiltradas.length === 0) {
+          console.log(`No hay recetas disponibles para la categoría ${categoria} después de aplicar las preferencias.`);
+          continue;
+        }
+
+        // Excluir recetas que han alcanzado el número máximo de repeticiones
+        const recetasDisponiblesParaSeleccion = recetasFiltradas.filter(receta => {
+          if (usados[categoria][receta.id_receta] === undefined) {
+            usados[categoria][receta.id_receta] = 0;
+          }
+          return usados[categoria][receta.id_receta] < maxRepeticiones;
+        });
+
+        if (recetasDisponiblesParaSeleccion.length === 0) {
+          console.log(`No hay recetas disponibles para la categoría ${categoria} después de considerar el límite de repeticiones.`);
+          continue;
+        }
+
         let recetasSeleccionadas = [];
         let caloriasActuales = 0;
 
-        for (let intento = 0; intento < recetasFiltradas.length && recetasSeleccionadas.length < maxRecetasPorCategoria; intento++) {
-          const receta = recetasFiltradas[intento];
+        // Intentar seleccionar una receta que cumpla con el rango de calorías
+        let recetaSeleccionada = null;
 
-          if ((caloriasActuales + receta.calorias) <= max || caloriasActuales < min) {
-            recetasSeleccionadas.push(receta);
-            caloriasActuales += receta.calorias;
-            usados[categoria][receta.id_receta] = (usados[categoria][receta.id_receta] || 0) + 1;
-          }
-
-          if (caloriasActuales >= min) {
+        for (let receta of recetasDisponiblesParaSeleccion) {
+          if (receta.calorias >= min && receta.calorias <= max) {
+            recetaSeleccionada = receta;
             break;
           }
         }
 
-        const caloriasCategoria = recetasSeleccionadas.reduce((sum, r) => sum + r.calorias, 0);
+        // Si no se encontró, seleccionar la receta más cercana al mínimo de calorías
+        if (!recetaSeleccionada) {
+          recetaSeleccionada = recetasDisponiblesParaSeleccion.reduce((prev, curr) => {
+            return (Math.abs(curr.calorias - min) < Math.abs(prev.calorias - min) ? curr : prev);
+          });
+        }
+
+        if (recetaSeleccionada) {
+          recetasSeleccionadas.push({
+            id: recetaSeleccionada.id_receta,
+            titulo: recetaSeleccionada.titulo,
+            calorias: recetaSeleccionada.calorias,
+          });
+          caloriasActuales += recetaSeleccionada.calorias;
+          usados[categoria][recetaSeleccionada.id_receta]++;
+          totalRecetasDia++;
+        }
+
+        // Si las calorías actuales son significativamente menores que el mínimo, intentar agregar otra receta
+        if (caloriasActuales < min * 0.8 && totalRecetasDia < 5) {
+          for (let receta of recetasDisponiblesParaSeleccion) {
+            if (receta.id_receta === recetaSeleccionada.id_receta) continue;
+            if ((caloriasActuales + receta.calorias) <= max) {
+              recetasSeleccionadas.push({
+                id: receta.id_receta,
+                titulo: receta.titulo,
+                calorias: receta.calorias,
+              });
+              caloriasActuales += receta.calorias;
+              usados[categoria][receta.id_receta]++;
+              totalRecetasDia++;
+              break;
+            }
+          }
+        }
+
+        const caloriasCategoria = caloriasActuales;
         totalCaloriasDia += caloriasCategoria;
 
-        planDiario[categoria] = recetasSeleccionadas.map(receta => ({
-          id: receta.id_receta,
-          titulo: receta.titulo,
-          calorias: receta.calorias,
-        }));
+        planDiario[categoria] = recetasSeleccionadas;
 
         // Registro detallado por categoría
         console.log(`  ${categoria}:`);
         recetasSeleccionadas.forEach(receta => {
-          console.log(`    - ID: ${receta.id_receta}, Calorías: ${receta.calorias}`);
+          console.log(`    - ID: ${receta.id}, Calorías: ${receta.calorias}`);
         });
       }
 
@@ -154,8 +205,6 @@ export const generarPlanSemanal = async (metaCalorias, preferencias, seed = Math
     throw error;
   }
 };
-
-
 
 // Función para mezclar arrays
 function shuffleArray(array, rng) {
