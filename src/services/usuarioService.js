@@ -214,11 +214,13 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
 };
 
 export const verificarYActualizarPlan = async () => {
+  let planActualizado = false;
+
   try {
     const userId = await AsyncStorage.getItem("usuarioId");
     if (!userId) {
       console.error("(1245) No se encontró el ID del usuario en AsyncStorage.");
-      return;
+      return false;
     }
 
     const usuarioDocRef = doc(db, "usuarios", userId);
@@ -235,16 +237,12 @@ export const verificarYActualizarPlan = async () => {
         usuarioData = { ...usuarioData, actualizar_plan: false };
       }
 
-      // Si 'actualizar_plan' es true, generar un nuevo plan y actualizarlo
       if (usuarioData.actualizar_plan) {
         console.log("(1245) Actualizando el plan alimenticio del usuario...");
-
-        // Generar y asignar un nuevo plan alimenticio
         await generarYAsignarPlanAlimenticio(userId);
-
-        // Restablecer 'actualizar_plan' a false después de actualizar
         await updateDoc(usuarioDocRef, { actualizar_plan: false });
         console.log("(1245) Plan alimenticio actualizado y 'actualizar_plan' restablecido a false.");
+        planActualizado = true;
       } else {
         console.log("(1245) No se requiere actualizar el plan alimenticio.");
       }
@@ -254,4 +252,6 @@ export const verificarYActualizarPlan = async () => {
   } catch (error) {
     console.error("(1245) Error al verificar o actualizar el atributo 'actualizar_plan':", error);
   }
+  return planActualizado;
 };
+
