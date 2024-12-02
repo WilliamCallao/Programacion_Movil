@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderSections from '../components/HeaderSections';
 import PlanSelector from '../components/PlanSelector';
-import { obtenerUsuario, verificarYActualizarPlan  } from '../services/usuarioService';
+import { obtenerUsuario, verificarYActualizarPlan } from '../services/usuarioService';
 import { obtenerRecetasPorIds } from '../services/recetaService';
 import Secciones56 from '../components/RecipesPlan';
 import WeeklyView from '../components/WeeklyView';
@@ -34,31 +34,51 @@ const MainScreen = () => {
   const [totalCalorias, setTotalCalorias] = useState(0);
   const [loadingRecetas, setLoadingRecetas] = useState(true);
   const [loadingTabChange, setLoadingTabChange] = useState(false);
+  const [loadingReload, setLoadingReload] = useState(false); // Nuevo estado para recarga
 
   const { favoritos, toggleFavorite, loading: loadingFavoritos } = useContext(FavoritesContext);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userId = await AsyncStorage.getItem('usuarioId');
-        if (userId) {
-          const datosUsuario = await obtenerUsuario(userId);
-          if (datosUsuario) {
-            setUsuario(datosUsuario);
-            setPlanes(datosUsuario.planes_alimentacion);
-          }
-        } else {
-          console.warn('No se encontró el ID de usuario en AsyncStorage.');
+  // Función para obtener los datos del usuario
+  const fetchUserData = useCallback(async () => {
+    try {
+      const userId = await AsyncStorage.getItem('usuarioId');
+      if (userId) {
+        const datosUsuario = await obtenerUsuario(userId);
+        if (datosUsuario) {
+          setUsuario(datosUsuario);
+          setPlanes(datosUsuario.planes_alimentacion);
         }
-      } catch (error) {
-        console.error('Error al obtener los datos del usuario:', error);
-        Alert.alert('Error', 'No se pudieron obtener los datos del usuario.');
+      } else {
+        console.warn('No se encontró el ID de usuario en AsyncStorage.');
       }
-    };
-
-    fetchUserData();
+    } catch (error) {
+      console.error('Error al obtener los datos del usuario:', error);
+      Alert.alert('Error', 'No se pudieron obtener los datos del usuario.');
+    }
   }, []);
 
+  // Función para cargar las recetas iniciales
+  const cargarRecetasIniciales = useCallback(async () => {
+    if (usuario) {
+      setLoadingRecetas(true);
+      try {
+        const recetasHoy = await fetchRecetasPorDia(0);
+        setRecetasDeHoy(recetasHoy);
+
+        const recetasMañana = await fetchRecetasPorDia(1);
+        setRecetasDeMañana(recetasMañana);
+
+        await fetchRecetasSemanales();
+      } catch (error) {
+        console.error('Error al cargar las recetas iniciales:', error);
+        Alert.alert('Error', 'No se pudieron cargar las recetas.');
+      } finally {
+        setLoadingRecetas(false);
+      }
+    }
+  }, [usuario]);
+
+  // Función para obtener recetas por día
   const fetchRecetasPorDia = async (offset) => {
     const currentDay = new Date().getDay();
     const targetDay = (currentDay + offset) % 7;
@@ -84,30 +104,7 @@ const MainScreen = () => {
     return recetasCompletas;
   };
 
-  useEffect(() => {
-    const cargarRecetasIniciales = async () => {
-      if (usuario) {
-        setLoadingRecetas(true);
-        try {
-          const recetasHoy = await fetchRecetasPorDia(0);
-          setRecetasDeHoy(recetasHoy);
-
-          const recetasMañana = await fetchRecetasPorDia(1);
-          setRecetasDeMañana(recetasMañana);
-
-          await fetchRecetasSemanales();
-        } catch (error) {
-          console.error('Error al cargar las recetas iniciales:', error);
-          Alert.alert('Error', 'No se pudieron cargar las recetas.');
-        } finally {
-          setLoadingRecetas(false);
-        }
-      }
-    };
-
-    cargarRecetasIniciales();
-  }, [usuario]);
-
+  // Función para obtener recetas semanales
   const fetchRecetasSemanales = async () => {
     try {
       const recetasPorDia = await Promise.all(
@@ -122,15 +119,31 @@ const MainScreen = () => {
     }
   };
 
+  // useEffect para cargar los datos del usuario al montar el componente
+  useEffect(() => {
+    fetchUserData();
+  }, [fetchUserData]);
+
+  // useEffect para cargar las recetas cuando el usuario cambia
+  useEffect(() => {
+    cargarRecetasIniciales();
+  }, [cargarRecetasIniciales]);
+
+  // useFocusEffect para verificar y actualizar el plan cuando la pantalla gana foco
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       const verificar = async () => {
-        await verificarYActualizarPlan();
+        setLoadingReload(true);
+        const planActualizado = await verificarYActualizarPlan();
+        if (planActualizado) {
+          await fetchUserData();
+          await cargarRecetasIniciales();
+        }
+        setLoadingReload(false);
       };
       verificar();
-    }, [])
+    }, [fetchUserData, cargarRecetasIniciales])
   );
-  
 
   const handleButtonPress = async (button) => {
     if (button !== selectedButton) {
@@ -155,6 +168,15 @@ const MainScreen = () => {
     );
     setTotalCalorias(totalCal);
   }, [selectedButton, recetasDeHoy, recetasDeMañana]);
+
+  // Mostrar el loader de recarga si está en proceso
+  if (loadingReload) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ThreeBodyLoader />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
