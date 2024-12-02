@@ -156,19 +156,15 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
     if (usuarioDoc.exists()) {
       const datosUsuario = usuarioDoc.data();
 
-      // Obtener meta_calorias y preferencias
-      let metaCalorias = datosUsuario.objetivos?.meta_calorias;
-      const preferencias = datosUsuario.preferencias;
-
-      // Necesitamos calcular la edad, peso objetivo, distribución, calorías y macronutrientes
-      const edad = calcularEdad(datosUsuario.informacion_personal.fecha_nacimiento);
+      // Calcular meta_calorias y demás datos relacionados
+      const edad = calcularEdad(datosUsuario.informacion_personal.fecha_nacimiento); // Es una cadena
       const pesoObjetivo = calcularPesoObjetivo(
         datosUsuario.medidas_fisicas.peso_kg,
         datosUsuario.objetivo_peso.tipo_objetivo
       );
       const distribucion = obtenerDistribucionMacronutrientes(datosUsuario.objetivo_peso.tipo_objetivo);
 
-      metaCalorias = calcularCalorias(
+      const metaCalorias = calcularCalorias(
         datosUsuario.medidas_fisicas.peso_kg,
         datosUsuario.medidas_fisicas.altura_cm,
         edad,
@@ -178,7 +174,7 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
 
       const macros = calcularMacronutrientes(metaCalorias, distribucion);
 
-      // Actualizar el usuario con estos datos
+      // Actualizar los objetivos del usuario
       await updateDoc(usuarioDocRef, {
         'objetivos.meta_calorias': metaCalorias,
         'objetivos.peso_objetivo_kg': pesoObjetivo,
@@ -186,7 +182,11 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
         'objetivos.macronutrientes': macros,
       });
 
-      // Generar el plan semanal
+      console.log(`Meta calórica calculada: ${metaCalorias}`);
+      console.log('Datos nutricionales actualizados en Firebase.');
+
+      // Generar el nuevo plan semanal
+      const preferencias = datosUsuario.preferencias;
       const planSemanal = await generarPlanSemanal(metaCalorias, preferencias);
 
       const fechaCreacion = new Date();
@@ -198,12 +198,12 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
         comidas: plan,
       }));
 
-      // Actualizar el usuario con el nuevo plan alimenticio
+      // Sobrescribir los planes existentes con el nuevo plan semanal
       await updateDoc(usuarioDocRef, {
-        planes_alimentacion: arrayUnion(...planesAlimentacion),
+        planes_alimentacion: planesAlimentacion, // Reemplaza la lista completa
       });
 
-      console.log('Plan alimenticio generado y asignado al usuario.');
+      console.log('Plan alimenticio generado y reemplazado en Firebase.');
     } else {
       console.error('No se encontró un usuario con la ID proporcionada.');
     }
