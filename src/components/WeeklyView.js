@@ -46,7 +46,7 @@ export default function WeeklyView({ planes, recetasCompletas, currentDay }) {
   };
 
   const handleRecipePress = (receta) => {
-    console.log(JSON.stringify(receta)); 
+    // console.log(JSON.stringify(receta)); 
     setSelectedRecipe(receta);
     setModalVisible(true); 
   };

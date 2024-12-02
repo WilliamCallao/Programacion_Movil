@@ -57,7 +57,6 @@ const GoalsScreen = ({ navigation }) => {
       if (userId) {
         await generarYAsignarPlanAlimenticio(userId);
         await completeRegistration();
-        Alert.alert('Éxito', 'Tu plan alimenticio ha sido generado exitosamente.');
       } else {
         console.log('No se encontró usuarioId en AsyncStorage.');
         Alert.alert('Error', 'No se encontró el identificador del usuario. Por favor, inicia sesión nuevamente.');

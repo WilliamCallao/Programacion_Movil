@@ -156,40 +156,37 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
     if (usuarioDoc.exists()) {
       const datosUsuario = usuarioDoc.data();
 
-      // Obtener meta_calorias y preferencias
-      let metaCalorias = datosUsuario.objetivos?.meta_calorias;
+      // Calcular meta_calorias y demás datos relacionados
+      const edad = calcularEdad(datosUsuario.informacion_personal.fecha_nacimiento); // Es una cadena
+      const pesoObjetivo = calcularPesoObjetivo(
+        datosUsuario.medidas_fisicas.peso_kg,
+        datosUsuario.objetivo_peso.tipo_objetivo
+      );
+      const distribucion = obtenerDistribucionMacronutrientes(datosUsuario.objetivo_peso.tipo_objetivo);
+
+      const metaCalorias = calcularCalorias(
+        datosUsuario.medidas_fisicas.peso_kg,
+        datosUsuario.medidas_fisicas.altura_cm,
+        edad,
+        datosUsuario.informacion_personal.genero,
+        datosUsuario.medidas_fisicas.nivel_actividad
+      );
+
+      const macros = calcularMacronutrientes(metaCalorias, distribucion);
+
+      // Actualizar los objetivos del usuario
+      await updateDoc(usuarioDocRef, {
+        'objetivos.meta_calorias': metaCalorias,
+        'objetivos.peso_objetivo_kg': pesoObjetivo,
+        'objetivos.distribucion_macronutrientes': distribucion,
+        'objetivos.macronutrientes': macros,
+      });
+
+      console.log(`Meta calórica calculada: ${metaCalorias}`);
+      console.log('Datos nutricionales actualizados en Firebase.');
+
+      // Generar el nuevo plan semanal
       const preferencias = datosUsuario.preferencias;
-
-      // Si no tenemos meta_calorias, necesitamos calcularla
-      if (!metaCalorias) {
-        // Necesitamos calcular la edad, peso objetivo, distribución, calorías y macronutrientes
-        const edad = calcularEdad(datosUsuario.informacion_personal.fecha_nacimiento); // Es una cadena
-        const pesoObjetivo = calcularPesoObjetivo(
-          datosUsuario.medidas_fisicas.peso_kg,
-          datosUsuario.objetivo_peso.tipo_objetivo
-        );
-        const distribucion = obtenerDistribucionMacronutrientes(datosUsuario.objetivo_peso.tipo_objetivo);
-
-        metaCalorias = calcularCalorias(
-          datosUsuario.medidas_fisicas.peso_kg,
-          datosUsuario.medidas_fisicas.altura_cm,
-          edad,
-          datosUsuario.informacion_personal.genero,
-          datosUsuario.medidas_fisicas.nivel_actividad
-        );
-
-        const macros = calcularMacronutrientes(metaCalorias, distribucion);
-
-        // Actualizar el usuario con estos datos
-        await updateDoc(usuarioDocRef, {
-          'objetivos.meta_calorias': metaCalorias,
-          'objetivos.peso_objetivo_kg': pesoObjetivo,
-          'objetivos.distribucion_macronutrientes': distribucion,
-          'objetivos.macronutrientes': macros,
-        });
-      }
-
-      // Generar el plan semanal
       const planSemanal = await generarPlanSemanal(metaCalorias, preferencias);
 
       const fechaCreacion = new Date();
@@ -201,12 +198,12 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
         comidas: plan,
       }));
 
-      // Actualizar el usuario con el nuevo plan alimenticio
+      // Sobrescribir los planes existentes con el nuevo plan semanal
       await updateDoc(usuarioDocRef, {
-        planes_alimentacion: arrayUnion(...planesAlimentacion),
+        planes_alimentacion: planesAlimentacion, // Reemplaza la lista completa
       });
 
-      console.log('Plan alimenticio generado y asignado al usuario.');
+      console.log('Plan alimenticio generado y reemplazado en Firebase.');
     } else {
       console.error('No se encontró un usuario con la ID proporcionada.');
     }
@@ -215,3 +212,46 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
     throw error;
   }
 };
+
+export const verificarYActualizarPlan = async () => {
+  let planActualizado = false;
+
+  try {
+    const userId = await AsyncStorage.getItem("usuarioId");
+    if (!userId) {
+      console.error("(1245) No se encontró el ID del usuario en AsyncStorage.");
+      return false;
+    }
+
+    const usuarioDocRef = doc(db, "usuarios", userId);
+    const usuarioDoc = await getDoc(usuarioDocRef);
+
+    if (usuarioDoc.exists()) {
+      let usuarioData = usuarioDoc.data();
+
+      // Verificar si el atributo 'actualizar_plan' existe
+      if (usuarioData.actualizar_plan === undefined) {
+        // Si no existe, crearlo con el valor 'false'
+        await updateDoc(usuarioDocRef, { actualizar_plan: false });
+        console.log("(1245) Atributo 'actualizar_plan' creado con el valor predeterminado: false.");
+        usuarioData = { ...usuarioData, actualizar_plan: false };
+      }
+
+      if (usuarioData.actualizar_plan) {
+        console.log("(1245) Actualizando el plan alimenticio del usuario...");
+        await generarYAsignarPlanAlimenticio(userId);
+        await updateDoc(usuarioDocRef, { actualizar_plan: false });
+        console.log("(1245) Plan alimenticio actualizado y 'actualizar_plan' restablecido a false.");
+        planActualizado = true;
+      } else {
+        console.log("(1245) No se requiere actualizar el plan alimenticio.");
+      }
+    } else {
+      console.error("(1245) No se encontró un documento para el usuario proporcionado.");
+    }
+  } catch (error) {
+    console.error("(1245) Error al verificar o actualizar el atributo 'actualizar_plan':", error);
+  }
+  return planActualizado;
+};
+
