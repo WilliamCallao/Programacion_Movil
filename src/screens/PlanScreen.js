@@ -4,23 +4,31 @@ import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderSections from '../components/HeaderSections';
 import PlanSelector from '../components/PlanSelector';
-import { obtenerUsuario, verificarYActualizarPlan } from '../services/usuarioService';
+import {
+  obtenerUsuario,
+  verificarYActualizarPlan,
+  generarYAsignarPlanSiguienteSemana,
+  moverPlanSiguienteSemanaAActual,
+  hayPlanSiguienteSemana,
+} from '../services/usuarioService';
 import { obtenerRecetasPorIds } from '../services/recetaService';
 import Secciones56 from '../components/RecipesPlan';
 import WeeklyView from '../components/WeeklyView';
 import { FavoritesContext } from '../contexts/FavoritesContext';
 import ThreeBodyLoader from '../components/ThreeBodyLoader';
 
+// Función para obtener el nombre del día con un desplazamiento opcional
 const getDayName = (offset = 0) => {
   const date = new Date();
   date.setDate(date.getDate() + offset);
   return date.toLocaleDateString('es-ES', { weekday: 'long' });
 };
 
+// Función para obtener el índice actual del día (0: Lunes, 6: Domingo)
 const getCurrentDayIndex = () => {
   const date = new Date();
-  const day = date.getDay();
-  const index = (day + 6) % 7;
+  const day = date.getDay(); // 0: Domingo, 1: Lunes, ..., 6: Sábado
+  const index = (day + 6) % 7; // 0: Lunes, ..., 6: Domingo
   return index;
 };
 
@@ -80,12 +88,17 @@ const MainScreen = () => {
 
   // Función para obtener recetas por día
   const fetchRecetasPorDia = async (offset) => {
-    const currentDay = new Date().getDay();
-    const targetDay = (currentDay + offset) % 7;
+    const currentDayIndex = getCurrentDayIndex(); // 0: Lunes, ..., 6: Domingo
+    const targetDayIndex = (currentDayIndex + offset) % 7; // Índice del día objetivo
 
-    const diaPlan = targetDay === 0 ? 7 : targetDay;
+    const esDomingo = currentDayIndex === 6;
+    const esLunes = currentDayIndex === 0;
 
-    const planDelDia = usuario?.planes_alimentacion.find((plan) => plan.dia === diaPlan);
+    let planDelDia = null;
+
+    // Siempre obtener recetas de planes_alimentacion
+    const diaPlan = targetDayIndex === 6 ? 7 : targetDayIndex + 1; // 1: Lunes, ..., 7: Domingo
+    planDelDia = usuario?.planes_alimentacion?.find((plan) => plan.dia === diaPlan);
 
     if (!planDelDia) return [];
 
@@ -104,7 +117,7 @@ const MainScreen = () => {
     return recetasCompletas;
   };
 
-  // Función para obtener recetas semanales
+  // Función para obtener todas las recetas semanales
   const fetchRecetasSemanales = async () => {
     try {
       const recetasPorDia = await Promise.all(
@@ -119,9 +132,32 @@ const MainScreen = () => {
     }
   };
 
-  // useEffect para cargar los datos del usuario al montar el componente
+  // useEffect para manejar acciones específicas de los días al montar el componente
   useEffect(() => {
-    fetchUserData();
+    const handleDaySpecificActions = async () => {
+      const currentDayIndex = getCurrentDayIndex(); // 0: Lunes, ..., 6: Domingo
+
+      const userId = await AsyncStorage.getItem('usuarioId');
+
+      if (currentDayIndex === 6) {
+        // Hoy es Domingo
+        console.log('Hoy es domingo, generando plan para la siguiente semana.');
+        await generarYAsignarPlanSiguienteSemana(userId);
+      } else if (currentDayIndex === 0) {
+        // Hoy es Lunes
+        console.log('Hoy es lunes, moviendo plan de la siguiente semana a actual si existe.');
+        if (await hayPlanSiguienteSemana(userId)) {
+          await moverPlanSiguienteSemanaAActual(userId);
+        } else {
+          console.log('No hay plan de la siguiente semana para mover.');
+        }
+      }
+
+      // Cargar los datos del usuario después de realizar acciones específicas del día
+      await fetchUserData();
+    };
+
+    handleDaySpecificActions();
   }, [fetchUserData]);
 
   // useEffect para cargar las recetas cuando el usuario cambia
@@ -145,6 +181,7 @@ const MainScreen = () => {
     }, [fetchUserData, cargarRecetasIniciales])
   );
 
+  // Función para manejar la selección de botones (Hoy, Mañana, Semana)
   const handleButtonPress = async (button) => {
     if (button !== selectedButton) {
       setLoadingTabChange(true);
@@ -153,6 +190,7 @@ const MainScreen = () => {
     }
   };
 
+  // useEffect para calcular las calorías totales cuando cambian las recetas o la selección
   useEffect(() => {
     let recetasSeleccionadas = [];
 
@@ -197,7 +235,7 @@ const MainScreen = () => {
               <ThreeBodyLoader />
             </View>
           ) : (
-            <Secciones56 
+            <Secciones56
               recetas={selectedButton === 'Hoy' ? recetasDeHoy : recetasDeMañana}
               favoritos={favoritos}
               toggleFavorite={toggleFavorite}
