@@ -119,14 +119,14 @@ const GoalsScreen = ({ navigation }) => {
           onValueChange={(itemValue) => setCondicionSalud(itemValue)}
         >
           <Picker.Item label="Selecciona tu condición de salud" value="" />
-          <Picker.Item label="Diabetes tipo 1" value="lower carb" />
-          <Picker.Item label="Diabetes tipo 2" value="lower carb" />
-          <Picker.Item label="Resistencia a la insulina" value="lower carb" />
-          <Picker.Item label="Celiaco" value="gluten-free" />
-          <Picker.Item label="Sobrepeso" value="high in fiber" />
-          <Picker.Item label="Presión alta" value="low sodium" />
-          <Picker.Item label="Insuficiencia cardiaca" value="low sodium" />
-          <Picker.Item label="Problemas renales" value="low sodium" />
+          <Picker.Item label="Diabetes tipo 1" value="diabetes_tipo_1" />
+          <Picker.Item label="Diabetes tipo 2" value="diabetes_tipo_2" />
+          <Picker.Item label="Resistencia a la insulina" value="resistencia_insulina" />
+          <Picker.Item label="Celiaco" value="celiaco" />
+          <Picker.Item label="Sobrepeso" value="sobrepeso" />
+          <Picker.Item label="Presión alta" value="presion_alta" />
+          <Picker.Item label="Insuficiencia cardiaca" value="insuficiencia_cardiaca" />
+          <Picker.Item label="Problemas renales" value="problemas_renales" />
         </Picker>
         <Text style={styles.label}>Tipo de Objetivo</Text>
         <Picker

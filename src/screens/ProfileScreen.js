@@ -119,77 +119,79 @@ export default function ProfileScreen() {
 
   const saveChanges = async () => {
     try {
-      // Actualiza el estado local inmediatamente
-      const updatedInfo = {
-        ...userInfo,
-        [editingField]:
-          editingField === 'condicionesSalud' ? editingValue : editingValue,
-      };
-      setUserInfo(updatedInfo); // Esto asegura que el estado local también esté actualizado
-  
-      // Actualiza en el backend
-      const usuarioId = await AsyncStorage.getItem('usuarioId');
-      if (usuarioId && originalUserData) {
-        const updatedData = { ...originalUserData };
-  
-        // Actualiza los campos específicos según el `editingField`
-        switch (editingField) {
-          case 'nombre':
-          case 'correo':
-          case 'genero':
-          case 'fechaNacimiento':
-            updatedData.informacion_personal = {
-              ...updatedData.informacion_personal,
-              nombre: updatedInfo.nombre,
-              correo: updatedInfo.correo,
-              genero: updatedInfo.genero,
-              fecha_nacimiento: updatedInfo.fechaNacimiento.toISOString().split('T')[0],
-            };
-            break;
-          case 'altura':
-          case 'peso':
-          case 'nivelActividad':
-            updatedData.medidas_fisicas = {
-              ...updatedData.medidas_fisicas,
-              altura_cm: parseFloat(updatedInfo.altura),
-              peso_kg: parseFloat(updatedInfo.peso),
-              nivel_actividad: updatedInfo.nivelActividad,
-            };
-            break;
-          case 'objetivo':
-            updatedData.objetivo_peso = {
-              ...updatedData.objetivo_peso,
-              tipo_objetivo: updatedInfo.objetivo,
-            };
-            break;
-          case 'tipoDieta':
-            updatedData.preferencias = {
-              ...updatedData.preferencias,
-              tipo_dieta: updatedInfo.tipoDieta,
-            };
-            break;
-          case 'condicionesSalud':
-            updatedData.preferencias = {
-              ...updatedData.preferencias,
-              condiciones_salud: updatedInfo.condicionesSalud,
-            };
-            break;
-          default:
-            break;
+        // Actualiza el estado local inmediatamente
+        const updatedInfo = {
+            ...userInfo,
+            [editingField]:
+                editingField === 'condicionesSalud' ? editingValue : editingValue,
+        };
+        setUserInfo(updatedInfo); // Esto asegura que el estado local también esté actualizado
+
+        // Actualiza en el backend
+        const usuarioId = await AsyncStorage.getItem('usuarioId');
+        if (usuarioId && originalUserData) {
+            const updatedData = { ...originalUserData };
+
+            // Actualiza los campos específicos según el `editingField`
+            switch (editingField) {
+                case 'nombre':
+                case 'correo':
+                case 'genero':
+                case 'fechaNacimiento':
+                    updatedData.informacion_personal = {
+                        ...updatedData.informacion_personal,
+                        nombre: updatedInfo.nombre,
+                        correo: updatedInfo.correo,
+                        genero: updatedInfo.genero,
+                        fecha_nacimiento: updatedInfo.fechaNacimiento.toISOString().split('T')[0],
+                    };
+                    break;
+                case 'altura':
+                case 'peso':
+                case 'nivelActividad':
+                    updatedData.medidas_fisicas = {
+                        ...updatedData.medidas_fisicas,
+                        altura_cm: parseFloat(updatedInfo.altura),
+                        peso_kg: parseFloat(updatedInfo.peso),
+                        nivel_actividad: updatedInfo.nivelActividad,
+                    };
+                    break;
+                case 'objetivo':
+                    updatedData.objetivo_peso = {
+                        ...updatedData.objetivo_peso,
+                        tipo_objetivo: updatedInfo.objetivo,
+                    };
+                    break;
+                case 'tipoDieta':
+                    updatedData.preferencias = {
+                        ...updatedData.preferencias,
+                        tipo_dieta: updatedInfo.tipoDieta,
+                    };
+                    break;
+                case 'condicionesSalud':
+                    updatedData.preferencias = {
+                        ...updatedData.preferencias,
+                        condiciones_salud: updatedInfo.condicionesSalud,
+                    };
+                    break;
+                default:
+                    break;
+            }
+
+            // Asegúrate de actualizar la propiedad "actualizar_plan"
+            updatedData.actualizar_plan = true;
+
+            await actualizarUsuario(usuarioId, updatedData);
+            console.log('Usuario actualizado exitosamente.');
+
+            // Actualiza los datos originales para reflejar los cambios
+            setOriginalUserData(updatedData);
         }
-  
-        await actualizarUsuario(usuarioId, updatedData);
-        console.log('Usuario actualizado exitosamente.');
-  
-        // Actualiza los datos originales para reflejar los cambios
-        setOriginalUserData(updatedData);
-      }
-      setModalVisible(false);
+        setModalVisible(false);
     } catch (error) {
-      console.error('Error al actualizar los datos del usuario:', error);
+        console.error('Error al actualizar los datos del usuario:', error);
     }
-  };
-  
+};
 
   const cancelChanges = () => {
     setEditingField(null);

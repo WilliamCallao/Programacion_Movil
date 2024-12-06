@@ -104,13 +104,31 @@ export const generarPlanSemanal = async (metaCalorias, preferencias, seed = Math
 
         shuffleArray(recetasDisponibles, rng);
 
-        const recetasFiltradas = recetasDisponibles.filter(receta => {
-          const dietas = preferencias.preferencias_dietarias || [];
-          const condiciones = preferencias.condiciones_salud || [];
-          const cumpleDietas = dietas.every(dieta => receta[dieta.toLowerCase()] === 1);
-          const cumpleCondiciones = condiciones.every(condicion => receta[condicion.toLowerCase()] === 1);
+        const preferenciasUnificadas = [
+          ...(preferencias.preferencias_dietarias || []),
+          ...(preferencias.condiciones_salud || []),
+          preferencias.tipo_dieta || "",
+        ];
 
-          return cumpleDietas && cumpleCondiciones;
+        // Aplicar equivalencias a las preferencias
+        const equivalencias = {
+          diabetes_tipo_1: "lower-carb",
+          diabetes_tipo_2: "lower-carb",
+          resistencia_insulina: "lower-carb",
+          celiaco: "gluten-free",
+          sobrepeso: "high-in-fiber",
+          presion_alta: "low-sodium",
+          insuficiencia_cardiaca: "low-sodium",
+          problemas_renales: "low-sodium",
+          no_restrictiva: "",
+          vegana: "vegano",
+          vegetariana: "vegetariano",
+        };
+
+        const preferenciasEquivalentes = preferenciasUnificadas.map(pref => equivalencias[pref] || pref);
+
+        const recetasFiltradas = recetasDisponibles.filter(receta => {
+          return preferenciasEquivalentes.every(pref => pref === "" || receta[pref.toLowerCase()] === 1);
         });
 
         if (recetasFiltradas.length === 0) {
