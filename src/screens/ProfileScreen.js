@@ -1,16 +1,18 @@
-import {TouchableOpacity} from 'react-native';
 // screens/ProfileScreen.js
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Text,
   ScrollView,
   Modal,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { obtenerUsuario, actualizarUsuario } from '../services/usuarioService'; // Asegúrate de tener esta función para actualizar
 
 // Importar Componentes Separados
@@ -20,10 +22,16 @@ import ObjectiveSection from '../components/ObjectiveSection';
 import DietTypeSection from '../components/DietTypeSection';
 import HealthConditionsSection from '../components/HealthConditionsSection';
 
+// Importar Contexto de Autenticación
+import { AuthContext } from '../context/AuthContext';
+
 // Importar Estilos Compartidos
 import { styles } from '../styles/ProfileStyles';
 
 export default function ProfileScreen() {
+  const navigation = useNavigation(); // Inicializa useNavigation
+  const { logout } = useContext(AuthContext); // Obtén la función logout del contexto
+
   const [userInfo, setUserInfo] = useState({
     nombre: '',
     correo: '',
@@ -44,6 +52,15 @@ export default function ProfileScreen() {
   const [editingValue, setEditingValue] = useState('');
   const [optionsForField, setOptionsForField] = useState([]);
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  // Función para cerrar sesión usando AuthContext
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error.message);
+    }
+  };
 
   // Fetch user data when the component mounts
   useEffect(() => {
@@ -119,79 +136,79 @@ export default function ProfileScreen() {
 
   const saveChanges = async () => {
     try {
-        // Actualiza el estado local inmediatamente
-        const updatedInfo = {
-            ...userInfo,
-            [editingField]:
-                editingField === 'condicionesSalud' ? editingValue : editingValue,
-        };
-        setUserInfo(updatedInfo); // Esto asegura que el estado local también esté actualizado
+      // Actualiza el estado local inmediatamente
+      const updatedInfo = {
+        ...userInfo,
+        [editingField]:
+          editingField === 'condicionesSalud' ? editingValue : editingValue,
+      };
+      setUserInfo(updatedInfo); // Esto asegura que el estado local también esté actualizado
 
-        // Actualiza en el backend
-        const usuarioId = await AsyncStorage.getItem('usuarioId');
-        if (usuarioId && originalUserData) {
-            const updatedData = { ...originalUserData };
+      // Actualiza en el backend
+      const usuarioId = await AsyncStorage.getItem('usuarioId');
+      if (usuarioId && originalUserData) {
+        const updatedData = { ...originalUserData };
 
-            // Actualiza los campos específicos según el `editingField`
-            switch (editingField) {
-                case 'nombre':
-                case 'correo':
-                case 'genero':
-                case 'fechaNacimiento':
-                    updatedData.informacion_personal = {
-                        ...updatedData.informacion_personal,
-                        nombre: updatedInfo.nombre,
-                        correo: updatedInfo.correo,
-                        genero: updatedInfo.genero,
-                        fecha_nacimiento: updatedInfo.fechaNacimiento.toISOString().split('T')[0],
-                    };
-                    break;
-                case 'altura':
-                case 'peso':
-                case 'nivelActividad':
-                    updatedData.medidas_fisicas = {
-                        ...updatedData.medidas_fisicas,
-                        altura_cm: parseFloat(updatedInfo.altura),
-                        peso_kg: parseFloat(updatedInfo.peso),
-                        nivel_actividad: updatedInfo.nivelActividad,
-                    };
-                    break;
-                case 'objetivo':
-                    updatedData.objetivo_peso = {
-                        ...updatedData.objetivo_peso,
-                        tipo_objetivo: updatedInfo.objetivo,
-                    };
-                    break;
-                case 'tipoDieta':
-                    updatedData.preferencias = {
-                        ...updatedData.preferencias,
-                        tipo_dieta: updatedInfo.tipoDieta,
-                    };
-                    break;
-                case 'condicionesSalud':
-                    updatedData.preferencias = {
-                        ...updatedData.preferencias,
-                        condiciones_salud: updatedInfo.condicionesSalud,
-                    };
-                    break;
-                default:
-                    break;
-            }
-
-            // Asegúrate de actualizar la propiedad "actualizar_plan"
-            updatedData.actualizar_plan = true;
-
-            await actualizarUsuario(usuarioId, updatedData);
-            console.log('Usuario actualizado exitosamente.');
-
-            // Actualiza los datos originales para reflejar los cambios
-            setOriginalUserData(updatedData);
+        // Actualiza los campos específicos según el `editingField`
+        switch (editingField) {
+          case 'nombre':
+          case 'correo':
+          case 'genero':
+          case 'fechaNacimiento':
+            updatedData.informacion_personal = {
+              ...updatedData.informacion_personal,
+              nombre: updatedInfo.nombre,
+              correo: updatedInfo.correo,
+              genero: updatedInfo.genero,
+              fecha_nacimiento: updatedInfo.fechaNacimiento.toISOString().split('T')[0],
+            };
+            break;
+          case 'altura':
+          case 'peso':
+          case 'nivelActividad':
+            updatedData.medidas_fisicas = {
+              ...updatedData.medidas_fisicas,
+              altura_cm: parseFloat(updatedInfo.altura),
+              peso_kg: parseFloat(updatedInfo.peso),
+              nivel_actividad: updatedInfo.nivelActividad,
+            };
+            break;
+          case 'objetivo':
+            updatedData.objetivo_peso = {
+              ...updatedData.objetivo_peso,
+              tipo_objetivo: updatedInfo.objetivo,
+            };
+            break;
+          case 'tipoDieta':
+            updatedData.preferencias = {
+              ...updatedData.preferencias,
+              tipo_dieta: updatedInfo.tipoDieta,
+            };
+            break;
+          case 'condicionesSalud':
+            updatedData.preferencias = {
+              ...updatedData.preferencias,
+              condiciones_salud: updatedInfo.condicionesSalud,
+            };
+            break;
+          default:
+            break;
         }
-        setModalVisible(false);
+
+        // Asegúrate de actualizar la propiedad "actualizar_plan"
+        updatedData.actualizar_plan = true;
+
+        await actualizarUsuario(usuarioId, updatedData);
+        console.log('Usuario actualizado exitosamente.');
+
+        // Actualiza los datos originales para reflejar los cambios
+        setOriginalUserData(updatedData);
+      }
+      setModalVisible(false);
     } catch (error) {
-        console.error('Error al actualizar los datos del usuario:', error);
+      console.error('Error al actualizar los datos del usuario:', error);
     }
-};
+  };
 
   const cancelChanges = () => {
     setEditingField(null);
@@ -278,6 +295,11 @@ export default function ProfileScreen() {
         </View>
         <Text style={styles.userName}>{userInfo.nombre}</Text>
         <Text style={styles.userEmail}>{userInfo.correo}</Text>
+
+        {/* Botón de Cerrar Sesión */}
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Secciones Separadas */}
@@ -342,7 +364,7 @@ export default function ProfileScreen() {
                       ]}
                       onPress={() => {
                         if (editingValue.includes(option.value)) {
-                          setEditingValue(editingValue.filter(val => val !== option.value));
+                          setEditingValue(editingValue.filter((val) => val !== option.value));
                         } else {
                           setEditingValue([...editingValue, option.value]);
                         }
