@@ -108,7 +108,7 @@ export const generarPlanSemanal = async (metaCalorias, preferencias, seed = Math
           ...(preferencias.preferencias_dietarias || []),
           ...(preferencias.condiciones_salud || []),
           preferencias.tipo_dieta || "",
-        ];
+        ].filter(pref => pref !== "no_restrictiva"); // Ignorar "no_restrictiva"
 
         // Aplicar equivalencias a las preferencias
         const equivalencias = {
@@ -120,7 +120,6 @@ export const generarPlanSemanal = async (metaCalorias, preferencias, seed = Math
           presion_alta: "low-sodium",
           insuficiencia_cardiaca: "low-sodium",
           problemas_renales: "low-sodium",
-          no_restrictiva: "",
           vegana: "vegano",
           vegetariana: "vegetariano",
         };
