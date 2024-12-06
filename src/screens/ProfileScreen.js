@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,29 +8,80 @@ import {
   Modal,
   TextInput,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { obtenerUsuario, actualizarUsuario } from '../services/usuarioService'; // Asegúrate de tener esta función para actualizar
 
 export default function ProfileScreen() {
+  const [userInfo, setUserInfo] = useState({
+    nombre: '',
+    correo: '',
+    fechaNacimiento: new Date(),
+    genero: '',
+    altura: '',
+    peso: '',
+    nivelActividad: '',
+    objetivo: '',
+    tipoDieta: '',
+    condicionesSalud: [],
+  });
+
+  const [originalUserData, setOriginalUserData] = useState(null);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [editingField, setEditingField] = useState(null);
   const [editingValue, setEditingValue] = useState('');
   const [optionsForField, setOptionsForField] = useState([]);
-
-  const [userInfo, setUserInfo] = useState({
-    nombre: 'Juan Pérez',
-    correo: 'juan.perez@ejemplo.com',
-    fechaNacimiento: new Date('1990-01-01'),
-    genero: 'masculino',
-    altura: '170',
-    peso: '70',
-    nivelActividad: 'moderadamente_activo',
-    objetivo: 'perder_peso',
-    tipoDieta: '',
-    condicionesSalud: '',
-  });
-
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  // Fetch user data when the component mounts
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const usuarioId = await AsyncStorage.getItem('usuarioId');
+        if (usuarioId) {
+          const usuarioData = await obtenerUsuario(usuarioId);
+          if (usuarioData) {
+            console.log('Datos del usuario:', JSON.stringify(usuarioData, null, 2));
+
+            // Mapea los datos anidados a userInfo
+            const informacionPersonal = usuarioData.informacion_personal || {};
+            const medidasFisicas = usuarioData.medidas_fisicas || {};
+            const objetivoPeso = usuarioData.objetivo_peso || {};
+            const preferencias = usuarioData.preferencias || {};
+
+            setUserInfo({
+              nombre: informacionPersonal.nombre || '',
+              correo: informacionPersonal.correo || '',
+              fechaNacimiento: informacionPersonal.fecha_nacimiento
+                ? new Date(informacionPersonal.fecha_nacimiento)
+                : new Date(),
+              genero: informacionPersonal.genero || '',
+              altura: medidasFisicas.altura_cm
+                ? medidasFisicas.altura_cm.toString()
+                : '',
+              peso: medidasFisicas.peso_kg
+                ? medidasFisicas.peso_kg.toString()
+                : '',
+              nivelActividad: medidasFisicas.nivel_actividad || '',
+              objetivo: objetivoPeso.tipo_objetivo || '',
+              tipoDieta: preferencias.tipo_dieta || '', // Ajusta según tu estructura de datos
+              condicionesSalud: preferencias.condiciones_salud || [],
+            });
+
+            setOriginalUserData(usuarioData);
+          }
+        } else {
+          console.error('No se encontró un usuarioId en AsyncStorage.');
+        }
+      } catch (error) {
+        console.error('Error al cargar los datos del usuario:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleEdit = (field) => {
     if (field === 'fechaNacimiento') {
@@ -41,7 +92,12 @@ export default function ProfileScreen() {
       )
     ) {
       setEditingField(field);
-      setEditingValue(userInfo[field]);
+      if (field === 'condicionesSalud') {
+        // Para condicionesSalud, maneja múltiples selecciones
+        setEditingValue(userInfo[field] || []);
+      } else {
+        setEditingValue(userInfo[field]);
+      }
       setOptionsForField(getOptionsForField(field));
       setModalVisible(true);
     } else {
@@ -51,9 +107,79 @@ export default function ProfileScreen() {
     }
   };
 
-  const saveChanges = () => {
-    setUserInfo((prev) => ({ ...prev, [editingField]: editingValue }));
+  const saveChanges = async () => {
+    // Actualiza el estado local
+    setUserInfo((prev) => ({
+      ...prev,
+      [editingField]:
+        editingField === 'condicionesSalud'
+          ? editingValue
+          : editingValue,
+    }));
     setModalVisible(false);
+
+    // Actualiza en el backend o en AsyncStorage según corresponda
+    try {
+      const usuarioId = await AsyncStorage.getItem('usuarioId');
+      if (usuarioId && originalUserData) {
+        // Prepara los datos para actualizar
+        const updatedData = { ...originalUserData };
+
+        // Actualiza los campos modificados
+        switch (editingField) {
+          case 'nombre':
+          case 'correo':
+          case 'genero':
+          case 'fechaNacimiento':
+            updatedData.informacion_personal = {
+              ...updatedData.informacion_personal,
+              nombre: userInfo.nombre,
+              correo: userInfo.correo,
+              genero: userInfo.genero,
+              fecha_nacimiento: userInfo.fechaNacimiento.toISOString().split('T')[0],
+            };
+            break;
+          case 'altura':
+          case 'peso':
+          case 'nivelActividad':
+            updatedData.medidas_fisicas = {
+              ...updatedData.medidas_fisicas,
+              altura_cm: parseFloat(userInfo.altura),
+              peso_kg: parseFloat(userInfo.peso),
+              nivel_actividad: userInfo.nivelActividad,
+            };
+            break;
+          case 'objetivo':
+            updatedData.objetivo_peso = {
+              ...updatedData.objetivo_peso,
+              tipo_objetivo: userInfo.objetivo,
+            };
+            break;
+          case 'tipoDieta':
+            updatedData.preferencias = {
+              ...updatedData.preferencias,
+              tipo_dieta: userInfo.tipoDieta,
+            };
+            break;
+          case 'condicionesSalud':
+            updatedData.preferencias = {
+              ...updatedData.preferencias,
+              condiciones_salud: userInfo.condicionesSalud,
+            };
+            break;
+          default:
+            break;
+        }
+
+        await actualizarUsuario(usuarioId, updatedData);
+        console.log('Usuario actualizado exitosamente.');
+
+        // Opcional: Actualiza originalUserData con los nuevos datos
+        setOriginalUserData(updatedData);
+      }
+    } catch (error) {
+      console.error('Error al actualizar los datos del usuario:', error);
+    }
   };
 
   const cancelChanges = () => {
@@ -70,7 +196,6 @@ export default function ProfileScreen() {
         { label: 'Otro', value: 'otro' },
       ],
       nivelActividad: [
-        { label: 'Selecciona tu nivel de actividad', value: '' },
         { label: 'Sedentario', value: 'sedentario' },
         { label: 'Ligeramente Activo', value: 'ligeramente_activo' },
         { label: 'Moderadamente Activo', value: 'moderadamente_activo' },
@@ -78,25 +203,22 @@ export default function ProfileScreen() {
         { label: 'Muy Activo', value: 'muy_activo' },
       ],
       objetivo: [
-        { label: 'Selecciona tu objetivo', value: '' },
         { label: 'Perder Peso', value: 'perder_peso' },
         { label: 'Mantener Peso', value: 'mantener_peso' },
         { label: 'Ganar Peso', value: 'ganar_peso' },
       ],
       condicionesSalud: [
-        { label: 'Selecciona tu condición de salud', value: '' },
-        { label: 'Diabetes tipo 1', value: 'lower carb' },
-        { label: 'Diabetes tipo 2', value: 'lower carb' },
-        { label: 'Resistencia a la insulina', value: 'lower carb' },
-        { label: 'Celiaco', value: 'gluten-free' },
-        { label: 'Sobrepeso', value: 'high in fiber' },
-        { label: 'Presión alta', value: 'low sodium' },
-        { label: 'Insuficiencia cardiaca', value: 'low sodium' },
-        { label: 'Problemas renales', value: 'low sodium' },
+        { label: 'Diabetes tipo 1', value: 'diabetes_tipo_1' },
+        { label: 'Diabetes tipo 2', value: 'diabetes_tipo_2' },
+        { label: 'Resistencia a la insulina', value: 'resistencia_insulina' },
+        { label: 'Celiaco', value: 'celiaco' },
+        { label: 'Sobrepeso', value: 'sobrepeso' },
+        { label: 'Presión alta', value: 'presion_alta' },
+        { label: 'Insuficiencia cardiaca', value: 'insuficiencia_cardiaca' },
+        { label: 'Problemas renales', value: 'problemas_renales' },
       ],
       tipoDieta: [
-        { label: 'Selecciona tu tipo de dieta', value: '' },
-        { label: 'No restrictiva', value: '' },
+        { label: 'No restrictiva', value: 'no_restrictiva' },
         { label: 'Vegana', value: 'vegana' },
         { label: 'Vegetariana', value: 'vegetariana' },
       ],
@@ -106,6 +228,15 @@ export default function ProfileScreen() {
 
   const getLabelForValue = (field, value) => {
     const options = getOptionsForField(field);
+    if (field === 'condicionesSalud') {
+      if (!value || value.length === 0) return 'Ninguna';
+      return value
+        .map((val) => {
+          const option = options.find((option) => option.value === val);
+          return option ? option.label : val;
+        })
+        .join(', ');
+    }
     const option = options.find((option) => option.value === value);
     return option ? option.label : value;
   };
@@ -263,7 +394,7 @@ export default function ProfileScreen() {
         />
       )}
 
-      {/* Modal for Editable Fields */}
+      {/* Modal para Campos Editables */}
       <Modal visible={modalVisible} transparent animationType="fade">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
@@ -271,20 +402,43 @@ export default function ProfileScreen() {
               Editar {getFieldDisplayName(editingField)}
             </Text>
             {optionsForField.length > 0 ? (
-              <View style={styles.optionsContainer}>
-                {optionsForField.map((option) => (
-                  <TouchableOpacity
-                    key={option.value}
-                    style={[
-                      styles.optionButton,
-                      editingValue === option.value && styles.selectedOption,
-                    ]}
-                    onPress={() => setEditingValue(option.value)}
-                  >
-                    <Text style={styles.optionButtonText}>{option.label}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+              editingField === 'condicionesSalud' ? (
+                <View style={styles.optionsContainer}>
+                  {optionsForField.map((option) => (
+                    <TouchableOpacity
+                      key={option.value}
+                      style={[
+                        styles.optionButton,
+                        editingValue.includes(option.value) && styles.selectedOption,
+                      ]}
+                      onPress={() => {
+                        if (editingValue.includes(option.value)) {
+                          setEditingValue(editingValue.filter(val => val !== option.value));
+                        } else {
+                          setEditingValue([...editingValue, option.value]);
+                        }
+                      }}
+                    >
+                      <Text style={styles.optionButtonText}>{option.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              ) : (
+                <View style={styles.optionsContainer}>
+                  {optionsForField.map((option) => (
+                    <TouchableOpacity
+                      key={option.value}
+                      style={[
+                        styles.optionButton,
+                        editingValue === option.value && styles.selectedOption,
+                      ]}
+                      onPress={() => setEditingValue(option.value)}
+                    >
+                      <Text style={styles.optionButtonText}>{option.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )
             ) : (
               <TextInput
                 style={styles.input}
@@ -387,6 +541,7 @@ const styles = StyleSheet.create({
     padding: 15,
     alignItems: 'center',
     elevation: 5,
+    maxHeight: '80%',
   },
   modalTitle: {
     fontSize: 18,
