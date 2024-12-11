@@ -2,20 +2,20 @@ import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import HeaderSections from '../components/HeaderSections';
-import PlanSelector from '../components/PlanSelector';
+import HeaderSections from '../../components/planScreen/HeaderSections';
+import PlanSelector from '../../components/planScreen/PlanSelector';
 import {
   obtenerUsuario,
   verificarYActualizarPlan,
   generarYAsignarPlanSiguienteSemana,
   moverPlanSiguienteSemanaAActual,
   hayPlanSiguienteSemana,
-} from '../services/usuarioService';
-import { obtenerRecetasPorIds } from '../services/recetaService';
-import Secciones56 from '../components/RecipesPlan';
-import WeeklyView from '../components/WeeklyView';
-import { FavoritesContext } from '../contexts/FavoritesContext';
-import ThreeBodyLoader from '../components/ThreeBodyLoader';
+} from '../../services/usuarioService';
+import { obtenerRecetasPorIds } from '../../services/recetaService';
+import Secciones56 from '../../components/planScreen/RecipesPlan';
+import WeeklyView from '../../components/WeeklyView';
+import { FavoritesContext } from '../../contexts/FavoritesContext';
+import ThreeBodyLoader from '../../components/ThreeBodyLoader';
 
 // Función para obtener el nombre del día con un desplazamiento opcional
 const getDayName = (offset = 0) => {

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import PlanScreen from '../screens/PlanScreen';
+import PlanScreen from '../screens/planScreen/PlanScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ProgressScreen from '../screens/ProgressScreen';
 import RecipesScreen from '../screens/RecipesScreen';
