@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { obtenerTodasLasRecetas } from '../services/recetaService'; // Importamos la función existente
+import { obtenerTodasLasRecetas } from '../../services/recetaService'; // Importamos la función existente
 
 const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
 

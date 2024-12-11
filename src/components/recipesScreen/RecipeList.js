@@ -1,7 +1,7 @@
 // Importaciones necesarias
 import React from 'react';
 import { FlatList } from 'react-native';
-import RecipeCardBiblioteca from './RecipeCardBiblioteca';
+import RecipeCardBiblioteca from '../RecipeCardBiblioteca';
 
 const RecipeList = ({ recipes, onRecipePress }) => {
   const numColumns = 2;

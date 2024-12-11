@@ -5,7 +5,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import PlanScreen from '../screens/planScreen/PlanScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ProgressScreen from '../screens/ProgressScreen';
-import RecipesScreen from '../screens/RecipesScreen';
+import RecipesScreen from '../screens/recipesScreen/RecipesScreen';
 import { FavoritesProvider } from '../contexts/FavoritesContext';
 
 const Stack = createStackNavigator();

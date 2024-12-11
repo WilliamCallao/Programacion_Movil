@@ -13,17 +13,17 @@ import {
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import TopTabs from '../components/TopTabs'; // Asegúrate de que la ruta sea correcta
-import { obtenerTodasLasRecetas } from '../services/recetaService';
+import TopTabs from '../../components/recipesScreen/TopTabs'; // Asegúrate de que la ruta sea correcta
+import { obtenerTodasLasRecetas } from '../../services/recetaService';
 import {
   obtenerFavoritos,
   agregarFavorito,
   quitarFavorito,
-} from '../services/favoritoService';
-import RecipeModal from '../components/RecipeModal';
-import FiltrosModal from '../components/FiltrosModal';
-import RecipeList from '../components/RecipeList';
-import ThreeBodyLoader from '../components/ThreeBodyLoader';
+} from '../../services/favoritoService';
+import RecipeModal from '../../components/RecipeModal';
+import FiltrosModal from '../../components/recipesScreen/FiltrosModal';
+import RecipeList from '../../components/recipesScreen/RecipeList';
+import ThreeBodyLoader from '../../components/ThreeBodyLoader';
 
 export default function RecipesScreen({ route }) {
   const { recetasFiltradas } = route.params || {};
