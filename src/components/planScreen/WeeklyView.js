@@ -1,5 +1,5 @@
 // components/WeeklyView.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { 
   View, 
   Text, 
@@ -13,6 +13,7 @@ import {
 import RecipeCardWeekly from './RecipeCardWeekly';
 import RecipeModal from '../common/RecipeModal'; 
 import { Ionicons } from '@expo/vector-icons';
+import { FavoritesContext } from '../../contexts/FavoritesContext';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -38,6 +39,9 @@ export default function WeeklyView({ planes, recetasCompletas, currentDay }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null); 
 
+  // Consume el contexto de favoritos
+  const { isFavorite, toggleFavorite } = useContext(FavoritesContext);
+
   useEffect(() => {}, [planes, recetasCompletas, currentDay]);
 
   const toggleDay = (index) => {
@@ -46,7 +50,6 @@ export default function WeeklyView({ planes, recetasCompletas, currentDay }) {
   };
 
   const handleRecipePress = (receta) => {
-    // console.log(JSON.stringify(receta)); 
     setSelectedRecipe(receta);
     setModalVisible(true); 
   };
@@ -82,7 +85,12 @@ export default function WeeklyView({ planes, recetasCompletas, currentDay }) {
                   {recetas.length > 0 ? (
                     recetas.map((item, idx) => (
                       <View key={item.id.toString()}>
-                        <RecipeCardWeekly receta={item} onPress={handleRecipePress} />
+                        <RecipeCardWeekly 
+                          receta={item} 
+                          onPress={() => handleRecipePress(item)} 
+                          isFavorite={isFavorite(item.id)} // Pasa el estado de favorito
+                          onToggleFavorite={() => toggleFavorite(item.id)} // Pasa la función para togglear
+                        />
                         {idx < recetas.length - 1 && <View style={styles.separator} />}
                       </View>
                     ))
@@ -101,6 +109,8 @@ export default function WeeklyView({ planes, recetasCompletas, currentDay }) {
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
           recipe={selectedRecipe}
+          isFavorite={isFavorite(selectedRecipe.id)} // Pasa el estado de favorito
+          onToggleFavorite={() => toggleFavorite(selectedRecipe.id)} // Pasa la función para togglear
         />
       )}
     </View>

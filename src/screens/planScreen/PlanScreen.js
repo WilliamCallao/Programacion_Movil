@@ -1,5 +1,3 @@
-// MainScreen.js
-
 import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
@@ -19,12 +17,14 @@ import WeeklyView from '../../components/planScreen/WeeklyView';
 import { FavoritesContext } from '../../contexts/FavoritesContext';
 import ThreeBodyLoader from '../../components/common/ThreeBodyLoader';
 
+// Función para obtener el nombre del día con un desplazamiento opcional
 const getDayName = (offset = 0) => {
   const date = new Date();
   date.setDate(date.getDate() + offset);
   return date.toLocaleDateString('es-ES', { weekday: 'long' });
 };
 
+// Función para obtener el índice actual del día (0: Lunes, 6: Domingo)
 const getCurrentDayIndex = () => {
   const date = new Date();
   const day = date.getDay(); // 0: Domingo, 1: Lunes, ..., 6: Sábado
@@ -42,10 +42,11 @@ const MainScreen = () => {
   const [totalCalorias, setTotalCalorias] = useState(0);
   const [loadingRecetas, setLoadingRecetas] = useState(true);
   const [loadingTabChange, setLoadingTabChange] = useState(false);
-  const [loadingReload, setLoadingReload] = useState(false);
+  const [loadingReload, setLoadingReload] = useState(false); // Nuevo estado para recarga
 
-  const { favoritos, toggleFavorite } = useContext(FavoritesContext);
+  const { favoritos, toggleFavorite, loading: loadingFavoritos } = useContext(FavoritesContext);
 
+  // Función para obtener los datos del usuario
   const fetchUserData = useCallback(async () => {
     try {
       const userId = await AsyncStorage.getItem('usuarioId');
@@ -64,11 +65,19 @@ const MainScreen = () => {
     }
   }, []);
 
+  // Función para obtener recetas por día
   const fetchRecetasPorDia = async (offset) => {
-    const currentDayIndex = getCurrentDayIndex();
-    const targetDayIndex = (currentDayIndex + offset) % 7;
-    const diaPlan = targetDayIndex === 6 ? 7 : targetDayIndex + 1;
-    const planDelDia = usuario?.planes_alimentacion?.find((plan) => plan.dia === diaPlan);
+    const currentDayIndex = getCurrentDayIndex(); // 0: Lunes, ..., 6: Domingo
+    const targetDayIndex = (currentDayIndex + offset) % 7; // Índice del día objetivo
+
+    const esDomingo = currentDayIndex === 6;
+    const esLunes = currentDayIndex === 0;
+
+    let planDelDia = null;
+
+    // Siempre obtener recetas de planes_alimentacion
+    const diaPlan = targetDayIndex === 6 ? 7 : targetDayIndex + 1; // 1: Lunes, ..., 7: Domingo
+    planDelDia = usuario?.planes_alimentacion?.find((plan) => plan.dia === diaPlan);
 
     if (!planDelDia) return [];
 
@@ -87,12 +96,14 @@ const MainScreen = () => {
     return recetasCompletas;
   };
 
+  // Función para obtener todas las recetas semanales
   const fetchRecetasSemanales = async () => {
     try {
       const recetasPorDia = await Promise.all(
         Array.from({ length: 7 }, (_, i) => fetchRecetasPorDia(i))
       );
       const recetasPlanificadas = recetasPorDia.flat();
+
       setRecetasCompletas(recetasPlanificadas);
     } catch (error) {
       console.error('Error al obtener las recetas semanales:', error);
@@ -100,6 +111,7 @@ const MainScreen = () => {
     }
   };
 
+  // Función para cargar las recetas iniciales
   const cargarRecetasIniciales = useCallback(async () => {
     if (usuario) {
       setLoadingRecetas(true);
@@ -120,31 +132,40 @@ const MainScreen = () => {
     }
   }, [usuario]);
 
+  // useEffect para manejar acciones específicas de los días al montar el componente
   useEffect(() => {
     const handleDaySpecificActions = async () => {
-      const currentDayIndex = getCurrentDayIndex(); 
+      const currentDayIndex = getCurrentDayIndex(); // 0: Lunes, ..., 6: Domingo
+
       const userId = await AsyncStorage.getItem('usuarioId');
 
       if (currentDayIndex === 6) {
-        // Domingo
+        // Hoy es Domingo
+        console.log('Hoy es domingo, generando plan para la siguiente semana.');
         await generarYAsignarPlanSiguienteSemana(userId);
       } else if (currentDayIndex === 0) {
-        // Lunes
+        // Hoy es Lunes
+        console.log('Hoy es lunes, moviendo plan de la siguiente semana a actual si existe.');
         if (await hayPlanSiguienteSemana(userId)) {
           await moverPlanSiguienteSemanaAActual(userId);
+        } else {
+          console.log('No hay plan de la siguiente semana para mover.');
         }
       }
 
+      // Cargar los datos del usuario después de realizar acciones específicas del día
       await fetchUserData();
     };
 
     handleDaySpecificActions();
   }, [fetchUserData]);
 
+  // useEffect para cargar las recetas cuando el usuario cambia
   useEffect(() => {
     cargarRecetasIniciales();
   }, [cargarRecetasIniciales]);
 
+  // useFocusEffect para verificar y actualizar el plan cuando la pantalla gana foco
   useFocusEffect(
     useCallback(() => {
       const verificar = async () => {
@@ -160,6 +181,7 @@ const MainScreen = () => {
     }, [fetchUserData, cargarRecetasIniciales])
   );
 
+  // Función para manejar la selección de botones (Hoy, Mañana, Semana)
   const handleButtonPress = async (button) => {
     if (button !== selectedButton) {
       setLoadingTabChange(true);
@@ -168,6 +190,7 @@ const MainScreen = () => {
     }
   };
 
+  // useEffect para calcular las calorías totales cuando cambian las recetas o la selección
   useEffect(() => {
     let recetasSeleccionadas = [];
 
@@ -184,13 +207,11 @@ const MainScreen = () => {
     setTotalCalorias(totalCal);
   }, [selectedButton, recetasDeHoy, recetasDeMañana]);
 
-  // Lógica de loaders:
-  // - Si loadingReload o loadingRecetas están true, mostramos loader a pantalla completa.
-  // - Si solo loadingTabChange está true (y los otros no), mostramos loader solo en la sección inferior.
-  
+  // Definir variables de estado de carga para renderizado condicional
   const showFullScreenLoader = loadingReload || loadingRecetas;
   const showPartialLoader = !showFullScreenLoader && loadingTabChange;
 
+  // Si se está recargando o cargando recetas, mostrar loader a pantalla completa
   if (showFullScreenLoader) {
     return (
       <View style={styles.loaderContainer}>
@@ -203,7 +224,6 @@ const MainScreen = () => {
     <View style={styles.container}>
       <HeaderSections dia={getDayName(selectedButton === 'Mañana' ? 1 : 0)} calorias={totalCalorias} />
       <PlanSelector selectedButton={selectedButton} onButtonPress={handleButtonPress} />
-
       {selectedButton === 'Semana' ? (
         <View style={styles.section7}>
           {showPartialLoader ? (
@@ -256,7 +276,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  partialLoaderContainer: { // Loader solo en la parte inferior
+  partialLoaderContainer: { // Loader parcial (solo la sección inferior)
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
