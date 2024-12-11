@@ -13,20 +13,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { obtenerUsuario, actualizarUsuario } from '../services/usuarioService'; // Asegúrate de tener esta función para actualizar
+import { obtenerUsuario, actualizarUsuario } from '../../services/usuarioService'; // Asegúrate de tener esta función para actualizar
 
 // Importar Componentes Separados
-import PersonalInfoSection from '../components/PersonalInfoSection';
-import ActivityLevelSection from '../components/ActivityLevelSection';
-import ObjectiveSection from '../components/ObjectiveSection';
-import DietTypeSection from '../components/DietTypeSection';
-import HealthConditionsSection from '../components/HealthConditionsSection';
+import PersonalInfoSection from '../../components/profileScreen/PersonalInfoSection';
+import ActivityLevelSection from '../../components/profileScreen/ActivityLevelSection';
+import ObjectiveSection from '../../components/profileScreen/ObjectiveSection';
+import DietTypeSection from '../../components/profileScreen/DietTypeSection';
+import HealthConditionsSection from '../../components/profileScreen/HealthConditionsSection';
 
 // Importar Contexto de Autenticación
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 // Importar Estilos Compartidos
-import { styles } from '../styles/ProfileStyles';
+import { styles } from '../../styles/ProfileStyles';
 
 export default function ProfileScreen() {
   const navigation = useNavigation(); // Inicializa useNavigation

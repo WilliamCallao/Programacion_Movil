@@ -45,6 +45,6 @@ const PersonalInfoSection = ({ userInfo, onEdit, getLabelForValue, getOptionsFor
 };
 
 // Importar estilos desde ProfileStyles.js
-import { styles } from '../styles/ProfileStyles';
+import { styles } from '../../styles/ProfileStyles';
 
 export default PersonalInfoSection;

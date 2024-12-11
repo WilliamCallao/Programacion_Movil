@@ -24,6 +24,6 @@ const ActivityLevelSection = ({ userInfo, onEdit, getLabelForValue }) => {
 };
 
 // Importar estilos desde ProfileStyles.js
-import { styles } from '../styles/ProfileStyles';
+import { styles } from '../../styles/ProfileStyles';
 
 export default ActivityLevelSection;
