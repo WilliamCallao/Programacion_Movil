@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { obtenerFavoritos, agregarFavorito, quitarFavorito } from '../services/favoritoService';
+import { obtenerFavoritos, agregarFavorito, quitarFavorito } from '../../services/favoritoService';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const RecipeCardBiblioteca = ({ recipe, onPress }) => {

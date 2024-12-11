@@ -11,7 +11,7 @@ import {
   UIManager 
 } from 'react-native';
 import RecipeCardWeekly from './RecipeCardWeekly';
-import RecipeModal from './RecipeModal'; 
+import RecipeModal from '../common/RecipeModal'; 
 import { Ionicons } from '@expo/vector-icons';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {

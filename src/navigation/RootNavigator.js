@@ -5,7 +5,7 @@ import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import AuthNavigator from './AuthNavigator';
 import UserInfoNavigator from './UserInfoNavigator';
 import AppNavigator from './AppNavigator';
-import FloatingNavbar from '../components/BottomNavbar';
+import FloatingNavbar from '../components/common/BottomNavbar';
 import { AuthContext } from '../context/AuthContext';
 
 const RootNavigator = () => {

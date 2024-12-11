@@ -13,9 +13,9 @@ import {
 } from '../../services/usuarioService';
 import { obtenerRecetasPorIds } from '../../services/recetaService';
 import Secciones56 from '../../components/planScreen/RecipesPlan';
-import WeeklyView from '../../components/WeeklyView';
+import WeeklyView from '../../components/planScreen/WeeklyView';
 import { FavoritesContext } from '../../contexts/FavoritesContext';
-import ThreeBodyLoader from '../../components/ThreeBodyLoader';
+import ThreeBodyLoader from '../../components/common/ThreeBodyLoader';
 
 // Función para obtener el nombre del día con un desplazamiento opcional
 const getDayName = (offset = 0) => {

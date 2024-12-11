@@ -20,10 +20,10 @@ import {
   agregarFavorito,
   quitarFavorito,
 } from '../../services/favoritoService';
-import RecipeModal from '../../components/RecipeModal';
+import RecipeModal from '../../components/common/RecipeModal';
 import FiltrosModal from '../../components/recipesScreen/FiltrosModal';
 import RecipeList from '../../components/recipesScreen/RecipeList';
-import ThreeBodyLoader from '../../components/ThreeBodyLoader';
+import ThreeBodyLoader from '../../components/common/ThreeBodyLoader';
 
 export default function RecipesScreen({ route }) {
   const { recetasFiltradas } = route.params || {};

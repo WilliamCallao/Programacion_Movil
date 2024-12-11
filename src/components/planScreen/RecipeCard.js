@@ -3,7 +3,7 @@ import React, { memo, useState } from 'react';
 import { Text, StyleSheet, Image, Dimensions, View, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import RecipeModal from './RecipeModal';
+import RecipeModal from '../common/RecipeModal';
 
 const { width: screenWidth } = Dimensions.get('window');
 const ITEM_WIDTH = screenWidth * 0.75;

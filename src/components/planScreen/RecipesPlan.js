@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Text, Dimensions } from 'react-native'; // Asegúrate de incluir Text
 import Animated, { useSharedValue, useAnimatedScrollHandler } from 'react-native-reanimated';
-import RecipeCard from '../RecipeCard';
+import RecipeCard from './RecipeCard';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import ThreeBodyLoader from '../ThreeBodyLoader';
+import ThreeBodyLoader from '../common/ThreeBodyLoader';
 
 const ITEM_WIDTH = Dimensions.get('window').width * 0.75;
 
