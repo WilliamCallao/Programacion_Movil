@@ -81,9 +81,8 @@ const LoginScreen = ({ navigation }) => {
         setErrorMessage('No se pudo almacenar la información del usuario. Inténtalo nuevamente.');
       }
 
-      // Forzar isRegistered a true
       setIsRegistered(true);
-      await AsyncStorage.setItem('isRegistered', 'true'); // Para persistencia
+      await AsyncStorage.setItem('isRegistered', 'true');
 
     } catch (error) {
       console.error('Error de autenticación:', error.message);
