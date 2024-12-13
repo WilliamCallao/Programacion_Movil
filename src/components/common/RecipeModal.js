@@ -78,7 +78,7 @@ const RecipeModal = ({ visible, onClose, recipe, isFavorite, onToggleFavorite })
   };
 
   if (!recipe) {
-    return null; // Si `recipe` es null o undefined, no se renderiza el contenido del modal.
+    return null;
   }
 
   return (
