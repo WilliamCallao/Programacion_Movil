@@ -1,11 +1,11 @@
 // src/navigation/RootNavigator.js
 
 import React, { useContext } from 'react';
-import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 import AuthNavigator from './AuthNavigator';
 import UserInfoNavigator from './UserInfoNavigator';
 import AppNavigator from './AppNavigator';
-import FloatingNavbar from '../components/BottomNavbar';
+import FloatingNavbar from '../components/common/BottomNavbar';
 import { AuthContext } from '../context/AuthContext';
 
 const RootNavigator = () => {
@@ -14,7 +14,11 @@ const RootNavigator = () => {
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#333" />
+        <Image
+          source={require('../../assets/img-splash.png')}
+          style={styles.splashImage}
+          resizeMode="contain"
+        />
       </View>
     );
   }
@@ -40,6 +44,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+  splashImage: {
+    width: 180,
   },
 });
 

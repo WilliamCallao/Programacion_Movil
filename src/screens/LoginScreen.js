@@ -1,15 +1,16 @@
-// src/screens/LoginScreen.js
 
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert, Animated, Easing } from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../services/firebase';
 import { AuthContext } from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const { } = useContext(AuthContext);
 
   const handleLogin = async () => {
@@ -24,19 +25,42 @@ const LoginScreen = ({ navigation }) => {
         console.log('Usuario ID almacenado en AsyncStorage:', user.uid);
       } catch (storageError) {
         console.error('Error al almacenar usuarioId en AsyncStorage:', storageError);
-        Alert.alert('Error', 'No se pudo almacenar la información del usuario. Inténtalo nuevamente.');
+        setError('No se pudo almacenar la información del usuario. Inténtalo nuevamente.');
       }
 
     } catch (error) {
       console.error('Authentication error:', error.message);
-      Alert.alert('Error de Autenticación', error.message);
+      setError('Error de Autenticación: ' + error.message);
     }
   };
 
+  // Animación para los iconos
+  const spinValue = new Animated.Value(0);
+  Animated.loop(
+    Animated.timing(
+      spinValue,
+      {
+        toValue: 1,
+        duration: 4000,
+        easing: Easing.linear,
+        useNativeDriver: true
+      }
+    )
+  ).start();
+
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg']
+  });
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Animated.View style={{ transform: [{ rotate: spin }] }}>
+        <FontAwesome5 name="apple-alt" size={50} color="#fff" />
+      </Animated.View>
       <View style={styles.authContainer}>
         <Text style={styles.title}>Iniciar Sesión</Text>
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
         <TextInput
           style={styles.input}
           value={email}
@@ -71,28 +95,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#2c3e50',
   },
   authContainer: {
     width: '80%',
     maxWidth: 400,
     backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 8,
+    padding: 24,
+    borderRadius: 12,
     elevation: 3,
+    marginTop: 20,
   },
   title: {
-    fontSize: 24,
-    marginBottom: 16,
+    fontSize: 28,
+    marginBottom: 24,
     textAlign: 'center',
+    color: '#2c3e50',
   },
   input: {
-    height: 40,
+    height: 50,
     borderColor: '#ddd',
     borderWidth: 1,
     marginBottom: 16,
-    padding: 8,
-    borderRadius: 4,
+    padding: 12,
+    borderRadius: 8,
+    fontSize: 16,
   },
   buttonContainer: {
     marginBottom: 16,
@@ -100,9 +127,15 @@ const styles = StyleSheet.create({
   toggleText: {
     color: '#3498db',
     textAlign: 'center',
+    fontSize: 16,
   },
   bottomContainer: {
     marginTop: 20,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 16,
+    textAlign: 'center',
   },
 });
 

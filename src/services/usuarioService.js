@@ -91,7 +91,7 @@ export const crearUsuario = async (datosUsuario) => {
 
     await guardarIdEnAsyncStorage(usuarioRef.id);
 
-    const planSemanal = await generarPlanSemanal(datosUsuario.objetivos.meta_calorias, datosUsuario.preferencias);
+    const planSemanal = await generarPlanSemanal(datosUsuario.objetivos.meta_calorias, datosUsuario.preferencias.preferencias);
 
     const fechaCreacion = new Date();
     const planesAlimentacion = planSemanal.map((plan, index) => ({
@@ -156,40 +156,37 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
     if (usuarioDoc.exists()) {
       const datosUsuario = usuarioDoc.data();
 
-      // Obtener meta_calorias y preferencias
-      let metaCalorias = datosUsuario.objetivos?.meta_calorias;
+      // Calcular meta_calorias y demás datos relacionados
+      const edad = calcularEdad(datosUsuario.informacion_personal.fecha_nacimiento); // Es una cadena
+      const pesoObjetivo = calcularPesoObjetivo(
+        datosUsuario.medidas_fisicas.peso_kg,
+        datosUsuario.objetivo_peso.tipo_objetivo
+      );
+      const distribucion = obtenerDistribucionMacronutrientes(datosUsuario.objetivo_peso.tipo_objetivo);
+
+      const metaCalorias = calcularCalorias(
+        datosUsuario.medidas_fisicas.peso_kg,
+        datosUsuario.medidas_fisicas.altura_cm,
+        edad,
+        datosUsuario.informacion_personal.genero,
+        datosUsuario.medidas_fisicas.nivel_actividad
+      );
+
+      const macros = calcularMacronutrientes(metaCalorias, distribucion);
+
+      // Actualizar los objetivos del usuario
+      await updateDoc(usuarioDocRef, {
+        'objetivos.meta_calorias': metaCalorias,
+        'objetivos.peso_objetivo_kg': pesoObjetivo,
+        'objetivos.distribucion_macronutrientes': distribucion,
+        'objetivos.macronutrientes': macros,
+      });
+
+      console.log(`Meta calórica calculada: ${metaCalorias}`);
+      console.log('Datos nutricionales actualizados en Firebase.');
+
+      // Generar el nuevo plan semanal
       const preferencias = datosUsuario.preferencias;
-
-      // Si no tenemos meta_calorias, necesitamos calcularla
-      if (!metaCalorias) {
-        // Necesitamos calcular la edad, peso objetivo, distribución, calorías y macronutrientes
-        const edad = calcularEdad(datosUsuario.informacion_personal.fecha_nacimiento); // Es una cadena
-        const pesoObjetivo = calcularPesoObjetivo(
-          datosUsuario.medidas_fisicas.peso_kg,
-          datosUsuario.objetivo_peso.tipo_objetivo
-        );
-        const distribucion = obtenerDistribucionMacronutrientes(datosUsuario.objetivo_peso.tipo_objetivo);
-
-        metaCalorias = calcularCalorias(
-          datosUsuario.medidas_fisicas.peso_kg,
-          datosUsuario.medidas_fisicas.altura_cm,
-          edad,
-          datosUsuario.informacion_personal.genero,
-          datosUsuario.medidas_fisicas.nivel_actividad
-        );
-
-        const macros = calcularMacronutrientes(metaCalorias, distribucion);
-
-        // Actualizar el usuario con estos datos
-        await updateDoc(usuarioDocRef, {
-          'objetivos.meta_calorias': metaCalorias,
-          'objetivos.peso_objetivo_kg': pesoObjetivo,
-          'objetivos.distribucion_macronutrientes': distribucion,
-          'objetivos.macronutrientes': macros,
-        });
-      }
-
-      // Generar el plan semanal
       const planSemanal = await generarPlanSemanal(metaCalorias, preferencias);
 
       const fechaCreacion = new Date();
@@ -201,17 +198,194 @@ export const generarYAsignarPlanAlimenticio = async (usuarioId) => {
         comidas: plan,
       }));
 
-      // Actualizar el usuario con el nuevo plan alimenticio
+      // Sobrescribir los planes existentes con el nuevo plan semanal
       await updateDoc(usuarioDocRef, {
-        planes_alimentacion: arrayUnion(...planesAlimentacion),
+        planes_alimentacion: planesAlimentacion, // Reemplaza la lista completa
       });
 
-      console.log('Plan alimenticio generado y asignado al usuario.');
+      console.log('Plan alimenticio generado y reemplazado en Firebase.');
     } else {
       console.error('No se encontró un usuario con la ID proporcionada.');
     }
   } catch (error) {
     console.error('Error al generar y asignar el plan alimenticio:', error);
+    throw error;
+  }
+};
+
+export const generarYAsignarPlanSiguienteSemana = async (usuarioId) => {
+  try {
+    // Referencia al documento del usuario
+    const usuarioDocRef = doc(db, 'usuarios', usuarioId);
+    const usuarioDoc = await getDoc(usuarioDocRef);
+
+    if (!usuarioDoc.exists()) {
+      console.error('No se encontró un usuario con la ID proporcionada.');
+      return false;
+    }
+
+    const datosUsuario = usuarioDoc.data();
+
+    // Verificar si ya existe un plan_siguientesemana y si no está vacío
+    const planSiguienteSemanaExistente = datosUsuario.plan_siguientesemana;
+    if (planSiguienteSemanaExistente && planSiguienteSemanaExistente.length > 0) {
+      console.log('Ya existe un plan_siguientesemana. No se generará un nuevo plan.');
+      return false;
+    }
+
+    // Calcular meta_calorias y demás datos relacionados
+    const edad = calcularEdad(datosUsuario.informacion_personal.fecha_nacimiento);
+    const pesoObjetivo = calcularPesoObjetivo(
+      datosUsuario.medidas_fisicas.peso_kg,
+      datosUsuario.objetivo_peso.tipo_objetivo
+    );
+    const distribucion = obtenerDistribucionMacronutrientes(datosUsuario.objetivo_peso.tipo_objetivo);
+
+    const metaCalorias = calcularCalorias(
+      datosUsuario.medidas_fisicas.peso_kg,
+      datosUsuario.medidas_fisicas.altura_cm,
+      edad,
+      datosUsuario.informacion_personal.genero,
+      datosUsuario.medidas_fisicas.nivel_actividad
+    );
+
+    const macros = calcularMacronutrientes(metaCalorias, distribucion);
+
+    // Actualizar los objetivos del usuario
+    await updateDoc(usuarioDocRef, {
+      'objetivos.meta_calorias': metaCalorias,
+      'objetivos.peso_objetivo_kg': pesoObjetivo,
+      'objetivos.distribucion_macronutrientes': distribucion,
+      'objetivos.macronutrientes': macros,
+    });
+
+    console.log(`Meta calórica calculada: ${metaCalorias}`);
+    console.log('Datos nutricionales actualizados en Firebase.');
+
+    const preferencias = datosUsuario.preferencias;
+    const planSemanal = await generarPlanSemanal(metaCalorias, preferencias);
+
+    const fechaCreacion = new Date();
+    const planSiguienteSemana = planSemanal.map((plan, index) => ({
+      id_plan: `planSiguiente${index + 1}_${fechaCreacion.getTime()}`,
+      fecha_creacion: fechaCreacion,
+      estado: 'pendiente', // Estado diferente para indicar que es un plan futuro
+      dia: index + 1,
+      comidas: plan,
+    }));
+
+    // Asignar el nuevo plan a plan_siguientesemana
+    await updateDoc(usuarioDocRef, {
+      plan_siguientesemana: planSiguienteSemana,
+    });
+
+    console.log('Plan alimenticio generado y guardado como plan_siguientesemana en Firebase.');
+    return true;
+  } catch (error) {
+    console.error('Error al generar y asignar el plan para la siguiente semana:', error);
+    throw error;
+  }
+};
+
+export const verificarYActualizarPlan = async () => {
+  let planActualizado = false;
+
+  try {
+    const userId = await AsyncStorage.getItem("usuarioId");
+    if (!userId) {
+      console.error("(1245) No se encontró el ID del usuario en AsyncStorage.");
+      return false;
+    }
+
+    const usuarioDocRef = doc(db, "usuarios", userId);
+    const usuarioDoc = await getDoc(usuarioDocRef);
+
+    if (usuarioDoc.exists()) {
+      let usuarioData = usuarioDoc.data();
+
+      // Verificar si el atributo 'actualizar_plan' existe
+      if (usuarioData.actualizar_plan === undefined) {
+        // Si no existe, crearlo con el valor 'false'
+        await updateDoc(usuarioDocRef, { actualizar_plan: false });
+        console.log("(1245) Atributo 'actualizar_plan' creado con el valor predeterminado: false.");
+        usuarioData = { ...usuarioData, actualizar_plan: false };
+      }
+
+      if (usuarioData.actualizar_plan) {
+        console.log("(1245) Actualizando el plan alimenticio del usuario...");
+        await generarYAsignarPlanAlimenticio(userId);
+        await updateDoc(usuarioDocRef, { actualizar_plan: false });
+        console.log("(1245) Plan alimenticio actualizado y 'actualizar_plan' restablecido a false.");
+        planActualizado = true;
+      } else {
+        console.log("(1245) No se requiere actualizar el plan alimenticio.");
+      }
+    } else {
+      console.error("(1245) No se encontró un documento para el usuario proporcionado.");
+    }
+  } catch (error) {
+    console.error("(1245) Error al verificar o actualizar el atributo 'actualizar_plan':", error);
+  }
+  return planActualizado;
+};
+
+export const moverPlanSiguienteSemanaAActual = async (usuarioId) => {
+  try {
+    const usuarioDocRef = doc(db, 'usuarios', usuarioId);
+    const usuarioDoc = await getDoc(usuarioDocRef);
+
+    if (usuarioDoc.exists()) {
+      const datosUsuario = usuarioDoc.data();
+      const planSiguienteSemana = datosUsuario.plan_siguientesemana || [];
+
+      if (!planSiguienteSemana.length) {
+        console.log('No hay plan_siguientesemana para mover.');
+        return false;
+      }
+
+      const planesActuales = datosUsuario.planes_alimentacion || [];
+      const nuevosPlanes = [...planesActuales, ...planSiguienteSemana];
+
+      await updateDoc(usuarioDocRef, {
+        planes_alimentacion: nuevosPlanes,
+        plan_siguientesemana: [], 
+      });
+
+      console.log('Plan_siguientesemana movido a planes_alimentacion y vaciado.');
+      return true;
+    } else {
+      console.error('No se encontró un usuario con la ID proporcionada.');
+      return false;
+    }
+  } catch (error) {
+    console.error('Error al mover plan_siguientesemana a planes_alimentacion:', error);
+    throw error;
+  }
+};
+
+export const hayPlanSiguienteSemana = async (usuarioId) => {
+  try {
+    const usuarioDocRef = doc(db, 'usuarios', usuarioId);
+    const usuarioDoc = await getDoc(usuarioDocRef);
+
+    if (usuarioDoc.exists()) {
+      const datosUsuario = usuarioDoc.data();
+      const planSiguienteSemana = datosUsuario.plan_siguientesemana || [];
+
+      // Verificar si el plan contiene datos
+      if (planSiguienteSemana.length > 0) {
+        console.log('El usuario tiene un plan en plan_siguientesemana.');
+        return true;
+      } else {
+        console.log('El usuario no tiene un plan en plan_siguientesemana.');
+        return false;
+      }
+    } else {
+      console.error('No se encontró un usuario con la ID proporcionada.');
+      return false; // No se encontró el usuario
+    }
+  } catch (error) {
+    console.error('Error al verificar plan_siguientesemana:', error);
     throw error;
   }
 };

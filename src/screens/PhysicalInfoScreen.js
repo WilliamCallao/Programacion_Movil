@@ -1,13 +1,11 @@
-// src/screens/PhysicalInfoScreen.js
 
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, ScrollView, Animated, Easing } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { actualizarUsuario } from '../services/usuarioService';
-import MultiSelect from 'react-native-multiple-select';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { auth } from '../services/firebase';
 import { useNavigation } from '@react-navigation/native';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const PhysicalInfoScreen = () => {
   const [pesoEntero, setPesoEntero] = useState('35');
@@ -32,11 +30,34 @@ const PhysicalInfoScreen = () => {
       await actualizarUsuario(user.uid, datosActualizados);
       navigation.navigate('GoalsScreen');
     } else {
+      console.log('No se encontró usuario.');
     }
   };
 
+  // Animación para los iconos
+  const spinValue = new Animated.Value(0);
+  Animated.loop(
+    Animated.timing(
+      spinValue,
+      {
+        toValue: 1,
+        duration: 4000,
+        easing: Easing.linear,
+        useNativeDriver: true
+      }
+    )
+  ).start();
+
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg']
+  });
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Animated.View style={{ transform: [{ rotate: spin }] }}>
+        <FontAwesome5 name="dumbbell" size={50} color="#fff" />
+      </Animated.View>
       <View style={styles.authContainer}>
         <Text style={styles.title}>Información Física</Text>
         <Text style={styles.label}>Peso (kg)</Text>
@@ -98,24 +119,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#2c3e50',
   },
   authContainer: {
     width: '80%',
     maxWidth: 400,
     backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 8,
+    padding: 24,
+    borderRadius: 12,
     elevation: 3,
+    marginTop: 20,
   },
   title: {
-    fontSize: 24,
-    marginBottom: 16,
+    fontSize: 28,
+    marginBottom: 24,
     textAlign: 'center',
+    color: '#2c3e50',
   },
   label: {
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 8,
+    color: '#2c3e50',
+    fontWeight: 'bold',
   },
   pickerContainer: {
     flexDirection: 'row',
@@ -125,10 +150,15 @@ const styles = StyleSheet.create({
   picker: {
     flex: 1,
     height: 50,
+    backgroundColor: '#f0f0f0',
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 8,
   },
   decimalSeparator: {
     fontSize: 24,
     marginHorizontal: 8,
+    color: '#2c3e50',
   },
   buttonContainer: {
     marginBottom: 16,

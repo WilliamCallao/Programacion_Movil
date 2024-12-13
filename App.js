@@ -1,7 +1,6 @@
 // App.js
-
 import React from 'react';
-import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider } from './src/context/AuthContext';
 import RootNavigator from './src/navigation/RootNavigator';
@@ -34,7 +33,11 @@ export default function App() {
   if (!poppinsLoaded || !dmSansLoaded) {
     return (
       <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#333" />
+        <Image
+          source={require('./assets/img-splash.png')}
+          style={styles.splashImage}
+          resizeMode="contain"
+        />
       </View>
     );
   }
@@ -53,5 +56,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+  splashImage: {
+    width: 180,
   },
 });

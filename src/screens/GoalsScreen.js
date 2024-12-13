@@ -1,21 +1,20 @@
-// src/screens/GoalsScreen.js
+
 
 import React, { useState, useContext } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, ScrollView, Alert, Animated, Easing } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { actualizarUsuario, generarYAsignarPlanAlimenticio } from '../services/usuarioService';
-import MultiSelect from 'react-native-multiple-select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../context/AuthContext';
+import { actualizarUsuario, generarYAsignarPlanAlimenticio } from '../services/usuarioService';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const GoalsScreen = ({ navigation }) => {
-  const [preferenciasDietarias, setPreferenciasDietarias] = useState([]);
+  const [tipoDieta, setTipoDieta] = useState('');
+  const [condicionSalud, setCondicionSalud] = useState('');
   const [tipoObjetivo, setTipoObjetivo] = useState('');
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const { completeRegistration } = useContext(AuthContext);
-  
 
-  // preferencias y objetivos del usuario
   const handleFinish = async () => {
     try {
       const userId = await AsyncStorage.getItem('usuarioId');
@@ -24,6 +23,14 @@ const GoalsScreen = ({ navigation }) => {
           Alert.alert('Error', 'Por favor, selecciona un tipo de objetivo.');
           return false;
         }
+
+        const preferenciasDietarias = [];
+        if (tipoDieta === 'vegana') preferenciasDietarias.push('vegano');
+        if (tipoDieta === 'vegetariana') preferenciasDietarias.push('vegetariano');
+        if (condicionSalud === 'lower carb') preferenciasDietarias.push('lower-carb');
+        if (condicionSalud === 'gluten-free') preferenciasDietarias.push('gluten-free');
+        if (condicionSalud === 'high in fiber') preferenciasDietarias.push('high-in-fiber');
+        if (condicionSalud === 'low sodium') preferenciasDietarias.push('low-sodium');
 
         const datosActualizados = {
           'preferencias.preferencias_dietarias': preferenciasDietarias,
@@ -44,14 +51,12 @@ const GoalsScreen = ({ navigation }) => {
     }
   };
 
-  // generar y asignar el plan alimenticio
   const handleGenerarPlan = async () => {
     try {
       const userId = await AsyncStorage.getItem('usuarioId');
       if (userId) {
         await generarYAsignarPlanAlimenticio(userId);
         await completeRegistration();
-        Alert.alert('Éxito', 'Tu plan alimenticio ha sido generado exitosamente.');
       } else {
         console.log('No se encontró usuarioId en AsyncStorage.');
         Alert.alert('Error', 'No se encontró el identificador del usuario. Por favor, inicia sesión nuevamente.');
@@ -62,7 +67,6 @@ const GoalsScreen = ({ navigation }) => {
     }
   };
 
-  // finalizar y generar el plan
   const handleFinishAndGeneratePlan = async () => {
     const finishSuccess = await handleFinish();
     if (finishSuccess) {
@@ -72,38 +76,58 @@ const GoalsScreen = ({ navigation }) => {
     }
   };
 
-  const opcionesDietarias = [
-    { id: 'Vegetariano', name: 'Vegetariano' },
-    { id: 'Vegano', name: 'Vegano' },
-    { id: 'Gluten-Free', name: 'Gluten-Free' },
-    { id: 'Low Sodium', name: 'Low Sodium' },
-    { id: 'Lower Carb', name: 'Lower Carb' },
-    { id: 'High in Fiber', name: 'High in Fiber' },
-  ];
+  const spinValue = new Animated.Value(0);
+  Animated.loop(
+    Animated.timing(
+      spinValue,
+      {
+        toValue: 1,
+        duration: 4000,
+        easing: Easing.linear,
+        useNativeDriver: true
+      }
+    )
+  ).start();
+
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg']
+  });
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Animated.View style={{ transform: [{ rotate: spin }] }}>
+        <FontAwesome5 name="bullseye" size={50} color="#fff" />
+      </Animated.View>
       <View style={styles.authContainer}>
         <Text style={styles.title}>Preferencias y Objetivos</Text>
-        <Text style={styles.label}>Preferencias Dietarias</Text>
-        <MultiSelect
-          items={opcionesDietarias}
-          uniqueKey="id"
-          onSelectedItemsChange={setPreferenciasDietarias}
-          selectedItems={preferenciasDietarias}
-          selectText="Selecciona tus preferencias"
-          searchInputPlaceholderText="Buscar preferencias..."
-          tagRemoveIconColor="#CCC"
-          tagBorderColor="#CCC"
-          tagTextColor="#CCC"
-          selectedItemTextColor="#CCC"
-          selectedItemIconColor="#CCC"
-          itemTextColor="#000"
-          displayKey="name"
-          searchInputStyle={{ color: '#CCC' }}
-          submitButtonColor="#CCC"
-          submitButtonText="Seleccionar"
-        />
+        <Text style={styles.label}>Tipo de Dieta</Text>
+        <Picker
+          selectedValue={tipoDieta}
+          style={styles.picker}
+          onValueChange={(itemValue) => setTipoDieta(itemValue)}
+        >
+          <Picker.Item label="Selecciona tu tipo de dieta" value="" />
+          <Picker.Item label="No restrictiva" value="" />
+          <Picker.Item label="Vegana" value="vegana" />
+          <Picker.Item label="Vegetariana" value="vegetariana" />
+        </Picker>
+        <Text style={styles.label}>Condiciones de Salud</Text>
+        <Picker
+          selectedValue={condicionSalud}
+          style={styles.picker}
+          onValueChange={(itemValue) => setCondicionSalud(itemValue)}
+        >
+          <Picker.Item label="Selecciona tu condición de salud" value="" />
+          <Picker.Item label="Diabetes tipo 1" value="diabetes_tipo_1" />
+          <Picker.Item label="Diabetes tipo 2" value="diabetes_tipo_2" />
+          <Picker.Item label="Resistencia a la insulina" value="resistencia_insulina" />
+          <Picker.Item label="Celiaco" value="celiaco" />
+          <Picker.Item label="Sobrepeso" value="sobrepeso" />
+          <Picker.Item label="Presión alta" value="presion_alta" />
+          <Picker.Item label="Insuficiencia cardiaca" value="insuficiencia_cardiaca" />
+          <Picker.Item label="Problemas renales" value="problemas_renales" />
+        </Picker>
         <Text style={styles.label}>Tipo de Objetivo</Text>
         <Picker
           selectedValue={tipoObjetivo}
@@ -134,28 +158,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#2c3e50',
   },
   authContainer: {
     width: '80%',
     maxWidth: 400,
     backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 8,
+    padding: 24,
+    borderRadius: 12,
     elevation: 3,
+    marginTop: 20,
   },
   title: {
-    fontSize: 24,
-    marginBottom: 16,
+    fontSize: 28,
+    marginBottom: 24,
     textAlign: 'center',
+    color: '#2c3e50',
   },
   label: {
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 8,
+    color: '#2c3e50',
+    fontWeight: 'bold',
   },
   picker: {
     height: 50,
+    width: '100%',
     marginBottom: 16,
+    backgroundColor: '#f0f0f0',
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 8,
   },
   buttonContainer: {
     marginBottom: 16,
