@@ -232,7 +232,7 @@ export default function ProfileScreen() {
         { label: 'Sedentario', value: 'sedentario' },
         { label: 'Ligeramente Activo', value: 'ligeramente_activo' },
         { label: 'Moderadamente Activo', value: 'moderadamente_activo' },
-        { label: 'Activo', value: 'activo' },
+        // { label: 'Activo', value: 'activo' },
         { label: 'Muy Activo', value: 'muy_activo' },
       ],
       objetivo: [
