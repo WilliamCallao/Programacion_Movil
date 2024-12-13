@@ -13,6 +13,10 @@ const GoalsScreen = ({ navigation }) => {
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const { setIsRegistered } = useContext(AuthContext);
 
+  const handleConditionChange = (itemValue) => {
+    setCondicionSalud((prevValue) => (prevValue === itemValue ? '' : itemValue));
+  };
+
   const handleFinish = async () => {
     try {
       const userId = await AsyncStorage.getItem('usuarioId');
@@ -25,15 +29,10 @@ const GoalsScreen = ({ navigation }) => {
         const preferenciasDietarias = [];
         if (tipoDieta === 'vegana') preferenciasDietarias.push('vegano');
         if (tipoDieta === 'vegetariana') preferenciasDietarias.push('vegetariano');
-        // Puedes mapear las condiciones de salud a las preferencias dietarias
-        // según necesites. Por ahora las dejamos como están en el ejemplo original.
-        if (condicionSalud === 'lower carb') preferenciasDietarias.push('lower-carb');
-        if (condicionSalud === 'gluten-free') preferenciasDietarias.push('gluten-free');
-        if (condicionSalud === 'high in fiber') preferenciasDietarias.push('high-in-fiber');
-        if (condicionSalud === 'low sodium') preferenciasDietarias.push('low-sodium');
 
         const datosActualizados = {
           'preferencias.preferencias_dietarias': preferenciasDietarias,
+          'preferencias.condiciones_salud': condicionSalud ? [condicionSalud] : [],
           'objetivo_peso.tipo_objetivo': tipoObjetivo,
         };
 
@@ -120,7 +119,7 @@ const GoalsScreen = ({ navigation }) => {
         <Picker
           selectedValue={condicionSalud}
           style={[styles.picker, styles.pickerOptional]}
-          onValueChange={(itemValue) => setCondicionSalud(itemValue)}
+          onValueChange={handleConditionChange}
         >
           <Picker.Item label="Selecciona tu condición de salud" value="" enabled={false} />
           <Picker.Item label="Diabetes tipo 1" value="diabetes_tipo_1" />
