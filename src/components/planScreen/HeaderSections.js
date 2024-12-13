@@ -15,7 +15,9 @@ export default function HeaderSections({ dia = "Lunes", calorias = 2805 }) {
 
       {/* Sección 2 */}
       <View style={[styles.section2, { height: (height * SECTION_HEIGHT_PERCENTAGES[1]) / 100, paddingVertical: 5 }]}>
-        <View style={styles.avatarCircle} />
+        <View style={styles.avatarCircle}>
+          <Ionicons name="person" size={30} color="white" />
+        </View>
       </View>
 
       {/* Sección 3: Día y Calorías en una sola línea */}
@@ -64,9 +66,18 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   avatarCircle: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: 'gray',
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: '#777',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 3,
+    borderColor: '#999',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });
