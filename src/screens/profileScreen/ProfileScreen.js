@@ -39,7 +39,7 @@ export default function ProfileScreen() {
     peso: '',
     nivelActividad: '',
     objetivo: '',
-    tipoDieta: '',
+    preferenciasDietarias: '',
     condicionesSalud: [],
   });
 
@@ -88,7 +88,9 @@ export default function ProfileScreen() {
                 : '',
               nivelActividad: medidasFisicas.nivel_actividad || '',
               objetivo: objetivoPeso.tipo_objetivo || '',
-              tipoDieta: preferencias.tipo_dieta || '',
+              preferenciasDietarias: preferencias.preferencias_dietarias && preferencias.preferencias_dietarias.length > 0 
+                ? preferencias.preferencias_dietarias[0] 
+                : '',
               condicionesSalud: preferencias.condiciones_salud || [],
             });
 
@@ -117,7 +119,7 @@ export default function ProfileScreen() {
       setEditingField('fechaNacimiento');
       setShowDatePicker(true);
     } else if (
-      ['genero', 'nivelActividad', 'objetivo', 'condicionesSalud', 'tipoDieta'].includes(field)
+      ['genero', 'nivelActividad', 'objetivo', 'condicionesSalud', 'preferenciasDietarias'].includes(field)
     ) {
       setEditingField(field);
       setEditingValue(userInfo[field]);
@@ -136,8 +138,7 @@ export default function ProfileScreen() {
       setSavingChanges(true);
       const updatedInfo = {
         ...userInfo,
-        [editingField]:
-          editingField === 'condicionesSalud' ? editingValue : editingValue,
+        [editingField]: editingValue,
       };
 
       const usuarioId = await AsyncStorage.getItem('usuarioId');
@@ -175,10 +176,13 @@ export default function ProfileScreen() {
               tipo_objetivo: updatedInfo.objetivo,
             };
             break;
-          case 'tipoDieta':
+          case 'preferenciasDietarias':
+            // Guardamos el valor en un array con un solo elemento
             updatedData.preferencias = {
               ...updatedData.preferencias,
-              tipo_dieta: updatedInfo.tipoDieta,
+              preferencias_dietarias: updatedInfo.preferenciasDietarias 
+                ? [updatedInfo.preferenciasDietarias] 
+                : [],
             };
             break;
           case 'condicionesSalud':
@@ -246,7 +250,8 @@ export default function ProfileScreen() {
         { label: 'Insuficiencia cardiaca', value: 'insuficiencia_cardiaca' },
         { label: 'Problemas renales', value: 'problemas_renales' },
       ],
-      tipoDieta: [
+      // Opciones para preferenciasDietarias, igual que antes con tipoDieta
+      preferenciasDietarias: [
         { label: 'No restrictiva', value: 'no_restrictiva' },
         { label: 'Vegana', value: 'vegana' },
         { label: 'Vegetariana', value: 'vegetariana' },
@@ -266,6 +271,7 @@ export default function ProfileScreen() {
         })
         .join(', ');
     }
+
     const option = options.find((option) => option.value === value);
     return option ? option.label : value;
   };
@@ -280,7 +286,7 @@ export default function ProfileScreen() {
       peso: 'Peso',
       nivelActividad: 'Nivel de Actividad',
       objetivo: 'Objetivo',
-      tipoDieta: 'Tipo de Dieta',
+      preferenciasDietarias: 'Preferencias Dietarias',
       condicionesSalud: 'Condiciones de Salud',
     };
     return fieldNames[field] || '';
@@ -328,6 +334,7 @@ export default function ProfileScreen() {
         userInfo={userInfo}
         onEdit={onEdit}
         getLabelForValue={getLabelForValue}
+        fieldKey="preferenciasDietarias"
       />
       <HealthConditionsSection
         userInfo={userInfo}
@@ -366,45 +373,22 @@ export default function ProfileScreen() {
               Editar {getFieldDisplayName(editingField)}
             </Text>
             {optionsForField.length > 0 ? (
-              editingField === 'condicionesSalud' ? (
-                <View style={styles.optionsContainer}>
-                  {optionsForField.map((option) => (
-                    <TouchableOpacity
-                      key={option.value}
-                      style={[
-                        styles.optionButton,
-                        editingValue.includes(option.value) && styles.selectedOption,
-                      ]}
-                      onPress={() => {
-                        if (editingValue.includes(option.value)) {
-                          setEditingValue(editingValue.filter((val) => val !== option.value));
-                        } else {
-                          setEditingValue([...editingValue, option.value]);
-                        }
-                      }}
-                    >
-                      <Text style={styles.optionButtonText}>{option.label}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              ) : (
-                <View style={styles.optionsContainer}>
-                  {optionsForField.map((option) => (
-                    <TouchableOpacity
-                      key={option.value}
-                      style={[
-                        styles.optionButton,
-                        editingValue === option.value && styles.selectedOption,
-                      ]}
-                      onPress={() => setEditingValue(option.value)}
-                    >
-                      <Text style={styles.optionButtonText}>{option.label}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              )
+              // Como preferenciasDietarias es ahora single-select, tratamos igual que tipoDieta antes
+              <View style={styles.optionsContainer}>
+                {optionsForField.map((option) => (
+                  <TouchableOpacity
+                    key={option.value}
+                    style={[
+                      styles.optionButton,
+                      editingValue === option.value && styles.selectedOption,
+                    ]}
+                    onPress={() => setEditingValue(option.value)}
+                  >
+                    <Text style={styles.optionButtonText}>{option.label}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
             ) : editingField === 'fechaNacimiento' ? (
-              // Mostrar la fecha seleccionada
               <View style={styles.optionsContainer}>
                 <Text style={styles.selectedDate}>
                   {editingValue instanceof Date
