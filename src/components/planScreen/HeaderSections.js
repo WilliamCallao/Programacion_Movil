@@ -1,4 +1,3 @@
-// components/HeaderSections.js
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -6,29 +5,27 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 const SECTION_HEIGHT_PERCENTAGES = [5, 10, 4];
 
 export default function HeaderSections({ dia = "Lunes", calorias = 2805 }) {
-  const { height } = Dimensions.get('window');
+  const { height } = Dimensions.get('window'); 
 
   return (
     <View>
-      {/* Sección 1 */}
       <View style={[styles.section1, { height: (height * SECTION_HEIGHT_PERCENTAGES[0]) / 100 }]} />
 
-      {/* Sección 2 */}
-      <View style={[styles.section2, { height: (height * SECTION_HEIGHT_PERCENTAGES[1]) / 100, paddingVertical: 5 }]}>
-        <View style={styles.avatarCircle}>
+      <View
+        style={[styles.section2, { height: (height * SECTION_HEIGHT_PERCENTAGES[1]) / 100, paddingVertical: 5 }]}>
+        <View style={styles.avatarCircle}> 
           <Ionicons name="person" size={30} color="white" />
         </View>
       </View>
 
-      {/* Sección 3: Día y Calorías en una sola línea */}
-      <View style={[styles.section3, { height: (height * SECTION_HEIGHT_PERCENTAGES[2]) / 100 }]}>
-        <View style={styles.inlineRow}>
+      <View style={[styles.section3, { height: (height * SECTION_HEIGHT_PERCENTAGES[2]) / 100 }]}> {/* Información principal */}
+        <View style={styles.inlineRow}> 
           <Ionicons name="calendar-outline" size={22} color="#333" />
           <Text style={styles.inlineText}>{dia},</Text>
           <MaterialCommunityIcons name="fire" size={22} color="#FF6B6B" style={{ marginLeft: 8 }} />
           <Text style={styles.inlineText}>{calorias} kcal</Text>
         </View>
-        <View style={styles.underline} />
+        <View style={styles.underline} /> {/* Línea decorativa */}
       </View>
     </View>
   );
@@ -69,11 +66,10 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: '#777',
+    backgroundColor: '#999',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 3,
-    borderColor: '#999',
+    borderColor: '#777',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
