@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 10,
   },
   buttonContainer: {
     flexDirection: 'row',
