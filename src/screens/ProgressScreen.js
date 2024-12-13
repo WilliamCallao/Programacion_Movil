@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import CalendarProgress from '../components/ProgressCalendar';
-import ButtonWeight from '../components/ButtonWeight';
-import PesoActualCard from '../components/WeightCard';
-import DiasCocinandoCard from '../components/DaysCard';
+import CalendarProgress from '../components/progressScreen/ProgressCalendar';
+import ButtonWeight from '../components/progressScreen/ButtonWeight';
+import PesoActualCard from '../components/progressScreen/WeightCard';
+import DiasCocinandoCard from '../components/progressScreen/DaysCard';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import WeightChart from '../components/graphCard';
+import WeightChart from '../components/progressScreen/graphCard';
 
 export default function ProgressScreen() {
   return (

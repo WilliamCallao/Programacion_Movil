@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     padding: 1,
   },
   card: {
-    backgroundColor: '#ddd',
+    backgroundColor: '#f2f2f2',
     marginVertical: 10,
     padding: 20,
     width: '100%', // Asegura que el contenedor ocupe todo el ancho de la pantalla

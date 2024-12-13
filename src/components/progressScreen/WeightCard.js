@@ -43,7 +43,7 @@ const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: '#ddd',
+        backgroundColor: '#f2f2f2',
         padding: 20,
         width: width - 32, // Margen horizontal de 16px en el contenedor
         alignSelf: 'center',
