@@ -89,7 +89,7 @@ const PhysicalInfoScreen = () => {
             <Picker.Item label="Sedentario" value="sedentario" />
             <Picker.Item label="Ligeramente Activo" value="ligeramente_activo" />
             <Picker.Item label="Moderadamente Activo" value="moderadamente_activo" />
-            <Picker.Item label="Activo" value="activo" />
+            {/* <Picker.Item label="Activo" value="activo" /> */}
             <Picker.Item label="Muy Activo" value="muy_activo" />
           </Picker>
         </View>
