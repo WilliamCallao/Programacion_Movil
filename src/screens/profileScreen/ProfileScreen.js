@@ -20,7 +20,6 @@ import PersonalInfoSection from '../../components/profileScreen/PersonalInfoSect
 import ActivityLevelSection from '../../components/profileScreen/ActivityLevelSection';
 import ObjectiveSection from '../../components/profileScreen/ObjectiveSection';
 import DietTypeSection from '../../components/profileScreen/DietTypeSection';
-import HealthConditionsSection from '../../components/profileScreen/HealthConditionsSection';
 import ThreeBodyLoader from '../../components/common/ThreeBodyLoader';
 
 import { AuthContext } from '../../context/AuthContext';
@@ -335,11 +334,6 @@ export default function ProfileScreen() {
         onEdit={onEdit}
         getLabelForValue={getLabelForValue}
         fieldKey="preferenciasDietarias"
-      />
-      <HealthConditionsSection
-        userInfo={userInfo}
-        onEdit={onEdit}
-        getLabelForValue={getLabelForValue}
       />
 
       {showDatePicker && (
