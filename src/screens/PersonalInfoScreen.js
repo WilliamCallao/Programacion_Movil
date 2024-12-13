@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView, Platform, TouchableOpacity, Animated, Easing } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ScrollView, Platform, TouchableOpacity, Animated, Easing, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { auth } from '../services/firebase';
 import { actualizarUsuario } from '../services/usuarioService';
@@ -13,24 +12,31 @@ const PersonalInfoScreen = () => {
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [genero, setGenero] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigation = useNavigation();
 
   const handleNext = async () => {
+    if (!nombre || !genero) return;
+    setIsSubmitting(true);
+
     const user = auth.currentUser;
     if (user) {
-      if (!nombre || !genero || !fechaNacimiento) {
-        return;
+      try {
+        const datosActualizados = {
+          'informacion_personal.nombre': nombre,
+          'informacion_personal.fecha_nacimiento': fechaNacimiento.toISOString().split('T')[0],
+          'informacion_personal.genero': genero,
+        };
+        await actualizarUsuario(user.uid, datosActualizados);
+        navigation.navigate('PhysicalInfoScreen');
+      } catch (error) {
+        console.error('Error al actualizar el usuario:', error);
+      } finally {
+        setIsSubmitting(false);
       }
-
-      const datosActualizados = {
-        'informacion_personal.nombre': nombre,
-        'informacion_personal.fecha_nacimiento': fechaNacimiento.toISOString().split('T')[0],
-        'informacion_personal.genero': genero,
-      };
-      await actualizarUsuario(user.uid, datosActualizados);
-      navigation.navigate('PhysicalInfoScreen');
     } else {
       console.log('No se encontró usuario.');
+      setIsSubmitting(false);
     }
   };
 
@@ -78,7 +84,7 @@ const PersonalInfoScreen = () => {
           placeholderTextColor="#888"
         />
         <Text style={styles.label}>Fecha de Nacimiento</Text>
-        <TouchableOpacity onPress={showDatepicker} style={styles.dateButton}>
+        <TouchableOpacity onPress={showDatepicker} style={[styles.dateButton, { borderRadius: 12 }]}>  
           <Text style={styles.dateButtonText}>{fechaNacimiento.toDateString()}</Text>
         </TouchableOpacity>
         {showDatePicker && (
@@ -91,19 +97,29 @@ const PersonalInfoScreen = () => {
           />
         )}
         <Text style={styles.label}>Género</Text>
-        <Picker
-          selectedValue={genero}
-          style={styles.picker}
-          onValueChange={(itemValue) => setGenero(itemValue)}
-        >
-          <Picker.Item label="Selecciona tu sexo" value="" />
-          <Picker.Item label="Masculino" value="masculino" />
-          <Picker.Item label="Femenino" value="femenino" />
-          <Picker.Item label="Otro" value="otro" />
-        </Picker>
-        <View style={styles.buttonContainer}>
-          <Button title="Siguiente" onPress={handleNext} color="#3498db" />
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={genero}
+            style={styles.picker}
+            onValueChange={(itemValue) => setGenero(itemValue)}
+          >
+            <Picker.Item label="Selecciona una opción" value="" enabled={false} />
+            <Picker.Item label="Masculino" value="masculino" />
+            <Picker.Item label="Femenino" value="femenino" />
+            <Picker.Item label="Otro" value="otro" />
+          </Picker>
         </View>
+        <TouchableOpacity
+          onPress={handleNext}
+          style={[styles.callToActionButton, (!nombre || !genero) && styles.disabledButton]}
+          disabled={!nombre || !genero || isSubmitting}
+        >
+          {isSubmitting ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.callToActionText}>Siguiente</Text>
+          )}
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -140,7 +156,6 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     fontSize: 16,
-    backgroundColor: '#f0f0f0',
     color: '#333',
   },
   label: {
@@ -149,26 +164,25 @@ const styles = StyleSheet.create({
     color: '#2c3e50',
     fontWeight: 'bold',
   },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    overflow: 'hidden',
+    marginBottom: 16,
+    backgroundColor: '#d3d3d3',
+  },
   picker: {
     height: 50,
     width: '100%',
-    marginBottom: 16,
-    backgroundColor: '#f0f0f0',
-    borderColor: '#ddd',
-    borderWidth: 1,
-    borderRadius: 8,
-  },
-  buttonContainer: {
-    marginBottom: 16,
   },
   dateButton: {
-    backgroundColor: '#3498db',
+    backgroundColor: '#d3d3d3',
     padding: 12,
-    borderRadius: 8,
     marginBottom: 16,
   },
   dateButtonText: {
-    color: '#fff',
+    color: '#2c3e50',
     textAlign: 'center',
     fontSize: 16,
   },
@@ -177,6 +191,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     marginBottom: 16,
+  },
+  callToActionButton: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 25,
+    paddingVertical: 9,
+    paddingHorizontal: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  disabledButton: {
+    backgroundColor: '#555',
+    borderColor: '#555',
+  },
+  callToActionText: {
+    color: '#fff',
+    fontSize: 14,
+    fontFamily: 'DMSans_500Medium',
+    textAlign: 'center',
   },
 });
 
