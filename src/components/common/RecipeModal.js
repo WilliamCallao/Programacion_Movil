@@ -1,4 +1,4 @@
-// components/RecipeModal.js
+// components/common/RecipeModal.js
 
 import React, { useEffect, useRef } from 'react';
 import {
