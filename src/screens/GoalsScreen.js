@@ -59,6 +59,7 @@ const GoalsScreen = ({ navigation }) => {
         await generarYAsignarPlanAlimenticio(userId);
         // Llamamos a completeRegistration para marcar isRegistered = true en AuthContext
         setIsRegistered(true);
+        await AsyncStorage.setItem('isRegistered', 'true');
       } else {
         console.log('No se encontró usuarioId en AsyncStorage.');
         Alert.alert('Error', 'No se encontró el identificador del usuario. Por favor, inicia sesión nuevamente.');
