@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView, Animated, Easing } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Animated, Easing, ActivityIndicator, TextInput } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { actualizarUsuario } from '../services/usuarioService';
 import { auth } from '../services/firebase';
@@ -8,29 +7,26 @@ import { useNavigation } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 const PhysicalInfoScreen = () => {
-  const [pesoEntero, setPesoEntero] = useState('35');
-  const [pesoDecimal, setPesoDecimal] = useState('0');
-  const [altura, setAltura] = useState('120');
+  const [peso, setPeso] = useState('');
+  const [altura, setAltura] = useState('');
   const [nivelActividad, setNivelActividad] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
   const handleNext = async () => {
     const user = auth.currentUser;
-    if (user) {
-      const peso = parseFloat(`${pesoEntero}.${pesoDecimal}`);
-      if (!peso || !altura || !nivelActividad) {
-        return;
-      }
-
+    if (user && nivelActividad && peso && altura) {
+      setLoading(true);
       const datosActualizados = {
-        'medidas_fisicas.peso_kg': peso,
+        'medidas_fisicas.peso_kg': parseFloat(peso),
         'medidas_fisicas.altura_cm': parseFloat(altura),
         'medidas_fisicas.nivel_actividad': nivelActividad,
       };
       await actualizarUsuario(user.uid, datosActualizados);
+      setLoading(false);
       navigation.navigate('GoalsScreen');
     } else {
-      console.log('No se encontró usuario.');
+      console.log('Faltan datos por completar.');
     }
   };
 
@@ -61,52 +57,57 @@ const PhysicalInfoScreen = () => {
       <View style={styles.authContainer}>
         <Text style={styles.title}>Información Física</Text>
         <Text style={styles.label}>Peso (kg)</Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={pesoEntero}
-            style={styles.picker}
-            onValueChange={(itemValue) => setPesoEntero(itemValue)}
-          >
-            {Array.from({ length: 191 }, (_, i) => i + 35).map((value) => (
-              <Picker.Item key={value} label={`${value}`} value={`${value}`} />
-            ))}
-          </Picker>
-          <Text style={styles.decimalSeparator}>.</Text>
-          <Picker
-            selectedValue={pesoDecimal}
-            style={styles.picker}
-            onValueChange={(itemValue) => setPesoDecimal(itemValue)}
-          >
-            {Array.from({ length: 10 }, (_, i) => i).map((value) => (
-              <Picker.Item key={value} label={`${value}`} value={`${value}`} />
-            ))}
-          </Picker>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={peso}
+            onChangeText={setPeso}
+            placeholder="Ingresa tu peso"
+            placeholderTextColor="#999"
+            keyboardType="numeric"
+          />
         </View>
         <Text style={styles.label}>Altura (cm)</Text>
-        <Picker
-          selectedValue={altura}
-          style={styles.picker}
-          onValueChange={(itemValue) => setAltura(itemValue)}
-        >
-          {Array.from({ length: 101 }, (_, i) => i + 120).map((value) => (
-            <Picker.Item key={value} label={`${value}`} value={`${value}`} />
-          ))}
-        </Picker>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={altura}
+            onChangeText={setAltura}
+            placeholder="Ingresa tu altura"
+            placeholderTextColor="#999"
+            keyboardType="numeric"
+          />
+        </View>
         <Text style={styles.label}>Nivel de Actividad</Text>
-        <Picker
-          selectedValue={nivelActividad}
-          style={styles.picker}
-          onValueChange={(itemValue) => setNivelActividad(itemValue)}
-        >
-          <Picker.Item label="Selecciona tu nivel de actividad" value="" />
-          <Picker.Item label="Sedentario" value="sedentario" />
-          <Picker.Item label="Ligeramente Activo" value="ligeramente_activo" />
-          <Picker.Item label="Moderadamente Activo" value="moderadamente_activo" />
-          <Picker.Item label="Activo" value="activo" />
-          <Picker.Item label="Muy Activo" value="muy_activo" />
-        </Picker>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={nivelActividad}
+            style={styles.picker}
+            onValueChange={(itemValue) => setNivelActividad(itemValue)}
+          >
+            <Picker.Item label="Selecciona tu nivel de actividad" value="" enabled={false} />
+            <Picker.Item label="Sedentario" value="sedentario" />
+            <Picker.Item label="Ligeramente Activo" value="ligeramente_activo" />
+            <Picker.Item label="Moderadamente Activo" value="moderadamente_activo" />
+            <Picker.Item label="Activo" value="activo" />
+            <Picker.Item label="Muy Activo" value="muy_activo" />
+          </Picker>
+        </View>
         <View style={styles.buttonContainer}>
-          <Button title="Siguiente" onPress={handleNext} color="#3498db" />
+          <TouchableOpacity
+            onPress={handleNext}
+            style={[styles.button, {
+              backgroundColor: nivelActividad && peso && altura ? 'black' : '#555',
+              borderColor: nivelActividad && peso && altura ? 'black' : '#555',
+            }]}
+            disabled={!nivelActividad || !peso || !altura || loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Siguiente</Text>
+            )}
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -142,26 +143,45 @@ const styles = StyleSheet.create({
     color: '#2c3e50',
     fontWeight: 'bold',
   },
-  pickerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  inputContainer: {
     marginBottom: 16,
   },
-  picker: {
-    flex: 1,
+  input: {
     height: 50,
-    backgroundColor: '#f0f0f0',
-    borderColor: '#ddd',
     borderWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: 'transparent',
     borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    color: '#333',
   },
-  decimalSeparator: {
-    fontSize: 24,
-    marginHorizontal: 8,
-    color: '#2c3e50',
+  pickerContainer: {
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#d3d3d3',
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  picker: {
+    height: 50,
+    fontSize: 16,
   },
   buttonContainer: {
     marginBottom: 16,
+  },
+  button: {
+    borderRadius: 25,
+    borderWidth: 1,
+    paddingVertical: 9,
+    paddingHorizontal: 14,
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontFamily: 'DMSans_500Medium',
+    fontSize: 14,
+    color: '#fff',
   },
 });
 
