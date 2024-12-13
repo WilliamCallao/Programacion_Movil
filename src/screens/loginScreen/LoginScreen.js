@@ -1,8 +1,8 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Animated, Easing, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../services/firebase';
-import { AuthContext } from '../context/AuthContext';
+import { auth } from '../../services/firebase';
+import { AuthContext } from '../../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 

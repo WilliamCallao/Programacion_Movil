@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Platform, TouchableOpacity, Animated, Easing, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { auth } from '../services/firebase';
-import { actualizarUsuario } from '../services/usuarioService';
+import { auth } from '../../services/firebase';
+import { actualizarUsuario } from '../../services/usuarioService';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import { FontAwesome5 } from '@expo/vector-icons';
