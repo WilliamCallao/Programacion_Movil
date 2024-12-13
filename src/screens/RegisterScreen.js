@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView, Animated, Easing, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ScrollView, Animated, Easing, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../services/firebase';
 import { doc, setDoc } from "firebase/firestore";
@@ -136,7 +136,11 @@ const RegisterScreen = ({ navigation }) => {
           onPress={handleRegister}
           disabled={isLoading}
         >
-          <Text style={textDynamic(isLoading)}>{isLoading ? "Cargando..." : "Registrarse"}</Text>
+          {isLoading ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={textDynamic(isLoading)}>Registrarse</Text>
+          )}
         </TouchableOpacity>
         <View style={styles.bottomContainer}>
           <Text style={styles.toggleText} onPress={() => navigation.navigate('LoginScreen')}>
