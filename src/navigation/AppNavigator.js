@@ -12,9 +12,9 @@ const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   return (
-    <FavoritesProvider>    
-        <Stack.Navigator
-        initialRouteName="PlanScreen"
+    <FavoritesProvider>
+      <Stack.Navigator
+        initialRouteName="PlanScreen" // PlanScreen es la pantalla inicial
         screenOptions={{
           headerShown: false,
           ...TransitionPresets.SlideFromRightIOS,
@@ -26,7 +26,6 @@ const AppNavigator = () => {
         <Stack.Screen name="RecipesScreen" component={RecipesScreen} />
       </Stack.Navigator>
     </FavoritesProvider>
-
   );
 };
 

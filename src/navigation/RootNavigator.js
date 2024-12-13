@@ -12,6 +12,7 @@ const RootNavigator = () => {
   const { user, isRegistered, loading } = useContext(AuthContext);
 
   if (loading) {
+    // Mostrar pantalla de carga mientras se verifica el estado de autenticación
     return (
       <View style={styles.loaderContainer}>
         <Image
@@ -24,13 +25,16 @@ const RootNavigator = () => {
   }
 
   if (!user) {
+    // Usuario no autenticado, mostrar AuthNavigator (Login/Register)
     return <AuthNavigator />;
   }
 
   if (user && !isRegistered) {
+    // Usuario autenticado pero no registrado, mostrar UserInfoNavigator
     return <UserInfoNavigator />;
   }
 
+  // Usuario autenticado y registrado, mostrar AppNavigator con FloatingNavbar
   return (
     <>
       <AppNavigator />

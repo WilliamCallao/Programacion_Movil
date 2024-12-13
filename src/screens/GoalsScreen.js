@@ -11,7 +11,7 @@ const GoalsScreen = ({ navigation }) => {
   const [condicionSalud, setCondicionSalud] = useState('');
   const [tipoObjetivo, setTipoObjetivo] = useState('');
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
-  const { completeRegistration } = useContext(AuthContext);
+  const { setIsRegistered } = useContext(AuthContext);
 
   const handleFinish = async () => {
     try {
@@ -25,6 +25,8 @@ const GoalsScreen = ({ navigation }) => {
         const preferenciasDietarias = [];
         if (tipoDieta === 'vegana') preferenciasDietarias.push('vegano');
         if (tipoDieta === 'vegetariana') preferenciasDietarias.push('vegetariano');
+        // Puedes mapear las condiciones de salud a las preferencias dietarias
+        // según necesites. Por ahora las dejamos como están en el ejemplo original.
         if (condicionSalud === 'lower carb') preferenciasDietarias.push('lower-carb');
         if (condicionSalud === 'gluten-free') preferenciasDietarias.push('gluten-free');
         if (condicionSalud === 'high in fiber') preferenciasDietarias.push('high-in-fiber');
@@ -34,6 +36,7 @@ const GoalsScreen = ({ navigation }) => {
           'preferencias.preferencias_dietarias': preferenciasDietarias,
           'objetivo_peso.tipo_objetivo': tipoObjetivo,
         };
+
         await actualizarUsuario(userId, datosActualizados);
         console.log('Datos del usuario actualizados en Firebase.');
         return true;
@@ -54,7 +57,8 @@ const GoalsScreen = ({ navigation }) => {
       const userId = await AsyncStorage.getItem('usuarioId');
       if (userId) {
         await generarYAsignarPlanAlimenticio(userId);
-        await completeRegistration();
+        // Llamamos a completeRegistration para marcar isRegistered = true en AuthContext
+        setIsRegistered(true);
       } else {
         console.log('No se encontró usuarioId en AsyncStorage.');
         Alert.alert('Error', 'No se encontró el identificador del usuario. Por favor, inicia sesión nuevamente.');
