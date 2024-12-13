@@ -1,7 +1,5 @@
-
-
 import React, { useState, useContext } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView, Alert, Animated, Easing } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, Animated, Easing, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../context/AuthContext';
@@ -68,12 +66,13 @@ const GoalsScreen = ({ navigation }) => {
   };
 
   const handleFinishAndGeneratePlan = async () => {
+    if (!tipoObjetivo) return;
+    setIsGeneratingPlan(true);
     const finishSuccess = await handleFinish();
     if (finishSuccess) {
-      setIsGeneratingPlan(true);
       await handleGenerarPlan();
-      setIsGeneratingPlan(false);
     }
+    setIsGeneratingPlan(false);
   };
 
   const spinValue = new Animated.Value(0);
@@ -101,24 +100,24 @@ const GoalsScreen = ({ navigation }) => {
       </Animated.View>
       <View style={styles.authContainer}>
         <Text style={styles.title}>Preferencias y Objetivos</Text>
-        <Text style={styles.label}>Tipo de Dieta</Text>
+        <Text style={styles.label}>Tipo de Dieta <Text style={styles.optional}>(Opcional)</Text></Text>
         <Picker
           selectedValue={tipoDieta}
-          style={styles.picker}
+          style={[styles.picker, styles.pickerOptional]}
           onValueChange={(itemValue) => setTipoDieta(itemValue)}
         >
-          <Picker.Item label="Selecciona tu tipo de dieta" value="" />
+          <Picker.Item label="Selecciona tu tipo de dieta" value="" enabled={false} />
           <Picker.Item label="No restrictiva" value="" />
           <Picker.Item label="Vegana" value="vegana" />
           <Picker.Item label="Vegetariana" value="vegetariana" />
         </Picker>
-        <Text style={styles.label}>Condiciones de Salud</Text>
+        <Text style={styles.label}>Condiciones de Salud <Text style={styles.optional}>(Opcional)</Text></Text>
         <Picker
           selectedValue={condicionSalud}
-          style={styles.picker}
+          style={[styles.picker, styles.pickerOptional]}
           onValueChange={(itemValue) => setCondicionSalud(itemValue)}
         >
-          <Picker.Item label="Selecciona tu condición de salud" value="" />
+          <Picker.Item label="Selecciona tu condición de salud" value="" enabled={false} />
           <Picker.Item label="Diabetes tipo 1" value="diabetes_tipo_1" />
           <Picker.Item label="Diabetes tipo 2" value="diabetes_tipo_2" />
           <Picker.Item label="Resistencia a la insulina" value="resistencia_insulina" />
@@ -131,22 +130,25 @@ const GoalsScreen = ({ navigation }) => {
         <Text style={styles.label}>Tipo de Objetivo</Text>
         <Picker
           selectedValue={tipoObjetivo}
-          style={styles.picker}
+          style={[styles.picker, styles.pickerRequired]}
           onValueChange={(itemValue) => setTipoObjetivo(itemValue)}
         >
-          <Picker.Item label="Selecciona tu objetivo" value="" />
+          <Picker.Item label="Selecciona tu objetivo" value="" enabled={false} />
           <Picker.Item label="Perder Peso" value="perder_peso" />
           <Picker.Item label="Mantener Peso" value="mantener_peso" />
           <Picker.Item label="Ganar Peso" value="ganar_peso" />
         </Picker>
-        <View style={styles.buttonContainer}>
-          <Button
-            title={isGeneratingPlan ? "Generando Plan..." : "Finalizar y Generar Plan"}
-            onPress={handleFinishAndGeneratePlan}
-            color="#9b59b6"
-            disabled={isGeneratingPlan}
-          />
-        </View>
+        <TouchableOpacity
+          style={[styles.button, (!tipoObjetivo || isGeneratingPlan) && styles.buttonDisabled]}
+          onPress={handleFinishAndGeneratePlan}
+          disabled={!tipoObjetivo || isGeneratingPlan}
+        >
+          {isGeneratingPlan ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Finalizar y Generar Plan</Text>
+          )}
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -170,10 +172,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   title: {
-    fontSize: 28,
+    fontSize: 18,
     marginBottom: 24,
     textAlign: 'center',
     color: '#2c3e50',
+    fontWeight: 'bold',
   },
   label: {
     fontSize: 18,
@@ -181,17 +184,41 @@ const styles = StyleSheet.create({
     color: '#2c3e50',
     fontWeight: 'bold',
   },
+  optional: {
+    fontSize: 12,
+    color: '#999',
+  },
   picker: {
     height: 50,
     width: '100%',
     marginBottom: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#d3d3d3',
     borderColor: '#ddd',
     borderWidth: 1,
     borderRadius: 8,
+    overflow: 'hidden',
   },
-  buttonContainer: {
-    marginBottom: 16,
+  pickerOptional: {
+    backgroundColor: '#fff',
+    color: '#000',
+  },
+  pickerRequired: {
+    backgroundColor: '#d3d3d3',
+    color: '#000',
+  },
+  button: {
+    backgroundColor: '#555',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonDisabled: {
+    backgroundColor: '#999',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
