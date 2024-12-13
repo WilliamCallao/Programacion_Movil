@@ -21,6 +21,7 @@ import ActivityLevelSection from '../../components/profileScreen/ActivityLevelSe
 import ObjectiveSection from '../../components/profileScreen/ObjectiveSection';
 import DietTypeSection from '../../components/profileScreen/DietTypeSection';
 import HealthConditionsSection from '../../components/profileScreen/HealthConditionsSection';
+import ThreeBodyLoader from '../../components/common/ThreeBodyLoader';
 
 // Importar Contexto de Autenticación
 import { AuthContext } from '../../context/AuthContext';
@@ -46,6 +47,7 @@ export default function ProfileScreen() {
   });
 
   const [originalUserData, setOriginalUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [editingField, setEditingField] = useState(null);
@@ -104,6 +106,8 @@ export default function ProfileScreen() {
         }
       } catch (error) {
         console.error('Error al cargar los datos del usuario:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -285,6 +289,14 @@ export default function ProfileScreen() {
     };
     return fieldNames[field] || '';
   };
+
+  if (loading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ThreeBodyLoader />
+      </View>
+    );
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

@@ -1,4 +1,4 @@
-// ThreeBodyLoader.js
+// scr/components/common/ThreeBodyLoader.js
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, StyleSheet, Easing } from 'react-native';
 

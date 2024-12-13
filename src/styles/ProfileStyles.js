@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F5F5F5',
     paddingBottom: 20,
+    paddingTop: 35,
   },
   header: {
     alignItems: 'center',
@@ -136,4 +137,10 @@ export const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '600',
   },
+  loaderContainer: {
+    width:'100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
