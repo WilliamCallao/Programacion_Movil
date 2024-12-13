@@ -1,23 +1,30 @@
-
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView, Animated, Easing } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ScrollView, Animated, Easing, TouchableOpacity } from 'react-native';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from '../services/firebase';
 import { doc, setDoc } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../context/AuthContext';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { } = useContext(AuthContext); // Puedes usar funciones del contexto si es necesario
 
   const handleRegister = async () => {
+    setIsLoading(true);
     try {
       if (!auth) {
         throw new Error('El objeto auth no está inicializado. Verifica la configuración de Firebase.');
+      }
+      if (password !== confirmPassword) {
+        throw new Error('Las contraseñas no coinciden.');
       }
 
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -53,6 +60,8 @@ const RegisterScreen = ({ navigation }) => {
     } catch (error) {
       console.error('Authentication error:', error.message);
       setError('Error de Autenticación: ' + error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -80,12 +89,6 @@ const RegisterScreen = ({ navigation }) => {
       <Animated.View style={{ transform: [{ rotate: spin }] }}>
         <FontAwesome5 name="carrot" size={50} color="#fff" />
       </Animated.View>
-      {/* <Animated.View style={{ transform: [{ rotate: spin }] }}>
-        <FontAwesome5 name="apple-alt" size={50} color="#fff" />
-      </Animated.View>
-      <Animated.View style={{ transform: [{ rotate: spin }] }}>
-        <FontAwesome5 name="lemon" size={50} color="#fff" />
-      </Animated.View> */}
       <View style={styles.authContainer}>
         <Text style={styles.title}>Registrarse</Text>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
@@ -96,16 +99,45 @@ const RegisterScreen = ({ navigation }) => {
           placeholder="Correo Electrónico"
           autoCapitalize="none"
         />
-        <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Contraseña"
-          secureTextEntry
-        />
-        <View style={styles.buttonContainer}>
-          <Button title="Registrarse" onPress={handleRegister} color="#3498db" />
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.inputPass}
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Contraseña"
+            secureTextEntry={!showPassword}
+          />
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            <MaterialIcons
+              name={showPassword ? "visibility" : "visibility-off"}
+              size={24}
+              color="gray"
+            />
+          </TouchableOpacity>
         </View>
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.inputPass}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            placeholder="Repetir Contraseña"
+            secureTextEntry={!showConfirmPassword}
+          />
+          <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+            <MaterialIcons
+              name={showConfirmPassword ? "visibility" : "visibility-off"}
+              size={24}
+              color="gray"
+            />
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          style={buttonDynamic(isLoading)}
+          onPress={handleRegister}
+          disabled={isLoading}
+        >
+          <Text style={textDynamic(isLoading)}>{isLoading ? "Cargando..." : "Registrarse"}</Text>
+        </TouchableOpacity>
         <View style={styles.bottomContainer}>
           <Text style={styles.toggleText} onPress={() => navigation.navigate('LoginScreen')}>
             ¿Ya tienes una cuenta? Inicia Sesión
@@ -115,6 +147,24 @@ const RegisterScreen = ({ navigation }) => {
     </ScrollView>
   );
 };
+
+const buttonDynamic = (isLoading) => ({
+  backgroundColor: isLoading ? '#555' : 'black',
+  borderColor: isLoading ? '#555' : 'black',
+  borderWidth: 1,
+  borderRadius: 8,
+  padding: 10,
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+const textDynamic = (isLoading) => ({
+  color: '#fff',
+  fontSize: 14,
+  fontFamily: 'DMSans_500Medium',
+  textAlign: 'center',
+  opacity: isLoading ? 0 : 1,
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -148,8 +198,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     fontSize: 16,
   },
-  buttonContainer: {
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingRight: 12,
     marginBottom: 16,
+  },
+  inputPass: {
+    height: 50,
+    padding: 12,
+    borderRadius: 8,
+    fontSize: 16,
+    flex: 1,
   },
   toggleText: {
     color: '#3498db',
