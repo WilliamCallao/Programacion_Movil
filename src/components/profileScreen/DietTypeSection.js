@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { styles } from '../../styles/ProfileStyles';
 
 const DietTypeSection = ({ userInfo, onEdit, getLabelForValue }) => {
   return (
@@ -22,8 +23,5 @@ const DietTypeSection = ({ userInfo, onEdit, getLabelForValue }) => {
     </View>
   );
 };
-
-// Importar estilos desde ProfileStyles.js
-import { styles } from '../../styles/ProfileStyles';
 
 export default DietTypeSection;

@@ -2,8 +2,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { styles } from '../../styles/ProfileStyles';
 
-const PersonalInfoSection = ({ userInfo, onEdit, getLabelForValue, getOptionsForField }) => {
+const PersonalInfoSection = ({ userInfo, onEdit, getLabelForValue }) => {
   return (
     <View style={styles.section}>
       <Text style={styles.sectionTitle}>Información Personal</Text>
@@ -34,7 +35,7 @@ const PersonalInfoSection = ({ userInfo, onEdit, getLabelForValue, getOptionsFor
               ? `${userInfo.altura} cm`
               : field === 'peso'
               ? `${userInfo.peso} kg`
-              : ['genero'].includes(field)
+              : field === 'genero'
               ? getLabelForValue(field, userInfo[field])
               : userInfo[field]}
           </Text>
@@ -43,8 +44,5 @@ const PersonalInfoSection = ({ userInfo, onEdit, getLabelForValue, getOptionsFor
     </View>
   );
 };
-
-// Importar estilos desde ProfileStyles.js
-import { styles } from '../../styles/ProfileStyles';
 
 export default PersonalInfoSection;

@@ -8,14 +8,14 @@ import {
   Modal,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { obtenerUsuario, actualizarUsuario } from '../../services/usuarioService'; // Asegúrate de tener esta función para actualizar
+import { obtenerUsuario, actualizarUsuario } from '../../services/usuarioService'; 
 
-// Importar Componentes Separados
 import PersonalInfoSection from '../../components/profileScreen/PersonalInfoSection';
 import ActivityLevelSection from '../../components/profileScreen/ActivityLevelSection';
 import ObjectiveSection from '../../components/profileScreen/ObjectiveSection';
@@ -23,15 +23,12 @@ import DietTypeSection from '../../components/profileScreen/DietTypeSection';
 import HealthConditionsSection from '../../components/profileScreen/HealthConditionsSection';
 import ThreeBodyLoader from '../../components/common/ThreeBodyLoader';
 
-// Importar Contexto de Autenticación
 import { AuthContext } from '../../context/AuthContext';
-
-// Importar Estilos Compartidos
 import { styles } from '../../styles/ProfileStyles';
 
 export default function ProfileScreen() {
-  const navigation = useNavigation(); // Inicializa useNavigation
-  const { logout } = useContext(AuthContext); // Obtén la función logout del contexto
+  const navigation = useNavigation();
+  const { logout } = useContext(AuthContext);
 
   const [userInfo, setUserInfo] = useState({
     nombre: '',
@@ -54,8 +51,8 @@ export default function ProfileScreen() {
   const [editingValue, setEditingValue] = useState('');
   const [optionsForField, setOptionsForField] = useState([]);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [savingChanges, setSavingChanges] = useState(false);
 
-  // Función para cerrar sesión usando AuthContext
   const handleLogout = async () => {
     try {
       await logout();
@@ -64,7 +61,6 @@ export default function ProfileScreen() {
     }
   };
 
-  // Fetch user data when the component mounts
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -72,9 +68,6 @@ export default function ProfileScreen() {
         if (usuarioId) {
           const usuarioData = await obtenerUsuario(usuarioId);
           if (usuarioData) {
-            console.log('Datos del usuario:', JSON.stringify(usuarioData, null, 2));
-
-            // Mapea los datos anidados a userInfo
             const informacionPersonal = usuarioData.informacion_personal || {};
             const medidasFisicas = usuarioData.medidas_fisicas || {};
             const objetivoPeso = usuarioData.objetivo_peso || {};
@@ -95,7 +88,7 @@ export default function ProfileScreen() {
                 : '',
               nivelActividad: medidasFisicas.nivel_actividad || '',
               objetivo: objetivoPeso.tipo_objetivo || '',
-              tipoDieta: preferencias.tipo_dieta || '', // Ajusta según tu estructura de datos
+              tipoDieta: preferencias.tipo_dieta || '',
               condicionesSalud: preferencias.condiciones_salud || [],
             });
 
@@ -114,24 +107,24 @@ export default function ProfileScreen() {
     fetchUserData();
   }, []);
 
-  const handleEdit = (field) => {
+  const onEdit = (field) => {
+    // Reiniciar estado del modal
+    setEditingField(null);
+    setEditingValue('');
+    setOptionsForField([]);
+
     if (field === 'fechaNacimiento') {
+      setEditingField('fechaNacimiento');
       setShowDatePicker(true);
     } else if (
-      ['genero', 'nivelActividad', 'objetivo', 'condicionesSalud', 'tipoDieta'].includes(
-        field
-      )
+      ['genero', 'nivelActividad', 'objetivo', 'condicionesSalud', 'tipoDieta'].includes(field)
     ) {
       setEditingField(field);
-      if (field === 'condicionesSalud') {
-        // Para condicionesSalud, maneja múltiples selecciones
-        setEditingValue(userInfo[field] || []);
-      } else {
-        setEditingValue(userInfo[field]);
-      }
+      setEditingValue(userInfo[field]);
       setOptionsForField(getOptionsForField(field));
       setModalVisible(true);
     } else {
+      // Campos de texto (nombre, correo, altura, peso)
       setEditingField(field);
       setEditingValue(userInfo[field]);
       setModalVisible(true);
@@ -140,20 +133,17 @@ export default function ProfileScreen() {
 
   const saveChanges = async () => {
     try {
-      // Actualiza el estado local inmediatamente
+      setSavingChanges(true);
       const updatedInfo = {
         ...userInfo,
         [editingField]:
           editingField === 'condicionesSalud' ? editingValue : editingValue,
       };
-      setUserInfo(updatedInfo); // Esto asegura que el estado local también esté actualizado
 
-      // Actualiza en el backend
       const usuarioId = await AsyncStorage.getItem('usuarioId');
       if (usuarioId && originalUserData) {
         const updatedData = { ...originalUserData };
 
-        // Actualiza los campos específicos según el `editingField`
         switch (editingField) {
           case 'nombre':
           case 'correo':
@@ -164,7 +154,9 @@ export default function ProfileScreen() {
               nombre: updatedInfo.nombre,
               correo: updatedInfo.correo,
               genero: updatedInfo.genero,
-              fecha_nacimiento: updatedInfo.fechaNacimiento.toISOString().split('T')[0],
+              fecha_nacimiento: updatedInfo.fechaNacimiento
+                .toISOString()
+                .split('T')[0],
             };
             break;
           case 'altura':
@@ -199,25 +191,30 @@ export default function ProfileScreen() {
             break;
         }
 
-        // Asegúrate de actualizar la propiedad "actualizar_plan"
         updatedData.actualizar_plan = true;
-
         await actualizarUsuario(usuarioId, updatedData);
         console.log('Usuario actualizado exitosamente.');
 
-        // Actualiza los datos originales para reflejar los cambios
+        setUserInfo(updatedInfo);
         setOriginalUserData(updatedData);
       }
+
+      setSavingChanges(false);
       setModalVisible(false);
+      setEditingField(null);
+      setEditingValue('');
+      setOptionsForField([]);
     } catch (error) {
       console.error('Error al actualizar los datos del usuario:', error);
+      setSavingChanges(false);
     }
   };
 
   const cancelChanges = () => {
+    setModalVisible(false);
     setEditingField(null);
     setEditingValue('');
-    setModalVisible(false);
+    setOptionsForField([]);
   };
 
   const getOptionsForField = (field) => {
@@ -273,7 +270,6 @@ export default function ProfileScreen() {
     return option ? option.label : value;
   };
 
-  // Helper function to get display name
   const getFieldDisplayName = (field) => {
     const fieldNames = {
       nombre: 'Nombre',
@@ -300,7 +296,6 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* Foto de Perfil y Encabezado */}
       <View style={styles.header}>
         <View style={styles.profilePicture}>
           <Ionicons name="person" size={50} color="#FFFFFF" />
@@ -308,51 +303,57 @@ export default function ProfileScreen() {
         <Text style={styles.userName}>{userInfo.nombre}</Text>
         <Text style={styles.userEmail}>{userInfo.correo}</Text>
 
-        {/* Botón de Cerrar Sesión */}
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Secciones Separadas */}
       <PersonalInfoSection
         userInfo={userInfo}
-        onEdit={handleEdit}
+        onEdit={onEdit}
         getLabelForValue={getLabelForValue}
         getOptionsForField={getOptionsForField}
       />
       <ActivityLevelSection
         userInfo={userInfo}
-        onEdit={handleEdit}
+        onEdit={onEdit}
         getLabelForValue={getLabelForValue}
       />
       <ObjectiveSection
         userInfo={userInfo}
-        onEdit={handleEdit}
+        onEdit={onEdit}
         getLabelForValue={getLabelForValue}
       />
       <DietTypeSection
         userInfo={userInfo}
-        onEdit={handleEdit}
+        onEdit={onEdit}
         getLabelForValue={getLabelForValue}
       />
       <HealthConditionsSection
         userInfo={userInfo}
-        onEdit={handleEdit}
+        onEdit={onEdit}
         getLabelForValue={getLabelForValue}
       />
 
-      {/* DateTimePicker for Fecha de Nacimiento */}
       {showDatePicker && (
         <DateTimePicker
           value={userInfo.fechaNacimiento}
           mode="date"
           display="default"
           onChange={(event, date) => {
-            if (date) {
-              setUserInfo((prev) => ({ ...prev, fechaNacimiento: date }));
+            if (event.type === 'set' && date) {
+              // Usuario seleccionó una fecha
+              setShowDatePicker(false);
+              setEditingValue(date);
+              // Ahora mostrar modal de confirmación con esa fecha
+              setModalVisible(true);
+            } else {
+              // Usuario canceló
+              setShowDatePicker(false);
+              setEditingField(null);
+              setEditingValue('');
+              setOptionsForField([]);
             }
-            setShowDatePicker(false);
           }}
         />
       )}
@@ -402,6 +403,15 @@ export default function ProfileScreen() {
                   ))}
                 </View>
               )
+            ) : editingField === 'fechaNacimiento' ? (
+              // Mostrar la fecha seleccionada
+              <View style={styles.optionsContainer}>
+                <Text style={styles.selectedDate}>
+                  {editingValue instanceof Date
+                    ? editingValue.toLocaleDateString()
+                    : ''}
+                </Text>
+              </View>
             ) : (
               <TextInput
                 style={styles.input}
@@ -411,12 +421,18 @@ export default function ProfileScreen() {
               />
             )}
             <View style={styles.modalButtons}>
-              <TouchableOpacity style={styles.cancelButton} onPress={cancelChanges}>
-                <Text style={styles.cancelButtonText}>Cancelar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
-                <Text style={styles.saveButtonText}>Guardar</Text>
-              </TouchableOpacity>
+              {savingChanges ? (
+                <ActivityIndicator size="large" color="#000" />
+              ) : (
+                <>
+                  <TouchableOpacity style={styles.cancelButton} onPress={cancelChanges}>
+                    <Text style={styles.cancelButtonText}>Cancelar</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
+                    <Text style={styles.saveButtonText}>Guardar</Text>
+                  </TouchableOpacity>
+                </>
+              )}
             </View>
           </View>
         </View>
