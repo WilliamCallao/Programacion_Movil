@@ -10,7 +10,6 @@ export default function PlanSelector({ selectedButton, onButtonPress }) {
   return (
     <View style={styles.section4}>
       <View style={styles.buttonContainer}>
-        {/* Botón Hoy */}
         <TouchableOpacity
           style={[
             styles.button,
@@ -31,7 +30,6 @@ export default function PlanSelector({ selectedButton, onButtonPress }) {
           </Text>
         </TouchableOpacity>
 
-        {/* Botón Mañana */}
         <TouchableOpacity
           style={[
             styles.button,
@@ -52,7 +50,6 @@ export default function PlanSelector({ selectedButton, onButtonPress }) {
           </Text>
         </TouchableOpacity>
 
-        {/* Botón Plan Semanal */}
         <TouchableOpacity
           style={[
             styles.button,

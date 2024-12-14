@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Animated, Easing, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from '../services/firebase';
+import { auth, db } from '../../services/firebase';
 import { doc, setDoc } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
 const RegisterScreen = ({ navigation }) => {

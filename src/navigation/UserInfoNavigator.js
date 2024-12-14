@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import PersonalInfoScreen from '../screens/PersonalInfoScreen';
-import PhysicalInfoScreen from '../screens/PhysicalInfoScreen';
+import PersonalInfoScreen from '../screens/loginScreen/PersonalInfoScreen';
+import PhysicalInfoScreen from '../screens/loginScreen/PhysicalInfoScreen';
 import GoalsScreen from '../screens/GoalsScreen';
 
 const Stack = createStackNavigator();

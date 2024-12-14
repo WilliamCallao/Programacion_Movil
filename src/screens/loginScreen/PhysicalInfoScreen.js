@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Animated, Easing, ActivityIndicator, TextInput } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { actualizarUsuario } from '../services/usuarioService';
-import { auth } from '../services/firebase';
+import { actualizarUsuario } from '../../services/usuarioService';
+import { auth } from '../../services/firebase';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
@@ -89,7 +89,7 @@ const PhysicalInfoScreen = () => {
             <Picker.Item label="Sedentario" value="sedentario" />
             <Picker.Item label="Ligeramente Activo" value="ligeramente_activo" />
             <Picker.Item label="Moderadamente Activo" value="moderadamente_activo" />
-            <Picker.Item label="Activo" value="activo" />
+            {/* <Picker.Item label="Activo" value="activo" /> */}
             <Picker.Item label="Muy Activo" value="muy_activo" />
           </Picker>
         </View>

@@ -18,14 +18,14 @@ export default function HeaderSections({ dia = "Lunes", calorias = 2805 }) {
         </View>
       </View>
 
-      <View style={[styles.section3, { height: (height * SECTION_HEIGHT_PERCENTAGES[2]) / 100 }]}> {/* Información principal */}
+      <View style={[styles.section3, { height: (height * SECTION_HEIGHT_PERCENTAGES[2]) / 100 }]}>
         <View style={styles.inlineRow}> 
           <Ionicons name="calendar-outline" size={22} color="#333" />
           <Text style={styles.inlineText}>{dia},</Text>
           <MaterialCommunityIcons name="fire" size={22} color="#FF6B6B" style={{ marginLeft: 8 }} />
           <Text style={styles.inlineText}>{calorias} kcal</Text>
         </View>
-        <View style={styles.underline} /> {/* Línea decorativa */}
+        <View style={styles.underline} /> 
       </View>
     </View>
   );

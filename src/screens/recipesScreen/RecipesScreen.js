@@ -1,5 +1,3 @@
-// RecipesScreen.js
-
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
@@ -199,6 +197,13 @@ export default function RecipesScreen({ route }) {
 
   const renderContent = () => {
     if (selectedTab === 'recetas') {
+      if (recetasVisibles.length === 0) {
+        return (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No se encontraron recetas disponibles.</Text>
+          </View>
+        );
+      }
       return (
         <RecipeList recipes={recetasVisibles} onRecipePress={handleOpenModal} />
       );
@@ -207,6 +212,13 @@ export default function RecipesScreen({ route }) {
         return (
           <View style={styles.loadingContainer}>
             <ThreeBodyLoader />
+          </View>
+        );
+      }
+      if (recetasVisibles.length === 0) {
+        return (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No tienes recetas marcadas como favoritas.</Text>
           </View>
         );
       }
@@ -367,5 +379,17 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  emptyText: {
+    color: '#555',
+    fontSize: 16,
+    textAlign: 'center',
+    fontFamily: 'DMSans_400Medium',
   },
 });

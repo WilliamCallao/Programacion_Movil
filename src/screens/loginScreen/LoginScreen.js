@@ -1,8 +1,20 @@
+// src/screens/loginScreen/LoginScreen.js
+
 import React, { useState, useContext, useRef, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView, Animated, Easing, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+  Animated,
+  Easing,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../services/firebase';
-import { AuthContext } from '../context/AuthContext';
+import { auth } from '../../services/firebase';
+import { AuthContext } from '../../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
@@ -25,11 +37,12 @@ const textDynamic = (isLoading) => ({
 });
 
 const LoginScreen = ({ navigation }) => {
+  const { setIsRegistered } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(''); // Estado para manejar el mensaje de error
+  const [errorMessage, setErrorMessage] = useState('');
   const spinValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -53,12 +66,12 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     setIsLoading(true);
-    setErrorMessage(''); // Limpiar cualquier error previo
+    setErrorMessage('');
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      console.log('User signed in successfully!');
+      console.log('Usuario ha iniciado sesión exitosamente!');
 
       try {
         await AsyncStorage.setItem('usuarioId', user.uid);
@@ -67,9 +80,13 @@ const LoginScreen = ({ navigation }) => {
         console.error('Error al almacenar usuarioId en AsyncStorage:', storageError);
         setErrorMessage('No se pudo almacenar la información del usuario. Inténtalo nuevamente.');
       }
+
+      setIsRegistered(true);
+      await AsyncStorage.setItem('isRegistered', 'true');
+
     } catch (error) {
-      console.error('Authentication error:', error.message);
-      setErrorMessage('Credenciales incorrectas. Por favor, inténtalo de nuevo.'); // Actualiza el mensaje de error
+      console.error('Error de autenticación:', error.message);
+      setErrorMessage('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
     } finally {
       setIsLoading(false);
     }
@@ -107,7 +124,6 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        {/* Mostrar mensaje de error */}
         {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
 
         <TouchableOpacity
