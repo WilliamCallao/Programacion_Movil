@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Modal } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; // Importar los iconos de MaterialCommunityIcons
 import PesoInput from './PesoInput';
 
 const ButtonWeight = () => {
-
-    const [modalVisible, setModalVisible] = useState(false);
+    const [showInput, setShowInput] = useState(false); // Estado para mostrar el campo de entrada
 
     const handlePesoSubmit = (peso) => {
         console.log(`Peso registrado: ${peso} kg`);
+        setShowInput(false); // Ocultar el campo de entrada después de registrar el peso
     };
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.button}>
+            <TouchableOpacity onPress={() => setShowInput(true)} style={styles.button}>
                 <View style={styles.buttonContent}>
                     <MaterialCommunityIcons
                         name="weight-kilogram" // Usar el icono de MaterialCommunityIcons
@@ -25,19 +25,13 @@ const ButtonWeight = () => {
                 </View>
             </TouchableOpacity>
 
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => setModalVisible(false)}
-            >
-                <View style={styles.modalContainer}>
-                    <PesoInput
-                        onSubmit={handlePesoSubmit}
-                        onClose={() => setModalVisible(false)} // Pasar función de cierre
-                    />
-                </View>
-            </Modal>
+            {/* Mostrar el campo de entrada solo cuando showInput sea true */}
+            {showInput && (
+                <PesoInput
+                    onSubmit={handlePesoSubmit}
+                    onClose={() => setShowInput(false)} // Función para cerrar el campo de entrada
+                />
+            )}
         </View>
     );
 };

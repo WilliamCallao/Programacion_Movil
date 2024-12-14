@@ -1,23 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
+import { obtenerDatosProgreso } from '../../services/progressService'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WeightChart = () => {
-  const staticData = {
-    labels: ['Ene 01', 'Ene 02', 'Ene 03', 'Ene 04', 'Ene 05'], // Formato de fecha sin el año
-    datasets: [
-      {
-        data: [70, 71, 72, 70.5, 71],
-        color: (opacity = 1) => `rgba(0, 0, 255, ${opacity})`, // Color de la línea
-      },
-    ],
+  const [data, setData] = useState({
+    labels: ['Cargando...'],
+    datasets: [{ data: [0] }],
+  });
+  const [usuarioId, setUsuarioId] = useState(null);
+  const [selectedPoint, setSelectedPoint] = useState(null); // Estado para el punto seleccionado
+
+  // Función para recuperar el usuarioId desde AsyncStorage
+  const obtenerUsuarioId = async () => {
+    try {
+      const storedUsuarioId = await AsyncStorage.getItem('usuarioId');
+      if (storedUsuarioId !== null) {
+        setUsuarioId(storedUsuarioId); // Establecer el usuarioId en el estado
+      } else {
+        console.log('No se encontró el usuarioId en el almacenamiento');
+      }
+    } catch (error) {
+      console.error('Error al obtener el usuarioId de AsyncStorage:', error);
+    }
   };
 
-  const [data, setData] = useState(staticData);
-  const [selectedPoint, setSelectedPoint] = useState(null);
+  useEffect(() => {
+    obtenerUsuarioId(); // Recuperar el usuarioId cuando el componente se monta
+  }, []);
 
+  useEffect(() => {
+    const cargarDatos = async () => {
+      if (usuarioId) {
+        const datosReales = await obtenerDatosProgreso(usuarioId);
+        setData(datosReales); // Actualiza el estado con los datos
+      }
+    };
+
+    cargarDatos(); // Cargar los datos de progreso cuando el usuarioId esté disponible
+  }, [usuarioId]);
+
+  // Función para manejar el clic en un punto del gráfico
   const handleDataPointClick = (data) => {
-    // Al hacer click en un punto, se actualizará el estado con los datos
     setSelectedPoint(data);
   };
 
@@ -47,25 +72,20 @@ const WeightChart = () => {
               },
             }}
             style={styles.chart}
-            onDataPointClick={handleDataPointClick} // Evento para manejar el clic
+            onDataPointClick={(e) => handleDataPointClick(e)} // Maneja el clic en un punto
           />
         </ScrollView>
-
+        
+        {/* Muestra solo el valor del peso del punto seleccionado */}
         {selectedPoint && (
-          <View style={styles.selectedPointContainer}>
-            <Text style={styles.selectedPointTitle}>Datos:</Text>
-            <Text style={styles.selectedPointText}>
-              Fecha: {data.labels[selectedPoint.index]}{' '}
-            </Text>
-            <Text style={styles.selectedPointText}>
-              Peso: {selectedPoint.value} kg
-            </Text>
+          <View style={styles.details}>
+            <Text style={styles.detailsText}>Peso: {selectedPoint.value} kg</Text>
           </View>
         )}
       </View>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -76,7 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2f2f2',
     marginVertical: 10,
     padding: 20,
-    width: '100%', // Asegura que el contenedor ocupe todo el ancho de la pantalla
+    width: '100%',
   },
   title: {
     fontSize: 20,
@@ -85,23 +105,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   scrollContainer: {
-    flex: 1, // Asegura que el contenedor ocupe todo el espacio disponible
+    flex: 1,
   },
   chart: {
     marginVertical: 8,
   },
-  selectedPointContainer: {
-    marginTop: 16,
+  details: {
+    marginTop: 20,
     padding: 10,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 8,
+    backgroundColor: '#e0e0e0',
+    borderRadius: 5,
   },
-  selectedPointTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  selectedPointText: {
+  detailsText: {
     fontSize: 16,
+    color: '#333',
   },
 });
 

@@ -1,59 +1,72 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Modal } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Importar AsyncStorage
+import { guardarProgreso } from '../../services/progressService';
 
-const PesoInput = ({ onSubmit, onClose, visible }) => {
+
+const PesoInput = ({ onSubmit, onClose }) => {
     const [peso, setPeso] = useState('');
 
-    const handlePress = () => {
+    const handlePress = async () => {
         if (!peso || isNaN(peso)) {
             Alert.alert('Error', 'Por favor, ingresa un peso válido');
         } else {
-            Alert.alert('Registro exitoso', `Peso registrado: ${peso} kg`);
-            onSubmit(peso);
-            setPeso('');
-            onClose();
+            try {
+                // Obtener el usuarioId del AsyncStorage
+                const usuarioId = await AsyncStorage.getItem('usuarioId');
+                if (!usuarioId) {
+                    Alert.alert('Error', 'No se ha encontrado el usuario');
+                    return;
+                }
+
+                // Llamar a la función para registrar el progreso
+                await guardarProgreso(peso, usuarioId);
+
+                // Mostrar un mensaje de éxito
+                Alert.alert('Registro exitoso', `Peso registrado: ${peso} kg`);
+                
+                // Llamar a la función onSubmit
+                onSubmit(peso);
+                setPeso(''); // Limpiar el campo de peso
+
+            } catch (error) {
+                console.error('Error al registrar el progreso:', error);
+                Alert.alert('Error', 'Hubo un problema al registrar tu peso');
+            }
         }
     };
 
     return (
-        <Modal visible={visible} transparent animationType="fade">
-            <View style={styles.overlay}>
-                <View style={styles.card}>
-                    <Text style={styles.label}>Ingresa tu peso (kg):</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Ej. 70"
-                        keyboardType="numeric"
-                        value={peso}
-                        onChangeText={setPeso}
-                    />
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-                            <Text style={styles.buttonText}>Cancelar</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={handlePress}>
-                            <Text style={styles.buttonText}>Registrar</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+        <View style={styles.card}>
+            <Text style={styles.label}>Ingresa tu peso (kg):</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Ej. 70"
+                keyboardType="numeric"
+                value={peso}
+                onChangeText={setPeso}
+            />
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+                    <Text style={styles.buttonText}>Cancelar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={handlePress}>
+                    <Text style={styles.buttonText}>Registrar</Text>
+                </TouchableOpacity>
             </View>
-        </Modal>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     card: {
         backgroundColor: '#fff',
         padding: 20,
         borderRadius: 10,
-        width: '90%',
-        elevation: 5, // Sombra para un diseño limpio
+        width: '80%',
+        elevation: 5,
+        marginTop: 20,
+        alignSelf: 'center',
     },
     label: {
         fontSize: 18,
@@ -64,20 +77,21 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '100%',
-        height: 50,
+        height: 60,
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 10,
-        paddingHorizontal: 10,
-        fontSize: 16,
+        paddingHorizontal: 15,
+        fontSize: 18,
         marginBottom: 20,
         backgroundColor: '#fff',
+        textAlign: 'center',
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'center', // Centrar horizontalmente
-        alignItems: 'center', // Centrar verticalmente (si aplica)
-        gap: 10, // Espaciado entre los botones
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 10,
     },
     button: {
         backgroundColor: '#000',
