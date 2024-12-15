@@ -109,6 +109,7 @@ export async function obtenerDatosProgreso(usuarioId) {
   }
 }
 // Función para obtener el peso inicial, peso objetivo y fecha de creación del usuario
+// Función para obtener el peso inicial, peso objetivo y fecha de creación del usuario
 export async function obtenerPesoYFechaDeCreacion(usuarioId) {
   try {
     if (!usuarioId) {
@@ -131,7 +132,8 @@ export async function obtenerPesoYFechaDeCreacion(usuarioId) {
     const datosUsuario = usuarioSnapshot.data();
     console.log('Datos del usuario:', datosUsuario);
 
-    const pesoInicial = datosUsuario.medidas_fisicas?.peso_kg || null;
+    // Ahora utilizamos el campo peso_inicial en lugar de peso_kg
+    const pesoInicial = datosUsuario.medidas_fisicas?.peso_inicial || null; 
     const pesoObjetivo = datosUsuario.objetivos?.peso_objetivo_kg || null;
     const fechaCreacion = datosUsuario.fecha_creacion
       ? datosUsuario.fecha_creacion.toDate()
@@ -147,6 +149,7 @@ export async function obtenerPesoYFechaDeCreacion(usuarioId) {
     return null;
   }
 }
+
 //Funcion que guarda el dia que se cocino una receta
 export async function guardarDiaRealizado(usuarioId) {
   try {
