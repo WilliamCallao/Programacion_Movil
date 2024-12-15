@@ -6,6 +6,7 @@ import PesoActualCard from '../components/progressScreen/WeightCard';
 import DiasCocinandoCard from '../components/progressScreen/DaysCard';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import WeightChart from '../components/progressScreen/graphCard';
+import ButtonRecetaRealizada from '../components/progressScreen/ButtonDay';
 
 export default function ProgressScreen() {
   return (
@@ -27,6 +28,7 @@ export default function ProgressScreen() {
       <View style={styles.underline} />
       <DiasCocinandoCard />
       <CalendarProgress />
+      <ButtonRecetaRealizada />
     </ScrollView>
   );
 }

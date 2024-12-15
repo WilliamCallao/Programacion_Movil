@@ -3,7 +3,6 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Importar AsyncStorage
 import { guardarProgreso } from '../../services/progressService';
 
-
 const PesoInput = ({ onSubmit, onClose }) => {
     const [peso, setPeso] = useState('');
 
@@ -63,10 +62,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 20,
         borderRadius: 10,
-        width: '80%',
+        width: '90%', // Más ancho y centrado
         elevation: 5,
         marginTop: 20,
-        alignSelf: 'center',
+        alignSelf: 'center', // Centra el contenedor en la pantalla
+        alignItems: 'center',
     },
     label: {
         fontSize: 18,
@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     input: {
-        width: '100%',
-        height: 60,
+        width: '100%', // Ocupa todo el ancho del card
+        height: 60, // Más alto
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 10,
@@ -85,13 +85,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginBottom: 20,
         backgroundColor: '#fff',
-        textAlign: 'center',
+        textAlign: 'center', // Centrar texto en el input
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 10,
+        gap: 10, // Espacio entre botones
     },
     button: {
         backgroundColor: '#000',

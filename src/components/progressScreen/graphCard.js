@@ -42,8 +42,12 @@ const WeightChart = () => {
   }, [usuarioId]);
 
   // Función para manejar el clic en un punto del gráfico
-  const handleDataPointClick = (data) => {
-    setSelectedPoint(data);
+  const handleDataPointClick = (dataPoint) => {
+    const date = data.labels[dataPoint.index]; // Obtener la fecha usando el índice del punto
+    setSelectedPoint({
+      weight: dataPoint.value,
+      date: date,
+    }); // Guardar peso y fecha del punto seleccionado
   };
 
   return (
@@ -75,11 +79,12 @@ const WeightChart = () => {
             onDataPointClick={(e) => handleDataPointClick(e)} // Maneja el clic en un punto
           />
         </ScrollView>
-        
-        {/* Muestra solo el valor del peso del punto seleccionado */}
+
+        {/* Mostrar el peso y la fecha del punto seleccionado */}
         {selectedPoint && (
           <View style={styles.details}>
-            <Text style={styles.detailsText}>Peso: {selectedPoint.value} kg</Text>
+            <Text style={styles.detailsText}>Peso: {selectedPoint.weight} kg</Text>
+            <Text style={styles.detailsText}>Fecha: {selectedPoint.date}</Text>
           </View>
         )}
       </View>
@@ -97,6 +102,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 20,
     width: '100%',
+    borderRadius: 8,
   },
   title: {
     fontSize: 20,

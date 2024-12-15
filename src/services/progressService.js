@@ -1,4 +1,4 @@
-import { collection, query, addDoc, orderBy, limit, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, query, addDoc, orderBy, limit, getDocs, doc, getDoc, where } from 'firebase/firestore';
 import { Timestamp } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { db } from './firebase'; // Asegúrate de importar correctamente Timestamp
@@ -136,5 +136,131 @@ export async function obtenerPesoYFechaDeCreacion(usuarioId) {
   } catch (error) {
     console.error('Error al obtener los datos del usuario:', error);
     return null;
+  }
+}
+//Funcion que guarda el dia que se cocino una receta
+export async function guardarDiaRealizado(usuarioId) {
+  try {
+    const hoy = new Date();
+    const fechaSinHora = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate()); // Fecha sin hora
+    const fechaTimestamp = Timestamp.fromDate(fechaSinHora);
+
+    // Referencia a la colección 'diasCocinando' del usuario
+    const diasCocinandoRef = collection(db, 'usuarios', usuarioId, 'diasCocinando');
+
+    // Query para verificar si la fecha ya existe
+    const consulta = query(diasCocinandoRef, where('fecha', '==', fechaTimestamp));
+    const consultaSnapshot = await getDocs(consulta);
+
+    if (!consultaSnapshot.empty) {
+      console.log('La fecha ya está registrada, no se hará nada.');
+      return;
+    }
+
+    // Si no existe, agregar la nueva fecha
+    const diaRealizadoRef = await addDoc(diasCocinandoRef, {
+      fecha: fechaTimestamp,
+    });
+
+    console.log('Día realizado guardado con ID:', diaRealizadoRef.id);
+  } catch (error) {
+    console.error('Error al guardar el día realizado:', error);
+  }
+}
+
+//Funcion que obtiene los fechas de dias cocinando
+export async function obtenerDiasCocinados(usuarioId) {
+  try {
+    const diasCocinandoRef = collection(db, 'usuarios', usuarioId, 'diasCocinando');
+    const snapshot = await getDocs(diasCocinandoRef);
+
+    const diasCocinados = [];
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      if (data && data.fecha && data.fecha.toDate) {
+        try {
+          const fechaFormateada = data.fecha.toDate().toISOString().split('T')[0];
+          diasCocinados.push(fechaFormateada);
+        } catch (e) {
+          console.error(`Error al procesar la fecha del documento con ID ${doc.id}:`, e);
+        }
+      } else {
+        console.warn(`El documento con ID ${doc.id} no tiene una fecha válida o es null.`);
+      }
+      
+    });
+
+    return diasCocinados;
+  } catch (error) {
+    console.error('Error al obtener días cocinados:', error);
+    return [];
+  }
+}
+
+// Función para obtener la cantidad de días registrados
+export async function obtenerCantidadDiasRegistrados(usuarioId) {
+  try {
+    // Referencia a la colección de días cocinados
+    const diasCocinandoRef = collection(db, 'usuarios', usuarioId, 'diasCocinando');
+    const snapshot = await getDocs(diasCocinandoRef);
+
+    const diasCocinados = [];
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      if (data && data.fecha) {
+        const fechaFormateada = data.fecha.toDate().toISOString().split('T')[0];
+        diasCocinados.push(fechaFormateada);
+      }
+    });
+
+    return diasCocinados.length;  // Regresa la cantidad de días registrados
+  } catch (error) {
+    console.error('Error al obtener la cantidad de días registrados:', error);
+    return 0;
+  }
+}
+
+// Función para obtener la cantidad máxima de días consecutivos
+export async function obtenerMaximoDiasConsecutivos(usuarioId) {
+  try {
+    // Referencia a la colección de días cocinados
+    const diasCocinandoRef = collection(db, 'usuarios', usuarioId, 'diasCocinando');
+    const snapshot = await getDocs(diasCocinandoRef);
+
+    const diasCocinados = [];
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      if (data && data.fecha) {
+        const fechaFormateada = data.fecha.toDate().toISOString().split('T')[0];
+        diasCocinados.push(fechaFormateada);
+      }
+    });
+
+    // Ordenar las fechas para asegurarnos de que estén en orden cronológico
+    diasCocinados.sort();
+
+    let maxConsecutivos = 1;
+    let consecutivos = 1;
+
+    for (let i = 1; i < diasCocinados.length; i++) {
+      const fechaActual = new Date(diasCocinados[i]);
+      const fechaAnterior = new Date(diasCocinados[i - 1]);
+
+      // Verificar si la fecha actual es consecutiva a la anterior
+      if ((fechaActual - fechaAnterior) / (1000 * 60 * 60 * 24) === 1) {
+        consecutivos++;  // Aumentar el conteo de días consecutivos
+      } else {
+        maxConsecutivos = Math.max(maxConsecutivos, consecutivos);  // Actualizar el máximo
+        consecutivos = 1;  // Reiniciar el conteo
+      }
+    }
+
+    // Asegurarse de considerar la última secuencia de días consecutivos
+    maxConsecutivos = Math.max(maxConsecutivos, consecutivos);
+
+    return maxConsecutivos;  // Regresar el máximo número de días consecutivos
+  } catch (error) {
+    console.error('Error al obtener el máximo de días consecutivos:', error);
+    return 0;
   }
 }

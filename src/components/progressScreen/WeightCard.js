@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { obtenerUltimoProgreso, obtenerPesoYFechaDeCreacion } from '../../services/progressService';
 
 const PesoActualCard = () => {
     const [pesoActual, setPesoActual] = useState(null);
-    const [pesoInicial, setPesoInicial] = useState(null); // Peso inicial constante
-    const [diferenciaPeso, setDiferenciaPeso] = useState(null); // Diferencia persistente
+    const [pesoInicial, setPesoInicial] = useState(null);
+    const [pesoObjetivo, setPesoObjetivo] = useState(null);
+    const [diferenciaPeso, setDiferenciaPeso] = useState(null);
     const [cargando, setCargando] = useState(true);
     const [usuarioId, setUsuarioId] = useState(null);
 
@@ -36,21 +38,20 @@ const PesoActualCard = () => {
                     return;
                 }
 
-                // Obtener el peso inicial
-                const { pesoInicial } = await obtenerPesoYFechaDeCreacion(usuarioId);
+                const { pesoInicial, pesoObjetivo } = await obtenerPesoYFechaDeCreacion(usuarioId);
                 if (pesoInicial !== null && !isNaN(pesoInicial)) {
-                    setPesoInicial(pesoInicial); // Guardamos el peso inicial
-                } else {
-                    console.warn("No se encontró el peso inicial.");
+                    setPesoInicial(pesoInicial);
+                }
+                if (pesoObjetivo !== null && !isNaN(pesoObjetivo)) {
+                    setPesoObjetivo(pesoObjetivo);
                 }
 
-                // Obtener el último progreso
                 const ultimoPeso = await obtenerUltimoProgreso(usuarioId);
                 if (ultimoPeso && ultimoPeso.peso !== undefined) {
-                    setPesoActual(ultimoPeso.peso); // Establecer peso actual
+                    setPesoActual(ultimoPeso.peso);
                 } else {
                     console.warn("No se encontró progreso o falta el campo 'peso'.");
-                    setPesoActual(pesoInicial); // Si no hay progreso, usa el peso inicial
+                    setPesoActual(pesoInicial);
                 }
             } catch (error) {
                 console.error("Error al obtener los datos de peso:", error);
@@ -64,7 +65,6 @@ const PesoActualCard = () => {
         }
     }, [usuarioId]);
 
-    // Calcular la diferencia con respecto al peso inicial
     useEffect(() => {
         if (pesoInicial !== null && pesoActual !== null) {
             setDiferenciaPeso(pesoActual - pesoInicial);
@@ -95,6 +95,16 @@ const PesoActualCard = () => {
                 )}
             </View>
             <Text style={styles.peso}>{cargando ? 'Cargando...' : `${pesoActual} kg`}</Text>
+            <View style={styles.extraInfo}>
+                <View style={styles.infoRow}>
+                    <Ionicons name="walk-outline" size={18} color="#555" />
+                    <Text style={styles.extraText}>Inicial: {pesoInicial ? `${pesoInicial} kg` : 'N/A'}</Text>
+                </View>
+                <View style={styles.infoRow}>
+                    <MaterialCommunityIcons name="flag-checkered" size={18} color="#555" />
+                    <Text style={styles.extraText}>Objetivo: {pesoObjetivo ? `${pesoObjetivo} kg` : 'N/A'}</Text>
+                </View>
+            </View>
         </View>
     );
 };
@@ -109,6 +119,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginVertical: 8,
         position: 'relative',
+        borderRadius: 8,
     },
     header: {
         flexDirection: 'row',
@@ -135,12 +146,13 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: -10,
         right: -10,
+        borderRadius: 5,
     },
     positive: {
-        backgroundColor: '#e8f5e9',
+        backgroundColor: '#a2f7f8',
     },
     negative: {
-        backgroundColor: '#ffebee',
+        backgroundColor: '#f8efa2',
     },
     differenceText: {
         fontSize: 14,
@@ -154,6 +166,19 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginLeft: 5,
         color: '#666',
+    },
+    extraInfo: {
+        marginTop: 10,
+    },
+    infoRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 5,
+    },
+    extraText: {
+        fontSize: 16,
+        color: '#555',
+        marginLeft: 8,
     },
 });
 
