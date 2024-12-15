@@ -1,4 +1,4 @@
-import { collection, query, addDoc, orderBy, limit, getDocs, doc, getDoc, where } from 'firebase/firestore';
+import { collection, query, addDoc, orderBy, limit, getDocs, doc, getDoc, where, updateDoc } from 'firebase/firestore';
 import { Timestamp } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { db } from './firebase'; // Asegúrate de importar correctamente Timestamp
@@ -6,13 +6,22 @@ import { db } from './firebase'; // Asegúrate de importar correctamente Timesta
 // Función para guardar el progreso del usuario (peso y fecha)
 export async function guardarProgreso(peso, usuarioId) {
   try {
+    // Guardar el nuevo registro de progreso en la subcolección 'progreso'
     const progresoRef = await addDoc(collection(db, 'usuarios', usuarioId, 'progreso'), {
       peso: peso,
       fecha: Timestamp.fromDate(new Date()), // Usamos Timestamp para mayor precisión
     });
     console.log('Progreso guardado con ID:', progresoRef.id);
+
+    // Actualizar el peso principal del usuario y establecer 'actualizar_plan' a true
+    const usuarioDocRef = doc(db, 'usuarios', usuarioId);
+    await updateDoc(usuarioDocRef, {
+      'medidas_fisicas.peso_kg': parseFloat(peso),
+      actualizar_plan: true,
+    });
+    console.log('Peso del usuario y variable actualizar_plan actualizados.');
   } catch (error) {
-    console.error('Error al guardar el progreso:', error);
+    console.error('Error al guardar el progreso y actualizar el usuario:', error);
   }
 }
 

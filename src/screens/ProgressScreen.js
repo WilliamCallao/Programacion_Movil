@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import CalendarProgress from '../components/progressScreen/ProgressCalendar';
 import ButtonWeight from '../components/progressScreen/ButtonWeight';
@@ -8,7 +8,41 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import WeightChart from '../components/progressScreen/graphCard';
 import ButtonRecetaRealizada from '../components/progressScreen/ButtonDay';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../services/firebase'; // Ajusta la ruta según tu proyecto
+
 export default function ProgressScreen() {
+  useEffect(() => {
+    const verificarPesoInicial = async () => {
+      try {
+        const usuarioId = await AsyncStorage.getItem('usuarioId');
+        if (!usuarioId) return;
+
+        const usuarioDocRef = doc(db, 'usuarios', usuarioId);
+        const usuarioSnapshot = await getDoc(usuarioDocRef);
+
+        if (usuarioSnapshot.exists()) {
+          const datosUsuario = usuarioSnapshot.data();
+          const medidas = datosUsuario.medidas_fisicas || {};
+          const { peso_kg, peso_inicial } = medidas;
+
+          // Si no existe peso_inicial y existe peso_kg, lo creamos
+          if (peso_kg && peso_inicial === undefined) {
+            await updateDoc(usuarioDocRef, {
+              'medidas_fisicas.peso_inicial': peso_kg,
+            });
+            console.log('Peso inicial asignado al usuario');
+          }
+        }
+      } catch (error) {
+        console.error('Error al verificar/crear el peso_inicial:', error);
+      }
+    };
+
+    verificarPesoInicial();
+  }, []);
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.headerContainer}>
@@ -38,7 +72,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 16,
     backgroundColor: '#fff',
-    justifyContent: 'space-between',  // Añadido para distribuir espacio uniformemente
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 28,
