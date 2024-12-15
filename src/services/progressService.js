@@ -248,6 +248,11 @@ export async function obtenerMaximoDiasConsecutivos(usuarioId) {
       }
     });
 
+    // Si no hay registros, retornar 0
+    if (diasCocinados.length === 0) {
+      return 0;
+    }
+
     // Ordenar las fechas para asegurarnos de que estén en orden cronológico
     diasCocinados.sort();
 
@@ -260,17 +265,17 @@ export async function obtenerMaximoDiasConsecutivos(usuarioId) {
 
       // Verificar si la fecha actual es consecutiva a la anterior
       if ((fechaActual - fechaAnterior) / (1000 * 60 * 60 * 24) === 1) {
-        consecutivos++;  // Aumentar el conteo de días consecutivos
+        consecutivos++; // Aumentar el conteo de días consecutivos
       } else {
-        maxConsecutivos = Math.max(maxConsecutivos, consecutivos);  // Actualizar el máximo
-        consecutivos = 1;  // Reiniciar el conteo
+        maxConsecutivos = Math.max(maxConsecutivos, consecutivos); // Actualizar el máximo
+        consecutivos = 1; // Reiniciar el conteo
       }
     }
 
     // Asegurarse de considerar la última secuencia de días consecutivos
     maxConsecutivos = Math.max(maxConsecutivos, consecutivos);
 
-    return maxConsecutivos;  // Regresar el máximo número de días consecutivos
+    return maxConsecutivos; // Regresar el máximo número de días consecutivos
   } catch (error) {
     console.error('Error al obtener el máximo de días consecutivos:', error);
     return 0;
