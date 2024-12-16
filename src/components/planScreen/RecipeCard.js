@@ -48,14 +48,18 @@ const RecipeCard = ({ item, index, scrollX, onImageError, isFavorite, onToggleFa
             <View style={styles.textContainer}>
               <Text style={styles.recipeTitle}>{item.titulo}</Text>
               <View style={styles.labels}>
-                <View style={styles.labelContainer}>
-                  <MaterialCommunityIcons name="clock-outline" size={20} color="#fff" />
-                  <Text style={styles.label}>{formatTime(item.tiempo_preparacion)}</Text>
-                </View>
-                <View style={styles.labelContainer}>
-                  <MaterialCommunityIcons name="chef-hat" size={20} color="#fff" />
-                  <Text style={styles.label}>{formatTime(item.tiempo_coccion)}</Text>
-                </View>
+        {item.tiempo_preparacion && (
+          <View style={styles.labelContainer}>
+            <MaterialCommunityIcons name="clock-outline" size={20} color="#fff" />
+            <Text style={styles.label}>{formatTime(item.tiempo_preparacion)}</Text>
+              </View>
+                )}
+                {item.tiempo_coccion && item.tiempo_coccion !== 'Desconocido' && (
+                  <View style={styles.labelContainer}>
+                    <MaterialCommunityIcons name="chef-hat" size={20} color="#fff" />
+                    <Text style={styles.label}>{formatTime(item.tiempo_coccion)}</Text>
+                  </View>
+                )}
               </View>
             </View>
           </View>
@@ -76,7 +80,7 @@ const RecipeCard = ({ item, index, scrollX, onImageError, isFavorite, onToggleFa
 const formatTime = (timeString) => {
   const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
   const matches = timeString.match(regex);
-  if (!matches) return 'Desconocido';
+  if (!matches) return ' ';
 
   const hours = matches[1] ? `${matches[1]}h ` : '';
   const minutes = matches[2] ? `${matches[2]}m ` : '';
