@@ -1,20 +1,31 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Importar AsyncStorage
 import { guardarProgreso } from '../../services/progressService';
 
 const PesoInput = ({ onSubmit, onClose }) => {
     const [peso, setPeso] = useState('');
+    const [isLoading, setIsLoading] = useState(false); // Estado para manejar la carga
+    const [errorMessage, setErrorMessage] = useState(''); // Estado para mensajes de error
+    const [successMessage, setSuccessMessage] = useState(''); // Estado para mensajes de éxito
 
     const handlePress = async () => {
+        // Resetear mensajes anteriores
+        setErrorMessage('');
+        setSuccessMessage('');
+
         if (!peso || isNaN(peso)) {
-            Alert.alert('Error', 'Por favor, ingresa un peso válido');
+            setErrorMessage('Por favor, ingresa un peso válido');
+            return;
         } else {
             try {
+                setIsLoading(true); // Iniciar la carga
+
                 // Obtener el usuarioId del AsyncStorage
                 const usuarioId = await AsyncStorage.getItem('usuarioId');
                 if (!usuarioId) {
-                    Alert.alert('Error', 'No se ha encontrado el usuario');
+                    setErrorMessage('No se ha encontrado el usuario');
+                    setIsLoading(false);
                     return;
                 }
 
@@ -22,15 +33,18 @@ const PesoInput = ({ onSubmit, onClose }) => {
                 await guardarProgreso(peso, usuarioId);
 
                 // Mostrar un mensaje de éxito
-                Alert.alert('Registro exitoso', `Peso registrado: ${peso} kg`);
-                
+                setSuccessMessage(`Peso registrado: ${peso} kg`);
+
                 // Llamar a la función onSubmit
                 onSubmit(peso);
                 setPeso(''); // Limpiar el campo de peso
 
+                setIsLoading(false); // Terminar la carga
+
             } catch (error) {
                 console.error('Error al registrar el progreso:', error);
-                Alert.alert('Error', 'Hubo un problema al registrar tu peso');
+                setErrorMessage('Hubo un problema al registrar tu peso');
+                setIsLoading(false); // Terminar la carga
             }
         }
     };
@@ -45,12 +59,25 @@ const PesoInput = ({ onSubmit, onClose }) => {
                 value={peso}
                 onChangeText={setPeso}
             />
+
+            {/* Mostrar mensajes de error o éxito */}
+            {errorMessage !== '' && <Text style={styles.errorText}>{errorMessage}</Text>}
+            {successMessage !== '' && <Text style={styles.successText}>{successMessage}</Text>}
+
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+                <TouchableOpacity style={styles.closeButton} onPress={onClose} disabled={isLoading}>
                     <Text style={styles.buttonText}>Cancelar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handlePress}>
-                    <Text style={styles.buttonText}>Registrar</Text>
+                <TouchableOpacity
+                    style={[styles.button, isLoading && styles.buttonDisabled]}
+                    onPress={handlePress}
+                    disabled={isLoading} // Deshabilitar el botón mientras carga
+                >
+                    {isLoading ? (
+                        <ActivityIndicator size="small" color="#fff" />
+                    ) : (
+                        <Text style={styles.buttonText}>Registrar</Text>
+                    )}
                 </TouchableOpacity>
             </View>
         </View>
@@ -99,6 +126,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         borderRadius: 5,
         alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        minWidth: 100,
     },
     closeButton: {
         backgroundColor: '#9f9795',
@@ -106,11 +136,27 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         borderRadius: 5,
         alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        minWidth: 100,
     },
     buttonText: {
         color: '#fff',
         fontSize: 14,
         fontWeight: 'bold',
+    },
+    buttonDisabled: {
+        backgroundColor: '#555', // Cambiar el color del botón cuando está deshabilitado
+    },
+    errorText: {
+        color: 'red',
+        marginBottom: 10,
+        textAlign: 'center',
+    },
+    successText: {
+        color: 'green',
+        marginBottom: 10,
+        textAlign: 'center',
     },
 });
 
