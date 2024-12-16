@@ -20,6 +20,7 @@ import PersonalInfoSection from '../../components/profileScreen/PersonalInfoSect
 import ActivityLevelSection from '../../components/profileScreen/ActivityLevelSection';
 import ObjectiveSection from '../../components/profileScreen/ObjectiveSection';
 import DietTypeSection from '../../components/profileScreen/DietTypeSection';
+import HealthConditionSection from '../../components/profileScreen/HealthConditionSection';
 import ThreeBodyLoader from '../../components/common/ThreeBodyLoader';
 
 import { AuthContext } from '../../context/AuthContext';
@@ -121,7 +122,12 @@ export default function ProfileScreen() {
       ['genero', 'nivelActividad', 'objetivo', 'condicionesSalud', 'preferenciasDietarias'].includes(field)
     ) {
       setEditingField(field);
-      setEditingValue(userInfo[field]);
+      if (field === 'condicionesSalud') {
+        // Obtener el primer elemento o vacío
+        setEditingValue(userInfo[field][0] || '');
+      } else {
+        setEditingValue(userInfo[field]);
+      }
       setOptionsForField(getOptionsForField(field));
       setModalVisible(true);
     } else {
@@ -135,10 +141,16 @@ export default function ProfileScreen() {
   const saveChanges = async () => {
     try {
       setSavingChanges(true);
-      const updatedInfo = {
-        ...userInfo,
-        [editingField]: editingValue,
-      };
+      let updatedInfo = { ...userInfo };
+
+      if (editingField === 'fechaNacimiento') {
+        updatedInfo.fechaNacimiento = editingValue;
+      } else if (editingField === 'condicionesSalud') {
+        // Siempre almacenamos en un arreglo con un solo elemento
+        updatedInfo.condicionesSalud = editingValue ? [editingValue] : [];
+      } else {
+        updatedInfo[editingField] = editingValue;
+      }
 
       const usuarioId = await AsyncStorage.getItem('usuarioId');
       if (usuarioId && originalUserData) {
@@ -176,11 +188,10 @@ export default function ProfileScreen() {
             };
             break;
           case 'preferenciasDietarias':
-            // Guardamos el valor en un array con un solo elemento
             updatedData.preferencias = {
               ...updatedData.preferencias,
-              preferencias_dietarias: updatedInfo.preferenciasDietarias 
-                ? [updatedInfo.preferenciasDietarias] 
+              preferencias_dietarias: updatedInfo.preferenciasDietarias
+                ? [updatedInfo.preferenciasDietarias]
                 : [],
             };
             break;
@@ -240,6 +251,7 @@ export default function ProfileScreen() {
         { label: 'Ganar Peso', value: 'ganar_peso' },
       ],
       condicionesSalud: [
+        { label: 'Selecciona tu condición de salud', value: '', disabled: true },
         { label: 'Diabetes tipo 1', value: 'diabetes_tipo_1' },
         { label: 'Diabetes tipo 2', value: 'diabetes_tipo_2' },
         { label: 'Resistencia a la insulina', value: 'resistencia_insulina' },
@@ -249,7 +261,6 @@ export default function ProfileScreen() {
         { label: 'Insuficiencia cardiaca', value: 'insuficiencia_cardiaca' },
         { label: 'Problemas renales', value: 'problemas_renales' },
       ],
-      // Opciones para preferenciasDietarias, igual que antes con tipoDieta
       preferenciasDietarias: [
         { label: 'No restrictiva', value: 'no_restrictiva' },
         { label: 'Vegana', value: 'vegana' },
@@ -335,6 +346,11 @@ export default function ProfileScreen() {
         getLabelForValue={getLabelForValue}
         fieldKey="preferenciasDietarias"
       />
+      <HealthConditionSection
+        userInfo={userInfo}
+        onEdit={onEdit}
+        getLabelForValue={getLabelForValue}
+      />
 
       {showDatePicker && (
         <DateTimePicker
@@ -367,21 +383,52 @@ export default function ProfileScreen() {
               Editar {getFieldDisplayName(editingField)}
             </Text>
             {optionsForField.length > 0 ? (
-              // Como preferenciasDietarias es ahora single-select, tratamos igual que tipoDieta antes
-              <View style={styles.optionsContainer}>
-                {optionsForField.map((option) => (
-                  <TouchableOpacity
-                    key={option.value}
-                    style={[
-                      styles.optionButton,
-                      editingValue === option.value && styles.selectedOption,
-                    ]}
-                    onPress={() => setEditingValue(option.value)}
-                  >
-                    <Text style={styles.optionButtonText}>{option.label}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+              // Verificamos si es 'condicionesSalud' para manejarlo como selección única
+              editingField === 'condicionesSalud' ? (
+                <View style={styles.optionsContainer}>
+                  {optionsForField.map((option) => (
+                    <TouchableOpacity
+                      key={option.value}
+                      style={[
+                        styles.optionButton,
+                        editingValue === option.value && styles.selectedOption,
+                        option.disabled && styles.disabledOption, // Aplicar estilo si está deshabilitado
+                      ]}
+                      onPress={() => {
+                        if (!option.disabled) {
+                          setEditingValue(option.value);
+                        }
+                      }}
+                      disabled={option.disabled} // Deshabilitar la opción si es necesario
+                    >
+                      <Text
+                        style={[
+                          styles.optionButtonText,
+                          option.disabled && styles.disabledOptionText, // Estilo para texto deshabilitado
+                        ]}
+                      >
+                        {option.label}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              ) : (
+                // Otras secciones con múltiples opciones
+                <View style={styles.optionsContainer}>
+                  {optionsForField.map((option) => (
+                    <TouchableOpacity
+                      key={option.value}
+                      style={[
+                        styles.optionButton,
+                        editingValue === option.value && styles.selectedOption,
+                      ]}
+                      onPress={() => setEditingValue(option.value)}
+                    >
+                      <Text style={styles.optionButtonText}>{option.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )
             ) : editingField === 'fechaNacimiento' ? (
               <View style={styles.optionsContainer}>
                 <Text style={styles.selectedDate}>
@@ -406,7 +453,14 @@ export default function ProfileScreen() {
                   <TouchableOpacity style={styles.cancelButton} onPress={cancelChanges}>
                     <Text style={styles.cancelButtonText}>Cancelar</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
+                  <TouchableOpacity
+                    style={[
+                      styles.saveButton,
+                      (editingValue === '' || editingValue === null) && styles.disabledSaveButton,
+                    ]}
+                    onPress={saveChanges}
+                    disabled={editingValue === '' || editingValue === null}
+                  >
                     <Text style={styles.saveButtonText}>Guardar</Text>
                   </TouchableOpacity>
                 </>
