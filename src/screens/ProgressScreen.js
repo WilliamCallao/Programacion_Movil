@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import CalendarProgress from '../components/progressScreen/ProgressCalendar';
 import ButtonWeight from '../components/progressScreen/ButtonWeight';
@@ -13,6 +13,8 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../services/firebase'; // Ajusta la ruta según tu proyecto
 
 export default function ProgressScreen() {
+  const [shouldReloadPesoCard, setShouldReloadPesoCard] = useState(false);
+
   useEffect(() => {
     const verificarPesoInicial = async () => {
       try {
@@ -33,6 +35,7 @@ export default function ProgressScreen() {
               'medidas_fisicas.peso_inicial': peso_kg,
             });
             console.log('Peso inicial asignado al usuario');
+            setShouldReloadPesoCard((prev) => !prev); // Fuerza la recarga
           }
         }
       } catch (error) {
@@ -50,7 +53,7 @@ export default function ProgressScreen() {
         <MaterialCommunityIcons name="trophy" size={22} color="#FFD700" style={styles.trophyIcon} />
       </View>
       <View style={styles.underline} />
-      <PesoActualCard />
+      <PesoActualCard key={shouldReloadPesoCard} /> {/* El key fuerza el re-render */}
       <WeightChart />
       <View style={styles.buttonContainer}>
         <ButtonWeight />

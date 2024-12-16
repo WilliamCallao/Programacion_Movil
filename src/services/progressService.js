@@ -281,3 +281,33 @@ export async function obtenerMaximoDiasConsecutivos(usuarioId) {
     return 0;
   }
 }
+
+export async function obtenerPesoActual(usuarioId) {
+  try {
+    if (!usuarioId) {
+      console.error('No se proporcionó un usuarioId válido.');
+      return null;
+    }
+
+    // Referencia al documento del usuario
+    const usuarioRef = doc(db, 'usuarios', usuarioId);
+
+    // Obtener los datos del documento
+    const usuarioSnapshot = await getDoc(usuarioRef);
+
+    if (!usuarioSnapshot.exists()) {
+      console.warn('El usuario no existe en la base de datos.');
+      return null;
+    }
+
+    const datosUsuario = usuarioSnapshot.data();
+    const pesoActual = datosUsuario.medidas_fisicas?.peso_kg || null;
+
+    console.log('Peso actual:', pesoActual);
+
+    return pesoActual;
+  } catch (error) {
+    console.error('Error al obtener el peso actual:', error);
+    return null;
+  }
+}

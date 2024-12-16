@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { obtenerUltimoProgreso, obtenerPesoYFechaDeCreacion } from '../../services/progressService';
+import { obtenerUltimoProgreso, obtenerPesoYFechaDeCreacion, obtenerPesoActual } from '../../services/progressService';
 
 const PesoActualCard = () => {
     const [pesoActual, setPesoActual] = useState(null);
@@ -37,21 +37,25 @@ const PesoActualCard = () => {
                     setCargando(false);
                     return;
                 }
-
+    
+                // Obtener peso inicial y objetivo
                 const { pesoInicial, pesoObjetivo } = await obtenerPesoYFechaDeCreacion(usuarioId);
-                if (pesoInicial !== null && !isNaN(pesoInicial)) {
-                    setPesoInicial(pesoInicial);
-                }
-                if (pesoObjetivo !== null && !isNaN(pesoObjetivo)) {
-                    setPesoObjetivo(pesoObjetivo);
-                }
-
-                const ultimoPeso = await obtenerUltimoProgreso(usuarioId);
-                if (ultimoPeso && ultimoPeso.peso !== undefined) {
-                    setPesoActual(ultimoPeso.peso);
+                setPesoInicial(Number.isFinite(pesoInicial) ? parseFloat(pesoInicial.toFixed(2)) : null);
+                setPesoObjetivo(Number.isFinite(pesoObjetivo) ? parseFloat(pesoObjetivo.toFixed(2)) : null);
+    
+                // Obtener peso actual desde medidas_fisicas.peso_kg
+                const pesoDesdeMedidas = await obtenerPesoActual(usuarioId);
+                if (Number.isFinite(pesoDesdeMedidas)) {
+                    setPesoActual(parseFloat(pesoDesdeMedidas.toFixed(2)));
                 } else {
-                    console.warn("No se encontró progreso o falta el campo 'peso'.");
-                    setPesoActual(pesoInicial);
+                    // Fallback: Obtener el último progreso si no existe peso en medidas_fisicas
+                    const ultimoPeso = await obtenerUltimoProgreso(usuarioId);
+                    if (ultimoPeso && Number.isFinite(ultimoPeso.peso)) {
+                        setPesoActual(parseFloat(ultimoPeso.peso.toFixed(2)));
+                    } else {
+                        console.warn("No se encontró peso válido en ninguna fuente.");
+                        setPesoActual(null);
+                    }
                 }
             } catch (error) {
                 console.error("Error al obtener los datos de peso:", error);
@@ -59,15 +63,16 @@ const PesoActualCard = () => {
                 setCargando(false);
             }
         };
-
+    
         if (usuarioId) {
             fetchPeso();
         }
     }, [usuarioId]);
+    
 
     useEffect(() => {
         if (pesoInicial !== null && pesoActual !== null) {
-            setDiferenciaPeso(pesoActual - pesoInicial);
+            setDiferenciaPeso((pesoActual - pesoInicial).toFixed(2));
         }
     }, [pesoActual, pesoInicial]);
 
@@ -85,7 +90,7 @@ const PesoActualCard = () => {
                         ]}
                     >
                         <Text style={styles.differenceText}>
-                            {diferenciaPeso > 0 ? `+${diferenciaPeso.toFixed(1)} kg` : `${diferenciaPeso.toFixed(1)} kg`}
+                            {diferenciaPeso > 0 ? `+${diferenciaPeso} kg` : `${diferenciaPeso} kg`}
                         </Text>
                         <Text style={styles.arrow}>
                             {diferenciaPeso > 0 ? '▲' : '▼'}
@@ -94,15 +99,21 @@ const PesoActualCard = () => {
                     </View>
                 )}
             </View>
-            <Text style={styles.peso}>{cargando ? 'Cargando...' : `${pesoActual} kg`}</Text>
+            <Text style={styles.peso}>
+                {cargando ? 'Cargando...' : pesoActual !== null ? `${pesoActual} kg` : 'N/A'}
+            </Text>
             <View style={styles.extraInfo}>
                 <View style={styles.infoRow}>
                     <Ionicons name="walk-outline" size={18} color="#555" />
-                    <Text style={styles.extraText}>Inicial: {pesoInicial ? `${pesoInicial} kg` : 'N/A'}</Text>
+                    <Text style={styles.extraText}>
+                        Inicial: {cargando ? 'Cargando...' : pesoInicial !== null ? `${pesoInicial} kg` : 'N/A'}
+                    </Text>
                 </View>
                 <View style={styles.infoRow}>
                     <MaterialCommunityIcons name="flag-checkered" size={18} color="#555" />
-                    <Text style={styles.extraText}>Objetivo: {pesoObjetivo ? `${pesoObjetivo} kg` : 'N/A'}</Text>
+                    <Text style={styles.extraText}>
+                        Objetivo: {cargando ? 'Cargando...' : pesoObjetivo !== null ? `${pesoObjetivo} kg` : 'N/A'}
+                    </Text>
                 </View>
             </View>
         </View>
