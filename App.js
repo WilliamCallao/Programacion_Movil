@@ -3,6 +3,7 @@ import React from 'react';
 import { Image, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider } from './src/context/AuthContext';
+import { RefreshProvider } from './src/contexts/RefreshContext';
 import RootNavigator from './src/navigation/RootNavigator';
 import { useFonts as usePoppins, Poppins_100Thin, Poppins_200ExtraLight,
   Poppins_300Light, Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold,
@@ -44,9 +45,11 @@ export default function App() {
 
   return (
     <AuthProvider>
+      <RefreshProvider>
       <NavigationContainer>
         <RootNavigator />
       </NavigationContainer>
+      </RefreshProvider>
     </AuthProvider>
   );
 }

@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+// components/progressScreen/ButtonWeight.js
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; // Importar los iconos de MaterialCommunityIcons
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PesoInput from './PesoInput';
+import { RefreshContext } from '../../contexts/RefreshContext'; // Importa el contexto
 
-const ButtonWeight = () => {
-    const [showInput, setShowInput] = useState(false); // Estado para mostrar el campo de entrada
+const ButtonWeight = () => { // No recibe props
+    const [showInput, setShowInput] = useState(false);
+    const { triggerRefresh } = useContext(RefreshContext); // Obtiene la función del contexto
 
     const handlePesoSubmit = (peso) => {
         console.log(`Peso registrado: ${peso} kg`);
-        setShowInput(false); // Ocultar el campo de entrada después de registrar el peso
+        setShowInput(false);
+        triggerRefresh(); // Dispara el refresco
     };
 
     return (
@@ -16,20 +20,19 @@ const ButtonWeight = () => {
             <TouchableOpacity onPress={() => setShowInput(true)} style={styles.button}>
                 <View style={styles.buttonContent}>
                     <MaterialCommunityIcons
-                        name="weight-kilogram" // Usar el icono de MaterialCommunityIcons
+                        name="weight-kilogram"
                         size={30}
-                        color="#fff" // Color dorado
+                        color="#fff"
                         style={styles.icon}
                     />
                     <Text style={styles.buttonText}>Nuevo registro de peso</Text>
                 </View>
             </TouchableOpacity>
 
-            {/* Mostrar el campo de entrada solo cuando showInput sea true */}
             {showInput && (
                 <PesoInput
                     onSubmit={handlePesoSubmit}
-                    onClose={() => setShowInput(false)} // Función para cerrar el campo de entrada
+                    onClose={() => setShowInput(false)}
                 />
             )}
         </View>
@@ -38,7 +41,7 @@ const ButtonWeight = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width: '100%', // Asegura que ocupe todo el ancho disponible
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
