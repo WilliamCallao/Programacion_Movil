@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -48,7 +49,7 @@ export default function ProfileScreen() {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [editingField, setEditingField] = useState(null);
-  const [editingValue, setEditingValue] = useState('');
+  const [editingValue, setEditingValue] = useState([]);
   const [optionsForField, setOptionsForField] = useState([]);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [savingChanges, setSavingChanges] = useState(false);
@@ -112,7 +113,7 @@ export default function ProfileScreen() {
   const onEdit = (field) => {
     // Reiniciar estado del modal
     setEditingField(null);
-    setEditingValue('');
+    setEditingValue([]);
     setOptionsForField([]);
 
     if (field === 'fechaNacimiento') {
@@ -123,8 +124,7 @@ export default function ProfileScreen() {
     ) {
       setEditingField(field);
       if (field === 'condicionesSalud') {
-        // Obtener el primer elemento o vacío
-        setEditingValue(userInfo[field][0] || '');
+        setEditingValue(userInfo[field] || []);
       } else {
         setEditingValue(userInfo[field]);
       }
@@ -146,8 +146,12 @@ export default function ProfileScreen() {
       if (editingField === 'fechaNacimiento') {
         updatedInfo.fechaNacimiento = editingValue;
       } else if (editingField === 'condicionesSalud') {
-        // Siempre almacenamos en un arreglo con un solo elemento
-        updatedInfo.condicionesSalud = editingValue ? [editingValue] : [];
+        // Si "ninguna" está seleccionada, guardar una lista vacía
+        if (editingValue.includes('ninguna')) {
+          updatedInfo.condicionesSalud = [];
+        } else {
+          updatedInfo.condicionesSalud = editingValue;
+        }
       } else {
         updatedInfo[editingField] = editingValue;
       }
@@ -216,7 +220,7 @@ export default function ProfileScreen() {
       setSavingChanges(false);
       setModalVisible(false);
       setEditingField(null);
-      setEditingValue('');
+      setEditingValue([]);
       setOptionsForField([]);
     } catch (error) {
       console.error('Error al actualizar los datos del usuario:', error);
@@ -227,7 +231,7 @@ export default function ProfileScreen() {
   const cancelChanges = () => {
     setModalVisible(false);
     setEditingField(null);
-    setEditingValue('');
+    setEditingValue([]);
     setOptionsForField([]);
   };
 
@@ -251,7 +255,7 @@ export default function ProfileScreen() {
         { label: 'Ganar Peso', value: 'ganar_peso' },
       ],
       condicionesSalud: [
-        { label: 'Selecciona tu condición de salud', value: '', disabled: true },
+        { label: 'Ninguna', value: 'ninguna' }, // Opción "Ninguna" agregada
         { label: 'Diabetes tipo 1', value: 'diabetes_tipo_1' },
         { label: 'Diabetes tipo 2', value: 'diabetes_tipo_2' },
         { label: 'Resistencia a la insulina', value: 'resistencia_insulina' },
@@ -368,7 +372,7 @@ export default function ProfileScreen() {
               // Usuario canceló
               setShowDatePicker(false);
               setEditingField(null);
-              setEditingValue('');
+              setEditingValue([]);
               setOptionsForField([]);
             }
           }}
@@ -383,37 +387,53 @@ export default function ProfileScreen() {
               Editar {getFieldDisplayName(editingField)}
             </Text>
             {optionsForField.length > 0 ? (
-              // Verificamos si es 'condicionesSalud' para manejarlo como selección única
               editingField === 'condicionesSalud' ? (
-                <View style={styles.optionsContainer}>
+                <ScrollView style={styles.optionsContainer}>
                   {optionsForField.map((option) => (
                     <TouchableOpacity
                       key={option.value}
                       style={[
                         styles.optionButton,
-                        editingValue === option.value && styles.selectedOption,
-                        option.disabled && styles.disabledOption, // Aplicar estilo si está deshabilitado
+                        editingValue.includes(option.value) && styles.selectedOption,
                       ]}
                       onPress={() => {
-                        if (!option.disabled) {
-                          setEditingValue(option.value);
+                        if (option.value === 'ninguna') {
+                          if (editingValue.includes('ninguna')) {
+                            // Desmarcar "Ninguna"
+                            setEditingValue([]);
+                          } else {
+                            // Seleccionar "Ninguna" y desmarcar otras opciones
+                            setEditingValue(['ninguna']);
+                          }
+                        } else {
+                          if (editingValue.includes(option.value)) {
+                            // Desmarcar la opción seleccionada
+                            setEditingValue(editingValue.filter((val) => val !== option.value));
+                          } else {
+                            // Seleccionar la opción
+                            const newValues = [...editingValue, option.value];
+                            // Si "Ninguna" estaba seleccionada, desmarcarla
+                            if (editingValue.includes('ninguna')) {
+                              setEditingValue(newValues.filter((val) => val !== 'ninguna'));
+                            } else {
+                              setEditingValue(newValues);
+                            }
+                          }
                         }
                       }}
-                      disabled={option.disabled} // Deshabilitar la opción si es necesario
                     >
                       <Text
                         style={[
                           styles.optionButtonText,
-                          option.disabled && styles.disabledOptionText, // Estilo para texto deshabilitado
+                          editingValue.includes(option.value) && styles.selectedOptionText,
                         ]}
                       >
                         {option.label}
                       </Text>
                     </TouchableOpacity>
                   ))}
-                </View>
+                </ScrollView>
               ) : (
-                // Otras secciones con múltiples opciones
                 <View style={styles.optionsContainer}>
                   {optionsForField.map((option) => (
                     <TouchableOpacity
@@ -456,10 +476,16 @@ export default function ProfileScreen() {
                   <TouchableOpacity
                     style={[
                       styles.saveButton,
-                      (editingValue === '' || editingValue === null) && styles.disabledSaveButton,
+                      (editingField === 'condicionesSalud' && editingValue.length === 0) ||
+                      (editingValue === '' || editingValue === null)
+                        ? styles.disabledSaveButton
+                        : {},
                     ]}
                     onPress={saveChanges}
-                    disabled={editingValue === '' || editingValue === null}
+                    disabled={
+                      (editingField === 'condicionesSalud' && editingValue.length === 0) ||
+                      (editingValue === '' || editingValue === null)
+                    }
                   >
                     <Text style={styles.saveButtonText}>Guardar</Text>
                   </TouchableOpacity>
