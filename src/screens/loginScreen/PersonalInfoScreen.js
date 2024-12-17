@@ -127,14 +127,14 @@ const PersonalInfoScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
+    backgroundColor: '#FFEEF0',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
     backgroundColor: '#2c3e50',
   },
   authContainer: {
-    width: '80%',
+    width: '90%',
     maxWidth: 400,
     backgroundColor: '#fff',
     padding: 24,
