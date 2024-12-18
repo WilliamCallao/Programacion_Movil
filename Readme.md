@@ -1,4 +1,22 @@
 
+<table align="center">
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/c3bf5458-055b-487b-8e3b-7152e9b81440" alt="Badge1">
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/e5a52f56-95e3-4d89-b47c-fb43291aa697" alt="Badge2">
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/b789aeb0-5270-488c-abbd-3204c732f632" alt="Badge3">
+    </td>
+    <td>
+      <img src="https://github.com/user-attachments/assets/df77e2eb-33a2-411a-a1d6-896826fdf1d8" alt="Badge4">
+    </td>
+  </tr>
+</table>
+
+
 ## Requisitos Previos
 
 Antes de comenzar, asegúrate de tener instalados los siguientes requisitos:
